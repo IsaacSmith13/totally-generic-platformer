@@ -1,6 +1,6 @@
 package com.isaactsmith.platformer;
 
-public class Platformer 
+public class Game 
 {
     public static void main( String[] args )
     {
