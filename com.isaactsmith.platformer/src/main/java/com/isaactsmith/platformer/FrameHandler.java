@@ -7,6 +7,7 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
+import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,23 +53,31 @@ public class FrameHandler extends JPanel implements KeyListener {
 		// temporary for testing
 		terrain = new ArrayList<Tile>();
 		enemies = new ArrayList<EnemyUnit>();
-		BufferedImage image = new BufferedImage(50, 50, 
+		BufferedImage playerImage = new BufferedImage(50, 50, 
 			     BufferedImage.TYPE_INT_ARGB);
 		
-		image.createGraphics();
-		image.getGraphics().setColor(new Color(2,1,3));
-		image.getGraphics().fillRect(0, 0, 50, 50);
+		playerImage.createGraphics();
+		playerImage.getGraphics().setColor(new Color(2,1,3));
+		playerImage.getGraphics().fillRect(0, 0, 50, 50);
 		
-		BufferedImage image2 = new BufferedImage(50, 50, 
-			     BufferedImage.TYPE_INT_ARGB);
+//		BufferedImage image2 = new BufferedImage(50, 50, 
+//			     BufferedImage.TYPE_INT_ARGB);
+//		
+//		image2.createGraphics();
+//		image2.getGraphics().setColor(new Color(2,1,3));
+//		image2.getGraphics().fillRect(0, 0, 50, 50);
 		
-		image2.createGraphics();
-		image2.getGraphics().setColor(new Color(2,1,3));
-		image2.getGraphics().fillRect(0, 0, 50, 50);
+		player = new PlayerUnit(70, 50, playerImage);
 		
-		player = new PlayerUnit(50, 50, image);
+//		terrain.add(new Tile(50, 300, image2));
 		
-		terrain.add(new Tile(50, 300, image2));
+		for (int i = 0; i < 30; i++) {
+			BufferedImage image = new BufferedImage(50, 50, BufferedImage.TYPE_4BYTE_ABGR);
+			image.createGraphics();
+			image.getGraphics().setColor(new Color((int)Math.random() * 255, (int)Math.random() * 255, (int)Math.random() * 255));
+			image.getGraphics().fillRect(0, 0, 50, 50);
+			terrain.add(new Tile(i * 32, 400, image));
+		}
 		
 		
 		
@@ -134,17 +143,13 @@ public class FrameHandler extends JPanel implements KeyListener {
 
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
-		repaint();
-
 	}
 
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-
 	}
 
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
-
 	}
 }
