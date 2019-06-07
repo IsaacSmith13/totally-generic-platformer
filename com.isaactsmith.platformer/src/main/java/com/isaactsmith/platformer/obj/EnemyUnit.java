@@ -2,11 +2,11 @@ package com.isaactsmith.platformer.obj;
 
 import java.awt.image.BufferedImage;
 
-public abstract class Enemy extends Unit {
+public abstract class EnemyUnit extends Unit {
 	
 	private static final boolean isEnemy = true;
 
-	public Enemy(int x, int y, BufferedImage image) {
+	public EnemyUnit(int x, int y, BufferedImage image) {
 		super(x, y, image);
 	}
 

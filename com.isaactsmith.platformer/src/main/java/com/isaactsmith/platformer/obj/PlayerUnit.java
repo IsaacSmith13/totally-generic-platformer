@@ -2,9 +2,9 @@ package com.isaactsmith.platformer.obj;
 
 import java.awt.image.BufferedImage;
 
-public class Player extends Unit {
+public class PlayerUnit extends Unit {
 
-	public Player(int x, int y, BufferedImage image) {
+	public PlayerUnit(int x, int y, BufferedImage image) {
 		super(x, y, image);
 	}
 
@@ -20,5 +20,4 @@ public class Player extends Unit {
 		// Should move with W, A, S or D
 		// Remove parameter if it is decided to determine key presses here
 	}
-
 }

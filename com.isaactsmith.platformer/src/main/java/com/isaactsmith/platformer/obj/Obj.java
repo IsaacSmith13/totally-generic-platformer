@@ -1,28 +1,43 @@
 package com.isaactsmith.platformer.obj;
 
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 public abstract class Obj {
-	private int x;
+	private double x;
 	private int y;
 	private BufferedImage image;
 	private boolean isForeground;
+	private int width;
+	private int height;
 
-	public Obj(int x, int y, BufferedImage image) {
+	public Obj(double x, int y, BufferedImage image) {
 		this.x = x;
 		this.y = y;
 		this.setImage(image);
+		this.width = 32;
+		this.height = 32;
 	}
 
-	public int getX() {
+	public Obj(double x, int y, BufferedImage image, int width, int height) {
+		this(x, y, image);
+		this.width = width;
+		this.height = height;
+	}
+	
+	public void paint(Graphics g) {
+		g.drawImage(getImage(), (int) Math.round(getX()), (int) Math.round(getY()), getWidth(), getHeight(), null);
+	}
+
+	public double getX() {
 		return x;
 	}
 
-	public void setX(int x) {
+	public void setX(double x) {
 		this.x = x;
 	}
 
-	public int getY() {
+	public double getY() {
 		return y;
 	}
 
@@ -44,5 +59,13 @@ public abstract class Obj {
 
 	public void setForeground(boolean isForeground) {
 		this.isForeground = isForeground;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
 	}
 }

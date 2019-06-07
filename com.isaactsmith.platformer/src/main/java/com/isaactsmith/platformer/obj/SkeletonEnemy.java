@@ -2,19 +2,19 @@ package com.isaactsmith.platformer.obj;
 
 import java.awt.image.BufferedImage;
 
-public class Goomba extends Enemy {
+public class SkeletonEnemy extends EnemyUnit {
 
-	public Goomba(int x, int y, BufferedImage image) {
+	public SkeletonEnemy(int x, int y, BufferedImage image) {
 		super(x, y, image);
 	}
 
 	@Override
 	void jump() {
-		// TODO jump method - goomba
+		// TODO jump method - skeleton
 	}
 
 	@Override
 	void move(int direction) {
-		// TODO move method - goomba
+		// TODO move method - skeleton
 	}
 }
