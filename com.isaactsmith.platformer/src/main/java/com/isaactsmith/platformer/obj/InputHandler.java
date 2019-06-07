@@ -10,7 +10,7 @@ public class InputHandler implements KeyListener {
 	
 	private JPanel panel;
 	
-	public InputHandler(JPanel panel) {
+	public InputHandler(FrameHandler panel) {
 		this.panel = panel;
 	}
 

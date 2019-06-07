@@ -1,5 +1,6 @@
 package com.isaactsmith.platformer.obj;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 
@@ -8,27 +9,32 @@ import javax.swing.JPanel;
 
 public class FrameHandler extends JPanel {
 
-	private JFrame frame;
-	private JPanel panel;
 	private static final long serialVersionUID = 1L;
 	private boolean isRunning = true;
-
-	public void run() {
-		// Initialize window
-		frame = new JFrame("Totally Generic Platformer");
-	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setPreferredSize(new Dimension(800, 600));
-		panel = new JPanel();
-		panel.setPreferredSize(new Dimension(800, 600));
-		panel.setBackground(Color.black);
-		panel.setFocusable(true);
-		frame.add(panel);
-		frame.pack();
+	private JFrame frame;
+	
+	public FrameHandler(JFrame frame) {
+		// Initialize the window
+		this.frame = frame;
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setResizable(false);
 		frame.setVisible(true);
 		
-		// Add custom key listener to window
-		panel.addKeyListener(new InputHandler(panel));
+		// Attach this panel to the window
+		frame.add(this, BorderLayout.CENTER);
 		
+		// Adjust size and center frame
+		setPreferredSize(new Dimension(800, 600));
+		frame.pack();
+		frame.setLocationRelativeTo(null);
+		setBackground(Color.black);
+		
+		// Attach a custom key listener to the panel
+		setFocusable(true);
+		addKeyListener(new InputHandler(this));
+	}
+
+	public void run() {
 		// While game is running, render a new frame every second
 		while (isRunning) {
 			try {
@@ -39,15 +45,14 @@ public class FrameHandler extends JPanel {
 				isRunning = false;
 			}
 		}
-		
+
 	}
-	
+
 	public void renderFrame() {
 		if (Math.random() < .5) {
-			panel.setBackground(Color.red);
-		}
-		else {
-			panel.setBackground(Color.blue);
+			setBackground(Color.red);
+		} else {
+			setBackground(Color.blue);
 		}
 		// TODO - Display a frame of the game
 	}
