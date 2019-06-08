@@ -23,10 +23,10 @@ public class PlayerUnit extends Unit {
 	public void move(int direction) {
 		switch(direction) {
 		case(LEFT):
-			setXVelocity(3);
+			setXVelocity(-3);
 			break;
 		case(RIGHT):
-			setXVelocity(-3);
+			setXVelocity(3);
 			break;
 		case(STOP):
 			setXVelocity(0);

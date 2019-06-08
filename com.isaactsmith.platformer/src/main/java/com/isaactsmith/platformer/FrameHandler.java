@@ -152,13 +152,13 @@ public class FrameHandler extends JPanel implements KeyListener {
 
 	public void keyPressed(KeyEvent e) {
 		switch (e.getKeyCode()) {
-		case KeyEvent.VK_D:
+		case KeyEvent.VK_A:
 			player.move(LEFT);
 			break;
 		case KeyEvent.VK_LEFT:
 			player.move(LEFT);
 			break;
-		case KeyEvent.VK_A:
+		case KeyEvent.VK_D:
 			player.move(RIGHT);
 			break;
 		case KeyEvent.VK_RIGHT:
