@@ -1,4 +1,4 @@
-package com.isaactsmith.platformer.obj;
+package com.isaactsmith.platformer.obj.unit;
 
 import java.awt.image.BufferedImage;
 

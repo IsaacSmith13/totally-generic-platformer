@@ -1,14 +1,14 @@
-package com.isaactsmith.platformer.obj;
+package com.isaactsmith.platformer.obj.unit;
 
 import java.awt.image.BufferedImage;
-import java.util.List;
+
+import com.isaactsmith.platformer.obj.Obj;
 
 public abstract class Unit extends Obj {
 
 	// terminal velocity = unit height / terminal velocity pixels per frame
 	private static final int TERMINAL_VELOCITY = 8;
 	private boolean isAlive = true;
-	private boolean isJumping = false;
 	private boolean isFalling = false;
 	private double xVelocity = 0;
 	private double yVelocity = 0;
@@ -29,32 +29,7 @@ public abstract class Unit extends Obj {
 		this.isAlive = isAlive;
 	}
 
-	public void handleFalling(List<Tile> terrain) {
-		boolean inAir = true;
-		for (Tile tile : terrain) {
-			if (isOn(tile)) {
-				inAir = false;
-				break;
-			}
-		}
-		if (inAir) {
-			setFalling(true);
-			setYVelocity(getYVelocity() + .2);
-		} else {
-			setJumping(false);
-			setFalling(false);
-			setYVelocity(0);
-		}
-	}
-
-	public void tick() {
-		if (isFalling) {
-			setY((int) Math.round(getY() + getYVelocity()));
-		}
-		setX((int) Math.round(getX() + getXVelocity()));
-	}
-
-	private boolean isOn(Obj object) {
+	public boolean isOn(Obj object) {
 		double xDifference = getX() - object.getX();
 		double yDifference = getY() - object.getY();
 
@@ -74,14 +49,6 @@ public abstract class Unit extends Obj {
 			return true;
 		}
 		return false;
-	}
-
-	public boolean isJumping() {
-		return isJumping;
-	}
-
-	public void setJumping(boolean isJumping) {
-		this.isJumping = isJumping;
 	}
 
 	public double getYVelocity() {

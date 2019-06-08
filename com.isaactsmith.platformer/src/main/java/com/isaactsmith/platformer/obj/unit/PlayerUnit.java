@@ -1,4 +1,4 @@
-package com.isaactsmith.platformer.obj;
+package com.isaactsmith.platformer.obj.unit;
 
 import java.awt.image.BufferedImage;
 
@@ -15,7 +15,6 @@ public class PlayerUnit extends Unit {
 	@Override
 	public void jump() {
 		setYVelocity(-8);
-		setJumping(true);
 		setY((int) getY() - 4);
 	}
 

@@ -6,6 +6,5 @@ public class Tile extends Obj {
 
 	public Tile(int x, int y, BufferedImage image) {
 		super(x, y, image);
-	}
-	
+	}	
 }

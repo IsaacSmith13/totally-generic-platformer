@@ -1,22 +1,22 @@
-package com.isaactsmith.platformer;
+package com.isaactsmith.platformer.handler;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
-import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import com.isaactsmith.platformer.obj.EnemyUnit;
-import com.isaactsmith.platformer.obj.PlayerUnit;
 import com.isaactsmith.platformer.obj.Tile;
+import com.isaactsmith.platformer.obj.unit.EnemyUnit;
+import com.isaactsmith.platformer.obj.unit.PlayerUnit;
 
 public class FrameHandler extends JPanel implements KeyListener {
 
@@ -58,9 +58,9 @@ public class FrameHandler extends JPanel implements KeyListener {
 		enemies = new ArrayList<EnemyUnit>();
 		BufferedImage playerImage = new BufferedImage(50, 50, BufferedImage.TYPE_INT_ARGB);
 
-		playerImage.createGraphics();
-		playerImage.getGraphics().setColor(new Color(2, 1, 3));
-		playerImage.getGraphics().fillRect(0, 0, 50, 50);
+		Graphics2D playerGraphics = playerImage.createGraphics();
+		playerGraphics.setColor(new Color(229, 122, 0));
+		playerGraphics.fillRect(0, 0, 50, 50);
 
 		// BufferedImage image2 = new BufferedImage(50, 50,
 		// BufferedImage.TYPE_INT_ARGB);
@@ -75,10 +75,11 @@ public class FrameHandler extends JPanel implements KeyListener {
 
 		for (int i = 0; i < 30; i++) {
 			BufferedImage image = new BufferedImage(50, 50, BufferedImage.TYPE_4BYTE_ABGR);
-			image.createGraphics();
-			image.getGraphics().setColor(
-					new Color((int) Math.random() * 255, (int) Math.random() * 255, (int) Math.random() * 255));
-			image.getGraphics().fillRect(0, 0, 50, 50);
+			Graphics2D graphics = image.createGraphics();
+			graphics.setPaint(
+					new Color((int) (Math.random() * 255), (int) (Math.random() * 255), (int) (Math.random() * 255)));
+			System.out.println(graphics.getPaint());
+			graphics.fillRect(0, 0, 50, 50);
 			terrain.add(new Tile(i * 32, 400, image));
 		}
 
@@ -104,8 +105,7 @@ public class FrameHandler extends JPanel implements KeyListener {
 	}
 
 	public void tick() {
-		player.handleFalling(terrain);
-		player.tick();
+		UnitHandler.tick(player, terrain);
 		// for (List<Enemy> enemy : enemies) {
 		// enemy.handleFalling(terrain);
 		// if player(isCollidingWith(enemy)) {
@@ -146,7 +146,6 @@ public class FrameHandler extends JPanel implements KeyListener {
 			player.paint(g);
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("hello");
 		}
 	}
 

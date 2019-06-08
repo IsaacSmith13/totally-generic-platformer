@@ -2,6 +2,8 @@ package com.isaactsmith.platformer;
 
 import javax.swing.JFrame;
 
+import com.isaactsmith.platformer.handler.FrameHandler;
+
 public class Game {
 
 	private static final String APPLICATION_NAME = "Totally Generic Platformer";

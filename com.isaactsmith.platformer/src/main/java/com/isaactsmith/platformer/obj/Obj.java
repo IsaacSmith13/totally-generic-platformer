@@ -28,6 +28,11 @@ public abstract class Obj {
 	public void paint(Graphics g) {
 		g.drawImage(getImage(), (int) Math.round(getX()), (int) Math.round(getY()), getWidth(), getHeight(), null);
 	}
+	
+	public void setLocation(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
 
 	public double getX() {
 		return x;
