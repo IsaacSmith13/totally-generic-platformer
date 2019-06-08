@@ -5,6 +5,8 @@ import java.util.List;
 
 public abstract class Unit extends Obj {
 
+	// terminal velocity = unit height / terminal velocity pixels per frame
+	private static final int TERMINAL_VELOCITY = 8;
 	private boolean isAlive = true;
 	private boolean isJumping = false;
 	private boolean isFalling = false;
@@ -57,7 +59,7 @@ public abstract class Unit extends Obj {
 		double yDifference = getY() - object.getY();
 
 		if ((xDifference > -getWidth() && xDifference < object.getWidth()) && yDifference > -getHeight()
-				&& yDifference < (getHeight() / 10) + 1) {
+				&& yDifference < (getHeight() / TERMINAL_VELOCITY) + 1) {
 			return true;
 		}
 		return false;
@@ -87,7 +89,7 @@ public abstract class Unit extends Obj {
 	}
 
 	public void setYVelocity(double yVelocity) {
-		this.yVelocity = Math.min(yVelocity, getHeight() / 10);
+		this.yVelocity = Math.min(yVelocity, getHeight() / TERMINAL_VELOCITY);
 	}
 
 	public double getXVelocity() {
