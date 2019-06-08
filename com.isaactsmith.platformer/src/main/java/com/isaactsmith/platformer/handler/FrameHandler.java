@@ -14,6 +14,7 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import com.isaactsmith.platformer.ReadWrite.LevelReader;
 import com.isaactsmith.platformer.ReadWrite.LevelWriter;
 import com.isaactsmith.platformer.obj.Tile;
 import com.isaactsmith.platformer.obj.unit.EnemyUnit;
@@ -25,6 +26,7 @@ public class FrameHandler extends JPanel implements KeyListener {
 	private static final int LEFT = 0;
 	private static final int RIGHT = 1;
 	private static final int STOP = 2;
+	private static final String levelPath = "testlevel.level";
 	private boolean isRunning = true;
 	private JFrame frame;
 	private List<Tile> terrain;
@@ -54,40 +56,13 @@ public class FrameHandler extends JPanel implements KeyListener {
 
 	public void run() {
 
-		// temporary for testing
-		LevelWriter.writeLevel("testlevel.level");
-
-		terrain = new ArrayList<Tile>();
-		enemies = new ArrayList<EnemyUnit>();
-		BufferedImage playerImage = new BufferedImage(50, 50, BufferedImage.TYPE_INT_ARGB);
-
-		Graphics2D playerGraphics = playerImage.createGraphics();
-		playerGraphics.setColor(new Color(229, 122, 0));
-		playerGraphics.fillRect(0, 0, 50, 50);
-
-		// BufferedImage image2 = new BufferedImage(50, 50,
-		// BufferedImage.TYPE_INT_ARGB);
-		//
-		// image2.createGraphics();
-		// image2.getGraphics().setColor(new Color(2,1,3));
-		// image2.getGraphics().fillRect(0, 0, 50, 50);
-
-		player = new PlayerUnit(70, 50, playerImage);
-
-		// terrain.add(new Tile(50, 300, image2));
-
-		for (int i = 0; i < 50; i++) {
-			BufferedImage image = new BufferedImage(50, 50, BufferedImage.TYPE_4BYTE_ABGR);
-			Graphics2D graphics = image.createGraphics();
-			graphics.setPaint(
-					new Color((int) (Math.random() * 255), (int) (Math.random() * 255), (int) (Math.random() * 255)));
-			graphics.fillRect(0, 0, 50, 50);
-			terrain.add(new Tile(i * 32, 400, image));
-
-			if (Math.round(Math.random() * 3) == 3)  {
-				i += 4;
-			}
-		}
+		LevelWriter.writeLevel(levelPath);
+		
+		LevelReader levelReader = new LevelReader();
+		levelReader.loadLevel(levelPath);
+		player = levelReader.getPlayer();
+		terrain = levelReader.getTerrain();
+		enemies = levelReader.getEnemies();
 
 		// While game is running, render a new frame every second
 		long lastUpdate = System.nanoTime();
@@ -145,11 +120,7 @@ public class FrameHandler extends JPanel implements KeyListener {
 			g.setColor(new Color(135, 206, 235));
 			g.fillRect(0, 0, getWidth(), getHeight());
 			for (int i = 0, terrainSize = terrain.size(); i < terrainSize; i++) {
-				Tile current = terrain.get(i);
-				if (current.equals(null)) {
-					System.out.println("NULL AT " + i);
-				}
-				current.paint(g);
+				terrain.get(i).paint(g);
 			}
 			// for (EnemyUnit enemy : enemies) {
 			// enemy.paint(g);
