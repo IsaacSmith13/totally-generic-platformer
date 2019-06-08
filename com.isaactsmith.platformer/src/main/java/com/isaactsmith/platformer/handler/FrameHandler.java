@@ -14,6 +14,7 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import com.isaactsmith.platformer.ReadWrite.LevelWriter;
 import com.isaactsmith.platformer.obj.Tile;
 import com.isaactsmith.platformer.obj.unit.EnemyUnit;
 import com.isaactsmith.platformer.obj.unit.PlayerUnit;
@@ -54,6 +55,8 @@ public class FrameHandler extends JPanel implements KeyListener {
 	public void run() {
 
 		// temporary for testing
+		LevelWriter.writeLevel("testlevel.level");
+
 		terrain = new ArrayList<Tile>();
 		enemies = new ArrayList<EnemyUnit>();
 		BufferedImage playerImage = new BufferedImage(50, 50, BufferedImage.TYPE_INT_ARGB);
@@ -73,14 +76,17 @@ public class FrameHandler extends JPanel implements KeyListener {
 
 		// terrain.add(new Tile(50, 300, image2));
 
-		for (int i = 0; i < 30; i++) {
+		for (int i = 0; i < 50; i++) {
 			BufferedImage image = new BufferedImage(50, 50, BufferedImage.TYPE_4BYTE_ABGR);
 			Graphics2D graphics = image.createGraphics();
 			graphics.setPaint(
 					new Color((int) (Math.random() * 255), (int) (Math.random() * 255), (int) (Math.random() * 255)));
-			System.out.println(graphics.getPaint());
 			graphics.fillRect(0, 0, 50, 50);
 			terrain.add(new Tile(i * 32, 400, image));
+
+			if (Math.round(Math.random() * 3) == 3)  {
+				i += 4;
+			}
 		}
 
 		// While game is running, render a new frame every second
@@ -132,20 +138,26 @@ public class FrameHandler extends JPanel implements KeyListener {
 		// }
 	}
 
+	@Override
 	public void paint(Graphics g) {
 		try {
 			requestFocusInWindow();
 			g.setColor(new Color(135, 206, 235));
 			g.fillRect(0, 0, getWidth(), getHeight());
-			for (Tile tile : terrain) {
-				tile.paint(g);
+			for (int i = 0, terrainSize = terrain.size(); i < terrainSize; i++) {
+				Tile current = terrain.get(i);
+				if (current.equals(null)) {
+					System.out.println("NULL AT " + i);
+				}
+				current.paint(g);
 			}
 			// for (EnemyUnit enemy : enemies) {
 			// enemy.paint(g);
 			// }
 			player.paint(g);
 		} catch (Exception e) {
-			e.printStackTrace();
+			// Do nothing, sometimes list of tiles not complete in the first frame or two of
+			// the game
 		}
 	}
 
