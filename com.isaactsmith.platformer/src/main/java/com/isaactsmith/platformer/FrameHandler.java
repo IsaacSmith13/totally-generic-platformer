@@ -7,6 +7,7 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
+import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,31 +52,36 @@ public class FrameHandler extends JPanel implements KeyListener {
 	}
 
 	public void run() {
-		
+
 		// temporary for testing
 		terrain = new ArrayList<Tile>();
 		enemies = new ArrayList<EnemyUnit>();
-		BufferedImage image = new BufferedImage(50, 50, 
-			     BufferedImage.TYPE_INT_ARGB);
-		
-		image.createGraphics();
-//		image.getGraphics().setColor(new Color(2,1,3));
-		image.getGraphics().fillRect(0, 0, 50, 50);
-		
-		BufferedImage image2 = new BufferedImage(50, 50, 
-			     BufferedImage.TYPE_INT_ARGB);
-		
-		image2.createGraphics();
-//		image2.getGraphics().setColor(new Color(2,1,3));
-		image2.getGraphics().fillRect(0, 0, 50, 50);
-		
-		player = new PlayerUnit(50, 50, image);
-		
-		terrain.add(new Tile(50, 300, image2));
-		
-		
-		
-		
+		BufferedImage playerImage = new BufferedImage(50, 50, BufferedImage.TYPE_INT_ARGB);
+
+		playerImage.createGraphics();
+		playerImage.getGraphics().setColor(new Color(2, 1, 3));
+		playerImage.getGraphics().fillRect(0, 0, 50, 50);
+
+		// BufferedImage image2 = new BufferedImage(50, 50,
+		// BufferedImage.TYPE_INT_ARGB);
+		//
+		// image2.createGraphics();
+		// image2.getGraphics().setColor(new Color(2,1,3));
+		// image2.getGraphics().fillRect(0, 0, 50, 50);
+
+		player = new PlayerUnit(70, 50, playerImage);
+
+		// terrain.add(new Tile(50, 300, image2));
+
+		for (int i = 0; i < 30; i++) {
+			BufferedImage image = new BufferedImage(50, 50, BufferedImage.TYPE_4BYTE_ABGR);
+			image.createGraphics();
+			image.getGraphics().setColor(
+					new Color((int) Math.random() * 255, (int) Math.random() * 255, (int) Math.random() * 255));
+			image.getGraphics().fillRect(0, 0, 50, 50);
+			terrain.add(new Tile(i * 32, 400, image));
+		}
+
 		// While game is running, render a new frame every second
 		long lastUpdate = System.nanoTime();
 		long lastRender = System.nanoTime();
@@ -100,44 +106,44 @@ public class FrameHandler extends JPanel implements KeyListener {
 	public void tick() {
 		player.handleFalling(terrain);
 		player.tick();
-//		for (List<Enemy> enemy : enemies) {
-//			enemy.handleFalling(terrain);
-//			if player(isCollidingWith(enemy)) {
-//				if (player.killsEnemy(enemy)) {
-//					// kill enemy
-//				} else {
-//					// kill player
-//				}
-//			}
-//			for (List<Enemy> secondEnemy : enemies) {
-//				if enemy(isCollidingWith(secondEnemy)) {
-//					// stop collision
-//				}
-//			}
-//			for (List<Tile> tile : terrain) {
-//				if (player.isOn((Obj)tile)) {
-//					//stop collision
-//				}
-//				if player(isCollidingWith(tile)) {
-//					//stop collision
-//				}
-//			}		
-//			
-//		}
+		// for (List<Enemy> enemy : enemies) {
+		// enemy.handleFalling(terrain);
+		// if player(isCollidingWith(enemy)) {
+		// if (player.killsEnemy(enemy)) {
+		// // kill enemy
+		// } else {
+		// // kill player
+		// }
+		// }
+		// for (List<Enemy> secondEnemy : enemies) {
+		// if enemy(isCollidingWith(secondEnemy)) {
+		// // stop collision
+		// }
+		// }
+		// for (List<Tile> tile : terrain) {
+		// if (player.isOn((Obj)tile)) {
+		// //stop collision
+		// }
+		// if player(isCollidingWith(tile)) {
+		// //stop collision
+		// }
+		// }
+		//
+		// }
 	}
 
 	public void paint(Graphics g) {
 		try {
 			requestFocusInWindow();
-		g.setColor(new Color(135, 206, 235));
-		g.fillRect(0, 0, getWidth(), getHeight());
-		for (Tile tile : terrain) {
-			tile.paint(g);
-		}
-//		for (EnemyUnit enemy : enemies) {
-//			enemy.paint(g);
-//		}
-		player.paint(g);
+			g.setColor(new Color(135, 206, 235));
+			g.fillRect(0, 0, getWidth(), getHeight());
+			for (Tile tile : terrain) {
+				tile.paint(g);
+			}
+			// for (EnemyUnit enemy : enemies) {
+			// enemy.paint(g);
+			// }
+			player.paint(g);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("hello");
@@ -145,7 +151,7 @@ public class FrameHandler extends JPanel implements KeyListener {
 	}
 
 	public void keyPressed(KeyEvent e) {
-		switch(e.getKeyCode()) {
+		switch (e.getKeyCode()) {
 		case KeyEvent.VK_D:
 			player.move(LEFT);
 			break;
@@ -178,6 +184,5 @@ public class FrameHandler extends JPanel implements KeyListener {
 
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
-
 	}
 }
