@@ -1,12 +1,11 @@
 package com.isaactsmith.platformer.obj;
 
-import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
 public abstract class Unit extends Obj {
 
-	private boolean isAlive;
+	private boolean isAlive = true;
 	private boolean isJumping = false;
 	private boolean isFalling = false;
 	private double xVelocity = 0;
@@ -14,7 +13,6 @@ public abstract class Unit extends Obj {
 
 	public Unit(int x, int y, BufferedImage image) {
 		super(x, y, image);
-		isAlive = true;
 	}
 
 	abstract void jump();
@@ -38,10 +36,8 @@ public abstract class Unit extends Obj {
 			}
 		}
 		if (inAir) {
-			if (!isJumping()) {
-				setFalling(true);
-				setYVelocity(getYVelocity() + .2);
-			}
+			setFalling(true);
+			setYVelocity(getYVelocity() + .2);
 		} else {
 			setJumping(false);
 			setFalling(false);
@@ -50,7 +46,7 @@ public abstract class Unit extends Obj {
 	}
 
 	public void tick() {
-		if (isFalling && !isJumping) {
+		if (isFalling) {
 			setY((int) Math.round(getY() + getYVelocity()));
 		}
 		setX((int) Math.round(getX() + getXVelocity()));
@@ -66,16 +62,16 @@ public abstract class Unit extends Obj {
 		}
 		return false;
 	}
-	
-	public boolean isCollidingWith(Obj object) {
-			double xDifference = getX() - object.getX();
-			double yDifference = getY() - object.getY();
 
-			if ((xDifference > -getWidth() && xDifference < object.getWidth()) && yDifference > -getHeight()
-					&& yDifference < object.getHeight()) {
-				return true;
-			}
-			return false;
+	public boolean isCollidingWith(Obj object) {
+		double xDifference = getX() - object.getX();
+		double yDifference = getY() - object.getY();
+
+		if ((xDifference > -getWidth() && xDifference < object.getWidth()) && yDifference > -getHeight()
+				&& yDifference < object.getHeight()) {
+			return true;
+		}
+		return false;
 	}
 
 	public boolean isJumping() {

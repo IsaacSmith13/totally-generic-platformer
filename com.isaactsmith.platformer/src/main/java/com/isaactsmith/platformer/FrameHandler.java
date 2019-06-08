@@ -20,6 +20,9 @@ import com.isaactsmith.platformer.obj.Tile;
 public class FrameHandler extends JPanel implements KeyListener {
 
 	private static final long serialVersionUID = 1L;
+	private static final int LEFT = 0;
+	private static final int RIGHT = 1;
+	private static final int STOP = 2;
 	private boolean isRunning = true;
 	private JFrame frame;
 	private List<Tile> terrain;
@@ -56,14 +59,14 @@ public class FrameHandler extends JPanel implements KeyListener {
 			     BufferedImage.TYPE_INT_ARGB);
 		
 		image.createGraphics();
-		image.getGraphics().setColor(new Color(2,1,3));
+//		image.getGraphics().setColor(new Color(2,1,3));
 		image.getGraphics().fillRect(0, 0, 50, 50);
 		
 		BufferedImage image2 = new BufferedImage(50, 50, 
 			     BufferedImage.TYPE_INT_ARGB);
 		
 		image2.createGraphics();
-		image2.getGraphics().setColor(new Color(2,1,3));
+//		image2.getGraphics().setColor(new Color(2,1,3));
 		image2.getGraphics().fillRect(0, 0, 50, 50);
 		
 		player = new PlayerUnit(50, 50, image);
@@ -85,8 +88,11 @@ public class FrameHandler extends JPanel implements KeyListener {
 			delta += (time - lastRender) / 1000000;
 			if ((time - lastUpdate) / 1000000 >= wait) {
 				tick();
-				repaint();
 				lastUpdate = System.nanoTime();
+			}
+			if (delta >= 1) {
+				repaint();
+				delta--;
 			}
 		}
 	}
@@ -121,26 +127,53 @@ public class FrameHandler extends JPanel implements KeyListener {
 	}
 
 	public void paint(Graphics g) {
+		try {
+			requestFocusInWindow();
 		g.setColor(new Color(135, 206, 235));
 		g.fillRect(0, 0, getWidth(), getHeight());
 		for (Tile tile : terrain) {
 			tile.paint(g);
 		}
-		for (EnemyUnit enemy : enemies) {
-			enemy.paint(g);
-		}
+//		for (EnemyUnit enemy : enemies) {
+//			enemy.paint(g);
+//		}
 		player.paint(g);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("hello");
+		}
 	}
 
 	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
-		repaint();
-
+		switch(e.getKeyCode()) {
+		case KeyEvent.VK_D:
+			player.move(LEFT);
+			break;
+		case KeyEvent.VK_LEFT:
+			player.move(LEFT);
+			break;
+		case KeyEvent.VK_A:
+			player.move(RIGHT);
+			break;
+		case KeyEvent.VK_RIGHT:
+			player.move(RIGHT);
+			break;
+		case KeyEvent.VK_SPACE:
+			if (!player.isFalling()) {
+				player.jump();
+			}
+			player.jump();
+			break;
+		default:
+			break;
+		}
 	}
 
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-
+		int key = e.getKeyCode();
+		if ((key == KeyEvent.VK_D || key == KeyEvent.VK_LEFT || key == KeyEvent.VK_A || key == KeyEvent.VK_RIGHT)) {
+			player.move(STOP);
+		}
 	}
 
 	public void keyTyped(KeyEvent e) {
