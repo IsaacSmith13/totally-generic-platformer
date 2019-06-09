@@ -166,6 +166,10 @@ public class FrameHandler extends JPanel implements KeyListener {
 		int key = e.getKeyCode();
 		if ((key == KeyEvent.VK_D || key == KeyEvent.VK_LEFT || key == KeyEvent.VK_A || key == KeyEvent.VK_RIGHT)) {
 			player.move(STOP);
+		} else if (key == KeyEvent.VK_SPACE) {
+			if (player.getYVelocity() < -5) {
+				player.setYVelocity(-5);
+			}
 		}
 	}
 

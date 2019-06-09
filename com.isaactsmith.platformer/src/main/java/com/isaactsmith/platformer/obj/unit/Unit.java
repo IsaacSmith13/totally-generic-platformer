@@ -24,8 +24,8 @@ public abstract class Unit extends Obj {
 	}
 
 	public boolean isOn(Obj object) {
-		double xDifference = getX() - object.getX();
-		double yDifference = getY() - object.getY();
+		int xDifference = (int) (getX() - object.getX());
+		int yDifference = (int) (getY() - object.getY());
 
 		if ((xDifference > -getWidth() && xDifference < object.getWidth()) && yDifference > -getHeight()
 				&& yDifference < (getHeight() / TERMINAL_VELOCITY) + 1) {
@@ -37,7 +37,7 @@ public abstract class Unit extends Obj {
 	public boolean isCollidingWith(int x, int y, Obj object) {
 		double xDiff = x - object.getX();
 		double yDiff = y - object.getY();
-		
+
 		if ((xDiff > -getWidth() && xDiff < object.getWidth()) && yDiff > -getHeight() && yDiff < object.getHeight()) {
 			return true;
 		}

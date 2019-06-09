@@ -14,7 +14,7 @@ public class PlayerUnit extends Unit {
 
 	@Override
 	public void jump() {
-		setYVelocity(-8);
+		setYVelocity(-10);
 	}
 
 	@Override
