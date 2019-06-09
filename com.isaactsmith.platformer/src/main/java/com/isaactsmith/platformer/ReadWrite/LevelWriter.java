@@ -6,8 +6,8 @@ import java.io.PrintWriter;
 
 public class LevelWriter {
 
-	private static final String NORMAL_BLOCK = "NormalBlock.png";
-	private static final String PLAYER = "Player";
+	private static final String NORMAL_BLOCK = "com/isaactsmith/platformer/images/NormalBlock.png";
+	private static final String PLAYER = "com/isaactsmith/platformer/images/Player";
 
 	public static void writeLevel(String levelPath) {
 		try (PrintWriter writer = new PrintWriter(new File(levelPath))) {

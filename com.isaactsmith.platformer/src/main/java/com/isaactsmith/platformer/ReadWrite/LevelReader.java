@@ -3,12 +3,9 @@ package com.isaactsmith.platformer.ReadWrite;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
-import javax.imageio.ImageIO;
 
 import com.isaactsmith.platformer.obj.Tile;
 import com.isaactsmith.platformer.obj.unit.EnemyUnit;
@@ -40,44 +37,25 @@ public class LevelReader {
 		int y = Integer.parseInt(objParams[2]);
 
 		if (type.equals("tile")) {
-			createTile(x, y, objParams[3]);
+			terrain.add(new Tile(x, y, ImageLoader.getBufferedImage(objParams[3])));
 		} else {
 			parseUnitImages(type, x, y, objParams[3]);
 		}
 	}
 
-	private void createTile(int x, int y, String fileName) {
-		try {
-			File img = new File(fileName);
-			BufferedImage image = ImageIO.read(img);
-			terrain.add(new Tile(x, y, image));
-		} catch (IOException e) {
-			System.out.println("Level file contains invalid image path");
-			e.printStackTrace();
-		}
-	}
-
-	private void parseUnitImages(String type, int x, int y, String fileName) {
+	private void parseUnitImages(String type, int x, int y, String filePath) {
 
 		BufferedImage[] images = new BufferedImage[6];
-
-		try {
-			// Makes an array with <imageName>Right0, <imageName>Right1, <imageName>Right2,
-			// <imageName>Left0, etc.
-			// There are three images in the walking animation, and two sides a unit can
-			// face
-			int indexNumber = 0;
-			for (int j = 0; j < DIRECTIONS.length; j++) {
-				for (int i = 0; i < 3; i++) {
-					File img = new File(fileName + DIRECTIONS[j] + i + ".png");
-					BufferedImage image = ImageIO.read(img);
-					// Math to make each image enter the array in a different index
-					images[indexNumber++] = image;
-				}
+		// Makes an array with <imageName>Right0, <imageName>Right1, <imageName>Right2,
+		// <imageName>Left0, etc.
+		// There are three images in the walking animation, and two sides a unit can
+		// face
+		int indexNumber = 0;
+		for (int j = 0; j < DIRECTIONS.length; j++) {
+			for (int i = 0; i < 3; i++) {
+				// Math to make each image enter the array in a different index
+				images[indexNumber++] = ImageLoader.getBufferedImage(filePath + DIRECTIONS[j] + i + ".png");
 			}
-		} catch (IOException e) {
-			System.out.println("Level file contains invalid image path");
-			e.printStackTrace();
 		}
 		createUnit(type, x, y, images);
 	}
