@@ -1,5 +1,6 @@
 package com.isaactsmith.platformer.handler;
 
+import java.awt.Point;
 import java.util.List;
 
 import com.isaactsmith.platformer.obj.Tile;
@@ -10,6 +11,8 @@ public class UnitHandler {
 
 	private List<Tile> terrain;
 	private PlayerUnit player;
+	private static double xOffset = 0;
+	private static double yOffset = 0;
 
 	public UnitHandler(PlayerUnit player, List<Tile> terrain) {
 		this.player = player;
@@ -27,86 +30,85 @@ public class UnitHandler {
 	}
 
 	public void tick(Unit unit) {
-
-		unit.setFalling(determineIsFalling(unit));
-
 		moveUnit(unit);
-	}
-
-	private boolean determineIsFalling(Unit unit) {
-		for (Tile tile : terrain) {
-			if (unit.isOn(tile)) {
-				return false;
-			}
-		}
-		return true;
 	}
 
 	private void moveUnit(Unit unit) {
 
-		int newY = (int) unit.getY();
-		int newX = (int) Math.round(unit.getX() + unit.getXVelocity());
+		int unitX = (int) (unit.getX() + xOffset);
+		int unitY = (int) (unit.getY() + yOffset);
 
-		// If falling, increase y velocity and make unit fall
+		boolean willCollideRight = false;
+		boolean willCollideLeft = false;
+
+		for (Tile tile : terrain) {
+			int width = tile.getWidth();
+			int height = tile.getHeight();
+			// Left side of tile collision
+			if (CollisionHandler.determineIfUnitInTile(new Point(unitX + width + 2, unitY), tile)
+					|| CollisionHandler.determineIfUnitInTile(new Point(unitX + width + 2, unitY + height - 1), tile)) {
+				willCollideRight = true;
+			}
+			// Right side of tile collision
+			if (CollisionHandler.determineIfUnitInTile(new Point(unitX, unitY + 2), tile)
+					|| CollisionHandler.determineIfUnitInTile(new Point(unitX, unitY + height - 1), tile)) {
+				willCollideLeft = true;
+			}
+			// Bottom side of tile collision
+			if (CollisionHandler.determineIfUnitInTile(new Point(unitX + 1, unitY), tile)
+					|| CollisionHandler.determineIfUnitInTile(new Point(unitX + width - 2, unitY), tile)) {
+				unit.setJumping(false);
+			}
+			// Top side of tile collision
+			if (CollisionHandler.determineIfUnitInTile(new Point(unitX + 2, unitY + height + 1), tile)
+					|| CollisionHandler.determineIfUnitInTile(new Point(unitX + width - 2, unitY + height + 1), tile)) {
+				unit.setY(tile.getY() - height - yOffset);
+				unit.setFalling(false);
+				unit.setTopCollision(true);
+			} else {
+				if (!unit.isTopCollision() && !unit.isJumping()) {
+					unit.setFalling(true);
+				}
+			}
+		}
+		unit.setTopCollision(false);
+
+		if (unit.isJumping()) {
+			double currentJumpSpeed = unit.getCurrentJumpSpeed();
+			yOffset -= currentJumpSpeed;
+			unit.setCurrentJumpSpeed(currentJumpSpeed - .2);
+
+			if (unit.getCurrentJumpSpeed() <= 0) {
+				unit.setCurrentJumpSpeed(unit.getJumpspeed());
+				unit.setJumping(false);
+				unit.setFalling(true);
+			}
+		}
+
 		if (unit.isFalling()) {
-			unit.setYVelocity(unit.getYVelocity() + .2);
-			newY = (int) Math.round(unit.getY() + unit.getYVelocity());
-			// Otherwise reset y velocity
-		} else {
-			unit.setYVelocity(0);
+			double currentYVelocity = unit.getYVelocity();
+			yOffset += currentYVelocity;
+			unit.setYVelocity(currentYVelocity + .2);
 		}
 
-		int incrementYIfInTile = determineCollision(newX, newY, unit);
-
-		if ((!unit.willCollideX() || incrementYIfInTile != 0) && newX > 0) {
-			unit.setX(newX);
+		if (unit.isRight() && !willCollideRight) {
+			xOffset += unit.getMoveSpeed();
 		}
-		if (!unit.willCollideY()) {
-			unit.setY(newY + incrementYIfInTile);
-		} else {
-			unit.setY(((int) unit.getY()) + incrementYIfInTile);
+		if (unit.isLeft() && !willCollideLeft) {
+			xOffset -= unit.getMoveSpeed();
+		}
+
+		if (!unit.isFalling()) {
+			unit.setYVelocity(.2);
+
 		}
 	}
 
-	private int determineCollision(int newX, int newY, Unit unit) {
-
-		int oldX = (int) unit.getX();
-		int oldY = (int) unit.getY();
-
-		unit.setWillCollideX(false);
-		unit.setWillCollideY(false);
-
-		int incrementY = 0;
-		for (Tile tile : terrain) {
-			if (unit.isCollidingWith(newX, oldY, tile)) {
-				unit.setWillCollideX(true);
-			}
-			if (unit.isCollidingWith(oldX, newY, tile) && (int) unit.getYVelocity() >= 0) {
-				unit.setWillCollideY(true);
-			}
-		}
-		for (Tile tile : terrain) {
-			if (incrementY == 0 && (unit.getYVelocity() == 0 || (unit.willCollideY() && unit.willCollideX()))) {
-				incrementY += handleInsideTile(newX, newY, unit, tile);
-			}
-		}
-		return incrementY;
+	public static double getXOffset() {
+		return xOffset;
 	}
 
-	private int handleInsideTile(int x, int y, Unit unit, Tile tile) {
-
-		int xDiff = (int) (x - tile.getX());
-		int yDiff = (int) (y - tile.getY());
-		int height = unit.getHeight();
-		double yVelocity = unit.getYVelocity();
-
-		if (yDiff < -(height / 2) && (xDiff > -unit.getWidth() && xDiff < tile.getWidth())) {
-			return (int) Math.min(yVelocity, -2);
-		} else if ((yDiff >= -(height / 2) && yDiff < height) && yVelocity > 0
-				&& (xDiff > -unit.getWidth() && xDiff < tile.getWidth())) {
-			return yDiff;
-		} else {
-			return 0;
-		}
+	public static double getYOffset() {
+		return yOffset;
 	}
 }

@@ -7,7 +7,7 @@ public abstract class Obj {
 
 	private static final int DEFAULT_DIAMETER = 32;
 	private double x;
-	private int y;
+	private double y;
 	private BufferedImage image;
 	private BufferedImage[] images;
 	private boolean isForeground;
@@ -55,7 +55,7 @@ public abstract class Obj {
 		return y;
 	}
 
-	public void setY(int y) {
+	public void setY(double y) {
 		this.y = y;
 	}
 

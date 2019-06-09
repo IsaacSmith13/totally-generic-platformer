@@ -66,7 +66,7 @@ public class LevelReader {
 			enemies.add(new SkeletonEnemy(x, y, images));
 			break;
 		case ("player"):
-			player = new PlayerUnit(x, y, images);
+			player = new PlayerUnit(images);
 			break;
 		default:
 			break;

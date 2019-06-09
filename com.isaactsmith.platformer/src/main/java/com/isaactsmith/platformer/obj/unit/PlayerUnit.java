@@ -1,33 +1,57 @@
 package com.isaactsmith.platformer.obj.unit;
 
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+
+import com.isaactsmith.platformer.handler.FrameHandler;
 
 public class PlayerUnit extends Unit {
 
-	private static final int LEFT = 0;
-	private static final int RIGHT = 1;
-	private static final int STOP = 2;
-
-	public PlayerUnit(int x, int y, BufferedImage[] images) {
-		super(x, y, images);
+	public PlayerUnit(BufferedImage[] images) {
+		super(FrameHandler.WINDOW_WIDTH / 2, FrameHandler.WINDOW_HEIGHT / 2, images);
 	}
 
-	@Override
-	public void jump() {
-		setYVelocity(-10);
+	public void keyPressed(KeyEvent e) {
+		switch (e.getKeyCode()) {
+		case KeyEvent.VK_A:
+			setLeft(true);
+			break;
+		case KeyEvent.VK_LEFT:
+			setLeft(true);
+			break;
+		case KeyEvent.VK_D:
+			setRight(true);
+			break;
+		case KeyEvent.VK_RIGHT:
+			setRight(true);
+			break;
+		case KeyEvent.VK_SPACE:
+			jump();
+			break;
+		default:
+			break;
+		}
 	}
 
-	@Override
-	public void move(int direction) {
-		switch(direction) {
-		case(LEFT):
-			setXVelocity(-3);
+	public void keyReleased(KeyEvent e) {
+		switch (e.getKeyCode()) {
+		case KeyEvent.VK_A:
+			setLeft(false);
 			break;
-		case(RIGHT):
-			setXVelocity(3);
+		case KeyEvent.VK_LEFT:
+			setLeft(false);
 			break;
-		case(STOP):
-			setXVelocity(0);
+		case KeyEvent.VK_D:
+			setRight(false);
+			break;
+		case KeyEvent.VK_RIGHT:
+			setRight(false);
+			break;
+		case KeyEvent.VK_SPACE:
+			setCurrentJumpSpeed(Math.max(getCurrentJumpSpeed(), getJumpspeed() / 2));
+			break;
+		default:
+			break;
 		}
 	}
 }

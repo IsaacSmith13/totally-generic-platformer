@@ -23,6 +23,8 @@ public class FrameHandler extends JPanel implements KeyListener {
 	private static final int RIGHT = 1;
 	private static final int STOP = 2;
 	private static final String LEVEL_PATH = "testlevel.level";
+	public static final int WINDOW_WIDTH = 800;
+	public static final int WINDOW_HEIGHT = 600;
 	private boolean isRunning = true;
 	private List<Tile> terrain;
 //	private List<EnemyUnit> enemies;
@@ -39,13 +41,10 @@ public class FrameHandler extends JPanel implements KeyListener {
 		frame.add(this, BorderLayout.CENTER);
 
 		// Adjust size and center frame
-		setPreferredSize(new Dimension(800, 600));
+		setPreferredSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
+
 		frame.pack();
 		frame.setLocationRelativeTo(null);
-
-		// Attach a custom key listener to the panel
-		setFocusable(true);
-		addKeyListener(this);
 	}
 
 	public void run() {
@@ -61,6 +60,10 @@ public class FrameHandler extends JPanel implements KeyListener {
 		terrain = levelReader.getTerrain();
 //		enemies = levelReader.getEnemies();
 		unitHandler = new UnitHandler(player, terrain);
+
+		// Attach a custom key listener to the panel
+		setFocusable(true);
+		addKeyListener(this);
 
 		// While game is running, render a new frame every second
 		long lastUpdate = System.nanoTime();
@@ -86,8 +89,10 @@ public class FrameHandler extends JPanel implements KeyListener {
 	}
 
 	public void tick() {
+		repaint();
 		unitHandler.tick(player);
 		unitHandler.scroll(this);
+
 //		UnitHandler.handleTileCollision(player);
 		// for (List<Enemy> enemy : enemies) {
 		// enemy.handleFalling(terrain);
@@ -137,40 +142,12 @@ public class FrameHandler extends JPanel implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		switch (e.getKeyCode()) {
-		case KeyEvent.VK_A:
-			player.move(LEFT);
-			break;
-		case KeyEvent.VK_LEFT:
-			player.move(LEFT);
-			break;
-		case KeyEvent.VK_D:
-			player.move(RIGHT);
-			break;
-		case KeyEvent.VK_RIGHT:
-			player.move(RIGHT);
-			break;
-		case KeyEvent.VK_SPACE:
-			if (!player.isFalling()) {
-				player.jump();
-			}
-			player.jump();
-			break;
-		default:
-			break;
-		}
+		player.keyPressed(e);
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		int key = e.getKeyCode();
-		if ((key == KeyEvent.VK_D || key == KeyEvent.VK_LEFT || key == KeyEvent.VK_A || key == KeyEvent.VK_RIGHT)) {
-			player.move(STOP);
-		} else if (key == KeyEvent.VK_SPACE) {
-			if (player.getYVelocity() < -5) {
-				player.setYVelocity(-5);
-			}
-		}
+		player.keyReleased(e);
 	}
 
 	@Override
