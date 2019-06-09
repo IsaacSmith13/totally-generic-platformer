@@ -3,14 +3,27 @@ package com.isaactsmith.platformer.handler;
 import java.util.List;
 
 import com.isaactsmith.platformer.obj.Tile;
+import com.isaactsmith.platformer.obj.unit.PlayerUnit;
 import com.isaactsmith.platformer.obj.unit.Unit;
 
 public class UnitHandler {
 
 	private List<Tile> terrain;
+	private PlayerUnit player;
 
-	public UnitHandler(List<Tile> terrain) {
+	public UnitHandler(PlayerUnit player, List<Tile> terrain) {
+		this.player = player;
 		this.terrain = terrain;
+	}
+
+	public void scroll(FrameHandler screen) {
+		int xDiff = (int) player.getX() - screen.getSize().width;
+		if (xDiff > -200) {
+			for (Tile tile : terrain) {
+				tile.setX(tile.getX() + (xDiff / 50));
+			}
+			player.setX(player.getX() + (xDiff / 50));
+		}
 	}
 
 	public void tick(Unit unit) {
@@ -45,7 +58,7 @@ public class UnitHandler {
 
 		int incrementYIfInTile = determineCollision(newX, newY, unit);
 
-		if (!unit.willCollideX() || incrementYIfInTile != 0) {
+		if ((!unit.willCollideX() || incrementYIfInTile != 0) && newX > 0) {
 			unit.setX(newX);
 		}
 		if (!unit.willCollideY()) {

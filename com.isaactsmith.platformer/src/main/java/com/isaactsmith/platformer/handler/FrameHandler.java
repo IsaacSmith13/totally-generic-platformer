@@ -60,7 +60,7 @@ public class FrameHandler extends JPanel implements KeyListener {
 		player = levelReader.getPlayer();
 		terrain = levelReader.getTerrain();
 //		enemies = levelReader.getEnemies();
-		unitHandler = new UnitHandler(terrain);
+		unitHandler = new UnitHandler(player, terrain);
 
 		// While game is running, render a new frame every second
 		long lastUpdate = System.nanoTime();
@@ -87,6 +87,7 @@ public class FrameHandler extends JPanel implements KeyListener {
 
 	public void tick() {
 		unitHandler.tick(player);
+		unitHandler.scroll(this);
 //		UnitHandler.handleTileCollision(player);
 		// for (List<Enemy> enemy : enemies) {
 		// enemy.handleFalling(terrain);
@@ -117,7 +118,6 @@ public class FrameHandler extends JPanel implements KeyListener {
 	@Override
 	public void paint(Graphics g) {
 		try {
-			
 			requestFocusInWindow();
 			g.setColor(new Color(135, 206, 235));
 			g.fillRect(0, 0, getWidth(), getHeight());
