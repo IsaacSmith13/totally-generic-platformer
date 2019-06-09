@@ -4,11 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -17,7 +14,6 @@ import javax.swing.JPanel;
 import com.isaactsmith.platformer.ReadWrite.LevelReader;
 import com.isaactsmith.platformer.ReadWrite.LevelWriter;
 import com.isaactsmith.platformer.obj.Tile;
-import com.isaactsmith.platformer.obj.unit.EnemyUnit;
 import com.isaactsmith.platformer.obj.unit.PlayerUnit;
 
 public class FrameHandler extends JPanel implements KeyListener {
@@ -26,16 +22,14 @@ public class FrameHandler extends JPanel implements KeyListener {
 	private static final int LEFT = 0;
 	private static final int RIGHT = 1;
 	private static final int STOP = 2;
-	private static final String levelPath = "testlevel.level";
+	private static final String LEVEL_PATH = "testlevel.level";
 	private boolean isRunning = true;
-	private JFrame frame;
 	private List<Tile> terrain;
-	private List<EnemyUnit> enemies;
+//	private List<EnemyUnit> enemies;
 	private PlayerUnit player;
 
 	public FrameHandler(JFrame frame) {
 		// Initialize the window
-		this.frame = frame;
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
 		frame.setVisible(true);
@@ -56,13 +50,16 @@ public class FrameHandler extends JPanel implements KeyListener {
 
 	public void run() {
 
-		LevelWriter.writeLevel(levelPath);
-		
+		// Call LevelWriter to "randomly" generate a level and write it to the file at
+		// LEVEL_PATH
+		LevelWriter.writeLevel(LEVEL_PATH);
+		// Call LevelReader to read the file and generate tiles, enemies, and a player
+		// at the specified locations
 		LevelReader levelReader = new LevelReader();
-		levelReader.loadLevel(levelPath);
+		levelReader.loadLevel(LEVEL_PATH);
 		player = levelReader.getPlayer();
 		terrain = levelReader.getTerrain();
-		enemies = levelReader.getEnemies();
+//		enemies = levelReader.getEnemies();
 
 		// While game is running, render a new frame every second
 		long lastUpdate = System.nanoTime();
@@ -71,16 +68,18 @@ public class FrameHandler extends JPanel implements KeyListener {
 		double wait = 1000 / ups;
 		double delta = 0;
 		long time;
-		while (isRunning) {
-			time = System.nanoTime();
-			delta += (time - lastRender) / 1000000;
-			if ((time - lastUpdate) / 1000000 >= wait) {
-				tick();
-				lastUpdate = System.nanoTime();
-			}
-			if (delta >= 1) {
-				repaint();
-				delta--;
+		if (!(player == null || terrain == null || terrain.isEmpty())) {
+			while (isRunning) {
+				time = System.nanoTime();
+				delta += (time - lastRender) / 1000000;
+				if ((time - lastUpdate) / 1000000 >= wait) {
+					tick();
+					lastUpdate = System.nanoTime();
+				}
+				if (delta >= 1) {
+					repaint();
+					delta--;
+				}
 			}
 		}
 	}
@@ -122,6 +121,7 @@ public class FrameHandler extends JPanel implements KeyListener {
 			for (int i = 0, terrainSize = terrain.size(); i < terrainSize; i++) {
 				terrain.get(i).paint(g);
 			}
+
 			// for (EnemyUnit enemy : enemies) {
 			// enemy.paint(g);
 			// }
@@ -132,6 +132,7 @@ public class FrameHandler extends JPanel implements KeyListener {
 		}
 	}
 
+	@Override
 	public void keyPressed(KeyEvent e) {
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_A:
@@ -157,6 +158,7 @@ public class FrameHandler extends JPanel implements KeyListener {
 		}
 	}
 
+	@Override
 	public void keyReleased(KeyEvent e) {
 		int key = e.getKeyCode();
 		if ((key == KeyEvent.VK_D || key == KeyEvent.VK_LEFT || key == KeyEvent.VK_A || key == KeyEvent.VK_RIGHT)) {
@@ -164,6 +166,7 @@ public class FrameHandler extends JPanel implements KeyListener {
 		}
 	}
 
+	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
 	}

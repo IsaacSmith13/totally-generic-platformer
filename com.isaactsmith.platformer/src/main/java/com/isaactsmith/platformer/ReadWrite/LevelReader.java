@@ -17,6 +17,7 @@ import com.isaactsmith.platformer.obj.unit.SkeletonEnemy;
 
 public class LevelReader {
 
+	private static final String[] DIRECTIONS = { "Right", "Left" };
 	private PlayerUnit player;
 	private List<Tile> terrain = new ArrayList<Tile>();
 	private List<EnemyUnit> enemies = new ArrayList<EnemyUnit>();
@@ -38,26 +39,56 @@ public class LevelReader {
 		int x = Integer.parseInt(objParams[1]);
 		int y = Integer.parseInt(objParams[2]);
 
+		if (type.equals("tile")) {
+			createTile(x, y, objParams[3]);
+		} else {
+			parseUnitImages(type, x, y, objParams[3]);
+		}
+	}
+
+	private void createTile(int x, int y, String fileName) {
 		try {
-			File img = new File(objParams[3]);
+			File img = new File(fileName);
 			BufferedImage image = ImageIO.read(img);
-			createObj(type, x, y, image);
+			terrain.add(new Tile(x, y, image));
 		} catch (IOException e) {
 			System.out.println("Level file contains invalid image path");
 			e.printStackTrace();
 		}
 	}
 
-	private void createObj(String type, int x, int y, BufferedImage image) {
+	private void parseUnitImages(String type, int x, int y, String fileName) {
+
+		BufferedImage[] images = new BufferedImage[6];
+
+		try {
+			// Makes an array with <imageName>Right0, <imageName>Right1, <imageName>Right2,
+			// <imageName>Left0, etc.
+			// There are three images in the walking animation, and two sides a unit can
+			// face
+			int indexNumber = 0;
+			for (int j = 0; j < DIRECTIONS.length; j++) {
+				for (int i = 0; i < 3; i++) {
+					File img = new File(fileName + DIRECTIONS[j] + i + ".png");
+					BufferedImage image = ImageIO.read(img);
+					// Math to make each image enter the array in a different index
+					images[indexNumber++] = image;
+				}
+			}
+		} catch (IOException e) {
+			System.out.println("Level file contains invalid image path");
+			e.printStackTrace();
+		}
+		createUnit(type, x, y, images);
+	}
+
+	private void createUnit(String type, int x, int y, BufferedImage[] images) {
 		switch (type) {
-		case ("tile"):
-			terrain.add(new Tile(x, y, image));
-			break;
 		case ("skeleton"):
-			enemies.add(new SkeletonEnemy(x, y, image));
+			enemies.add(new SkeletonEnemy(x, y, images));
 			break;
 		case ("player"):
-			player = new PlayerUnit(x, y, image);
+			player = new PlayerUnit(x, y, images);
 			break;
 		default:
 			break;

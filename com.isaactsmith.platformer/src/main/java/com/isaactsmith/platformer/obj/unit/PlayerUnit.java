@@ -8,8 +8,8 @@ public class PlayerUnit extends Unit {
 	private static final int RIGHT = 1;
 	private static final int STOP = 2;
 
-	public PlayerUnit(int x, int y, BufferedImage image) {
-		super(x, y, image);
+	public PlayerUnit(int x, int y, BufferedImage[] images) {
+		super(x, y, images);
 	}
 
 	@Override

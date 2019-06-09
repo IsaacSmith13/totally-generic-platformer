@@ -4,8 +4,8 @@ import java.awt.image.BufferedImage;
 
 public class SkeletonEnemy extends EnemyUnit {
 
-	public SkeletonEnemy(int x, int y, BufferedImage image) {
-		super(x, y, image);
+	public SkeletonEnemy(int x, int y, BufferedImage[] images) {
+		super(x, y, images);
 	}
 
 	@Override

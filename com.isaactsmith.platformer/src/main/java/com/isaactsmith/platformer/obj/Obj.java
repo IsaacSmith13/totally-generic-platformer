@@ -4,9 +4,12 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 public abstract class Obj {
+
+	private static final int DEFAULT_DIAMETER = 32;
 	private double x;
 	private int y;
 	private BufferedImage image;
+	private BufferedImage[] images;
 	private boolean isForeground;
 	private int width;
 	private int height;
@@ -14,21 +17,27 @@ public abstract class Obj {
 	public Obj(double x, int y, BufferedImage image) {
 		this.x = x;
 		this.y = y;
-		this.setImage(image);
-		this.width = 32;
-		this.height = 32;
+		this.image = image;
+		this.width = DEFAULT_DIAMETER;
+		this.height = DEFAULT_DIAMETER;
 	}
 
-	public Obj(double x, int y, BufferedImage image, int width, int height) {
+	public Obj(double x, int y, BufferedImage image, int diameter) {
 		this(x, y, image);
-		this.width = width;
-		this.height = height;
+		this.width = diameter;
+		this.height = diameter;
 	}
-	
-	public void paint(Graphics g) {
-		g.drawImage(getImage(), (int) Math.round(getX()), (int) Math.round(getY()), getWidth(), getHeight(), null);
+
+	public Obj(int x, int y, BufferedImage[] images) {
+		this.x = x;
+		this.y = y;
+		this.images = images;
+		this.width = DEFAULT_DIAMETER;
+		this.height = DEFAULT_DIAMETER;
 	}
-	
+
+	public abstract void paint(Graphics g);
+
 	public void setLocation(int x, int y) {
 		this.x = x;
 		this.y = y;
@@ -72,5 +81,9 @@ public abstract class Obj {
 
 	public int getHeight() {
 		return height;
+	}
+
+	public BufferedImage[] getImages() {
+		return images;
 	}
 }
