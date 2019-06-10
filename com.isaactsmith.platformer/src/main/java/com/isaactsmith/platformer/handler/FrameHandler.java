@@ -27,6 +27,7 @@ public class FrameHandler extends JPanel implements KeyListener {
 //	private List<EnemyUnit> enemies;
 	private PlayerUnit player;
 	private UnitHandler unitHandler;
+	private GameStateHandler gameStateHandler;
 
 	public FrameHandler(JFrame frame) {
 		// Initialize the window
@@ -45,6 +46,8 @@ public class FrameHandler extends JPanel implements KeyListener {
 	}
 
 	public void run() {
+
+//		gameStateHandler = new GameStateHandler();
 
 		// Call LevelWriter to "randomly" generate a level and write it to the file at
 		// LEVEL_PATH
@@ -87,37 +90,12 @@ public class FrameHandler extends JPanel implements KeyListener {
 
 	public void tick() {
 		unitHandler.tick(player);
-		unitHandler.scroll(this);
-
-//		UnitHandler.handleTileCollision(player);
-		// for (List<Enemy> enemy : enemies) {
-		// enemy.handleFalling(terrain);
-		// if player(isCollidingWith(enemy)) {
-		// if (player.killsEnemy(enemy)) {
-		// // kill enemy
-		// } else {
-		// // kill player
-		// }
-		// }
-		// for (List<Enemy> secondEnemy : enemies) {
-		// if enemy(isCollidingWith(secondEnemy)) {
-		// // stop collision
-		// }
-		// }
-		// for (List<Tile> tile : terrain) {
-		// if (player.isOn((Obj)tile)) {
-		// //stop collision
-		// }
-		// if player(isCollidingWith(tile)) {
-		// //stop collision
-		// }
-		// }
-		//
-		// }
+//		gameStateHandler.tick();
 	}
 
 	@Override
 	public void paint(Graphics g) {
+//		gameStateHandler.paint(g);
 		try {
 			requestFocusInWindow();
 			g.setColor(new Color(135, 206, 235));
@@ -139,15 +117,16 @@ public class FrameHandler extends JPanel implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		player.keyPressed(e);
+//		gameStateHandler.keyPressed(e.getKeyCode());
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		player.keyReleased(e);
+//		gameStateHandler.keyReleased(e.getKeyCode());
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
 	}
 }

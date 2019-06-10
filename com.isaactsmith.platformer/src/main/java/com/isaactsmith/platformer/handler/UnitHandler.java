@@ -20,15 +20,15 @@ public class UnitHandler {
 		collisionHandler = new CollisionHandler(terrain);
 	}
 
-	public void scroll(FrameHandler screen) {
-		int xDiff = (int) player.getX() - screen.getSize().width;
-		if (xDiff > -200) {
-			for (Tile tile : terrain) {
-				tile.setX(tile.getX() + (xDiff / 50));
-			}
-			player.setX(player.getX() + (xDiff / 50));
-		}
-	}
+//	public void scroll(FrameHandler screen) {
+//		int xDiff = (int) player.getX() - screen.getSize().width;
+//		if (xDiff > -200) {
+//			for (Tile tile : terrain) {
+//				tile.setX(tile.getX() + (xDiff / 50));
+//			}
+//			player.setX(player.getX() + (xDiff / 50));
+//		}
+//	}
 
 	public void tick(Unit unit) {
 		moveUnit(unit);
