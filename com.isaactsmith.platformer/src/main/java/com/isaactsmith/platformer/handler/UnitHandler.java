@@ -28,7 +28,7 @@ public class UnitHandler {
 			yOffset -= currentJumpSpeed;
 			unit.setCurrentJumpSpeed(currentJumpSpeed - .2);
 
-			if (unit.getCurrentJumpSpeed() <= 0) {
+			if (unit.getCurrentJumpSpeed() <= 0.1) {
 				unit.setCurrentJumpSpeed(unit.getJumpspeed());
 				unit.setJumping(false);
 				unit.setFalling(true);

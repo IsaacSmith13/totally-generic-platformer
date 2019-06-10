@@ -48,7 +48,9 @@ public class PlayerUnit extends Unit {
 			setRight(false);
 			break;
 		case KeyEvent.VK_SPACE:
-			setCurrentJumpSpeed(Math.max(getCurrentJumpSpeed(), getJumpspeed() / 2));
+			if (isJumping()) {
+				setCurrentJumpSpeed(Math.min(getCurrentJumpSpeed(), getJumpspeed() / 2));
+			}
 			break;
 		default:
 			break;

@@ -31,16 +31,22 @@ public class FrameHandler extends JPanel implements KeyListener {
 
 		frame.pack();
 		frame.setLocationRelativeTo(null);
+		// Attach a custom key listener to the panel
+		setFocusable(true);
+		addKeyListener(this);
 	}
 
 	public void run() {
 
 		gameStateHandler = new GameStateHandler();
 
-		// Attach a custom key listener to the panel
-		setFocusable(true);
-		addKeyListener(this);
-
+		new Thread();
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		// While game is running, render a new frame every second
 		long lastUpdate = System.nanoTime();
 		long lastRender = System.nanoTime();
@@ -65,7 +71,12 @@ public class FrameHandler extends JPanel implements KeyListener {
 
 	@Override
 	public void paint(Graphics g) {
-		gameStateHandler.paint(g);
+		try {
+			requestFocusInWindow();
+			gameStateHandler.paint(g);
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
