@@ -11,8 +11,8 @@ public class PlayerUnit extends Unit {
 		super(FrameHandler.WINDOW_WIDTH / 2, FrameHandler.WINDOW_HEIGHT / 2, images);
 	}
 
-	public void keyPressed(KeyEvent e) {
-		switch (e.getKeyCode()) {
+	public void keyPressed(int e) {
+		switch (e) {
 		case KeyEvent.VK_A:
 			setLeft(true);
 			break;
@@ -33,8 +33,8 @@ public class PlayerUnit extends Unit {
 		}
 	}
 
-	public void keyReleased(KeyEvent e) {
-		switch (e.getKeyCode()) {
+	public void keyReleased(int e) {
+		switch (e) {
 		case KeyEvent.VK_A:
 			setLeft(false);
 			break;

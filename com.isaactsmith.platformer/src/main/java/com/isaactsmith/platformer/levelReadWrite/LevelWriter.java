@@ -8,13 +8,13 @@ import com.isaactsmith.platformer.handler.FrameHandler;
 
 public class LevelWriter {
 
-	private static final String PASSABLE_BLOCK = "com/isaactsmith/platformer/images/PassableBlock.png";
-	private static final String SOLID_BLOCK = "com/isaactsmith/platformer/images/SolidBlock.png";
-	private static final String PLAYER = "com/isaactsmith/platformer/images/Player";
+	private static final String PASSABLE_BLOCK = "com/isaactsmith/platformer/resources/images/PassableBlock.png";
+	private static final String SOLID_BLOCK = "com/isaactsmith/platformer/resources/images/SolidBlock.png";
+	private static final String PLAYER = "com/isaactsmith/platformer/resources/images/Player";
 	private static final int DEFAULT_DIAMETER = FrameHandler.WINDOW_WIDTH / 25;
 
 	public static void writeLevel(String levelPath) {
-		try (PrintWriter writer = new PrintWriter(new File(levelPath))) {
+		try (PrintWriter writer = new PrintWriter(new File("level.level"))) {
 			writer.println("player,0,0," + PLAYER);
 			for (int i = 0; i < 10; i++) {
 				for (int j = 0, k = 0; j < 200; j++, k++) {
@@ -29,6 +29,7 @@ public class LevelWriter {
 				}
 			}
 		} catch (FileNotFoundException e) {
+			System.out.println("Invalid level file to write to");
 			e.printStackTrace();
 		}
 	}

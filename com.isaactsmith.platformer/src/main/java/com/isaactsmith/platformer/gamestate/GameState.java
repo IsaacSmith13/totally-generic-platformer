@@ -9,7 +9,6 @@ public abstract class GameState {
 	
 	public GameState(GameStateHandler gameStateHandler) {
 		this.gameStateHandler = gameStateHandler;
-		init();
 	}
 	
 	public abstract void init();

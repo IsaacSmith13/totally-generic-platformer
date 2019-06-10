@@ -20,7 +20,7 @@ public class LevelReader {
 	private List<EnemyUnit> enemies = new ArrayList<EnemyUnit>();
 
 	public void loadLevel(String levelPath) {
-		try (Scanner scanner = new Scanner(new File(levelPath))) {
+		try (Scanner scanner = new Scanner(new File("level.level"))) {
 			while (scanner.hasNextLine()) {
 				parseParameters(scanner.nextLine().split(","));
 			}
