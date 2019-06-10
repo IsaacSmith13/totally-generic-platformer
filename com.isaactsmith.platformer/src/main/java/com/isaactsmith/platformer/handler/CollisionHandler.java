@@ -34,15 +34,16 @@ public class CollisionHandler {
 						|| determineIfInSideOfTile(new Point(unitX - 2, unitY + height - 1), tile)) {
 					willCollideLeft = true;
 				}
-				// Top side of tile collision
+				// Bottom side of tile collision
 				if (determineIfInSideOfTile(new Point(unitX + 1, unitY), tile)
-						|| determineIfInSideOfTile(new Point(unitX + width - 2, unitY), tile)) {
+						|| determineIfInSideOfTile(new Point(unitX + width - 1, unitY), tile)) {
 					unit.setJumping(false);
 				}
 			}
-			// Bottom side of tile collision
+			// Top side of tile collision
 			if (determineIfInSideOfTile(new Point(unitX, unitY + height), tile)
 					|| determineIfInSideOfTile(new Point(unitX + width, unitY + height), tile)) {
+				unit.setFalling(false);
 				unit.setCollideTop(true);
 			} else {
 				if (!unit.willCollideTop() && !unit.isJumping()) {

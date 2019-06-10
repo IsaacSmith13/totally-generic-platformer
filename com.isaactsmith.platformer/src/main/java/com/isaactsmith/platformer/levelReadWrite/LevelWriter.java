@@ -18,7 +18,7 @@ public class LevelWriter {
 			writer.println("player,0,0," + PLAYER);
 			for (int i = 0; i < 10; i++) {
 				for (int j = 0, k = 0; j < 200; j++, k++) {
-					writer.println("tile," + j * DEFAULT_DIAMETER + "," + ((i * -150) + 500) + "," + PASSABLE_BLOCK + ",passable");
+					writer.println("tile," + j * DEFAULT_DIAMETER + "," + ((i * -150) + 800) + "," + PASSABLE_BLOCK + ",passable");
 					if (Math.round(Math.random() * 3) == 3) {
 						j += Math.random() * 15;
 					}
@@ -28,6 +28,7 @@ public class LevelWriter {
 					}
 				}
 			}
+			writer.println("tile,0,32," + SOLID_BLOCK + ",solid");
 		} catch (FileNotFoundException e) {
 			System.out.println("Invalid level file to write to");
 			e.printStackTrace();

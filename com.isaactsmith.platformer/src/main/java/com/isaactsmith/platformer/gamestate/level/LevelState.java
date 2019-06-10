@@ -52,6 +52,7 @@ public abstract class LevelState extends GameState {
 		try {
 			g.setColor(new Color(135, 206, 235));
 			g.fillRect(0, 0, FrameHandler.WINDOW_WIDTH, FrameHandler.WINDOW_HEIGHT);
+			
 			for (int i = 0, terrainSize = terrain.size(); i < terrainSize; i++) {
 				terrain.get(i).paint(g);
 			}

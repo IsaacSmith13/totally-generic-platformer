@@ -3,11 +3,9 @@ package com.isaactsmith.platformer.obj;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
-import com.isaactsmith.platformer.handler.FrameHandler;
-
 public abstract class Obj {
 
-	private static final int DEFAULT_DIAMETER =  FrameHandler.WINDOW_WIDTH / 25;
+	public static final int GLOBAL_DIAMETER =  32;
 	private double x;
 	private double y;
 	private BufferedImage image;
@@ -20,8 +18,8 @@ public abstract class Obj {
 		this.x = x;
 		this.y = y;
 		this.image = image;
-		this.width = DEFAULT_DIAMETER;
-		this.height = DEFAULT_DIAMETER;
+		this.width = GLOBAL_DIAMETER;
+		this.height = GLOBAL_DIAMETER;
 	}
 
 	public Obj(double x, int y, BufferedImage image, int diameter) {
@@ -34,8 +32,8 @@ public abstract class Obj {
 		this.x = x;
 		this.y = y;
 		this.images = images;
-		this.width = DEFAULT_DIAMETER;
-		this.height = DEFAULT_DIAMETER;
+		this.width = GLOBAL_DIAMETER;
+		this.height = GLOBAL_DIAMETER;
 	}
 
 	public abstract void paint(Graphics g);
