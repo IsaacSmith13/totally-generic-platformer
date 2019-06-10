@@ -21,7 +21,9 @@ public abstract class Unit extends Obj {
 	private double currentJumpSpeed = jumpSpeed;
 	private boolean left = false;
 	private boolean right = false;
-	private boolean topCollision = false;
+	private boolean willCollideTop = false;
+	private boolean willCollideRight = false;
+	private boolean willCollideLeft = false;
 
 	public Unit(int x, int y, BufferedImage[] images) {
 		super(x, y, images);
@@ -140,11 +142,27 @@ public abstract class Unit extends Obj {
 		this.moveSpeed = moveSpeed;
 	}
 
-	public boolean isTopCollision() {
-		return topCollision;
+	public boolean willCollideTop() {
+		return willCollideTop;
 	}
 
-	public void setTopCollision(boolean topCollision) {
-		this.topCollision = topCollision;
+	public void setCollideTop(boolean topCollision) {
+		this.willCollideTop = topCollision;
+	}
+	
+	public boolean willCollideRight() {
+		return willCollideRight;
+	}
+
+	public void setCollideRight(boolean rightCollision) {
+		this.willCollideRight = rightCollision;
+	}
+
+	public boolean willCollideLeft() {
+		return willCollideLeft;
+	}
+
+	public void setCollideLeft(boolean leftCollision) {
+		this.willCollideLeft = leftCollision;
 	}
 }

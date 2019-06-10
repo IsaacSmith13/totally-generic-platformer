@@ -19,12 +19,9 @@ import com.isaactsmith.platformer.obj.unit.PlayerUnit;
 public class FrameHandler extends JPanel implements KeyListener {
 
 	private static final long serialVersionUID = 1L;
-	private static final int LEFT = 0;
-	private static final int RIGHT = 1;
-	private static final int STOP = 2;
 	private static final String LEVEL_PATH = "testlevel.level";
-	public static final int WINDOW_WIDTH = 800;
-	public static final int WINDOW_HEIGHT = 600;
+	public static final int WINDOW_WIDTH = 1200;
+	public static final int WINDOW_HEIGHT = 1080;
 	private boolean isRunning = true;
 	private List<Tile> terrain;
 //	private List<EnemyUnit> enemies;

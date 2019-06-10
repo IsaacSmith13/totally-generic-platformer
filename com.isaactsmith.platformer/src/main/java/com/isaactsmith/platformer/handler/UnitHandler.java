@@ -1,6 +1,5 @@
 package com.isaactsmith.platformer.handler;
 
-import java.awt.Point;
 import java.util.List;
 
 import com.isaactsmith.platformer.obj.Tile;
@@ -13,10 +12,12 @@ public class UnitHandler {
 	private PlayerUnit player;
 	private static double xOffset = 0;
 	private static double yOffset = 0;
+	private CollisionHandler collisionHandler;
 
 	public UnitHandler(PlayerUnit player, List<Tile> terrain) {
 		this.player = player;
 		this.terrain = terrain;
+		collisionHandler = new CollisionHandler(terrain);
 	}
 
 	public void scroll(FrameHandler screen) {
@@ -35,43 +36,7 @@ public class UnitHandler {
 
 	private void moveUnit(Unit unit) {
 
-		int unitX = (int) (unit.getX() + xOffset);
-		int unitY = (int) (unit.getY() + yOffset);
-
-		boolean willCollideRight = false;
-		boolean willCollideLeft = false;
-
-		for (Tile tile : terrain) {
-			int width = tile.getWidth();
-			int height = tile.getHeight();
-			// Left side of tile collision
-			if (CollisionHandler.determineIfUnitInTile(new Point(unitX + width + 2, unitY), tile)
-					|| CollisionHandler.determineIfUnitInTile(new Point(unitX + width + 2, unitY + height - 1), tile)) {
-				willCollideRight = true;
-			}
-			// Right side of tile collision
-			if (CollisionHandler.determineIfUnitInTile(new Point(unitX, unitY + 2), tile)
-					|| CollisionHandler.determineIfUnitInTile(new Point(unitX, unitY + height - 1), tile)) {
-				willCollideLeft = true;
-			}
-			// Bottom side of tile collision
-			if (CollisionHandler.determineIfUnitInTile(new Point(unitX + 1, unitY), tile)
-					|| CollisionHandler.determineIfUnitInTile(new Point(unitX + width - 2, unitY), tile)) {
-				unit.setJumping(false);
-			}
-			// Top side of tile collision
-			if (CollisionHandler.determineIfUnitInTile(new Point(unitX + 2, unitY + height + 1), tile)
-					|| CollisionHandler.determineIfUnitInTile(new Point(unitX + width - 2, unitY + height + 1), tile)) {
-				unit.setY(tile.getY() - height - yOffset);
-				unit.setFalling(false);
-				unit.setTopCollision(true);
-			} else {
-				if (!unit.isTopCollision() && !unit.isJumping()) {
-					unit.setFalling(true);
-				}
-			}
-		}
-		unit.setTopCollision(false);
+		collisionHandler.handleTileCollision(unit);
 
 		if (unit.isJumping()) {
 			double currentJumpSpeed = unit.getCurrentJumpSpeed();
@@ -91,10 +56,10 @@ public class UnitHandler {
 			unit.setYVelocity(currentYVelocity + .2);
 		}
 
-		if (unit.isRight() && !willCollideRight) {
+		if (unit.isRight() && !unit.willCollideRight()) {
 			xOffset += unit.getMoveSpeed();
 		}
-		if (unit.isLeft() && !willCollideLeft) {
+		if (unit.isLeft() && !unit.willCollideLeft()) {
 			xOffset -= unit.getMoveSpeed();
 		}
 
