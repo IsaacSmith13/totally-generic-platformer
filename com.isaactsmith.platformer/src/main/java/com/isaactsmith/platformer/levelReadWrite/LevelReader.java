@@ -1,4 +1,4 @@
-package com.isaactsmith.platformer.ReadWrite;
+package com.isaactsmith.platformer.levelReadWrite;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -37,9 +37,23 @@ public class LevelReader {
 		int y = Integer.parseInt(objParams[2]);
 
 		if (type.equals("tile")) {
-			terrain.add(new Tile(x, y, ImageLoader.getBufferedImage(objParams[3])));
+			createTile(x, y, objParams[3], objParams[4]);
 		} else {
 			parseUnitImages(type, x, y, objParams[3]);
+		}
+	}
+
+	private void createTile(int x, int y, String filePath, String tileType) {
+		switch (tileType) {
+		case ("passable"):
+			terrain.add(new Tile(x, y, ImageLoader.getBufferedImage(filePath), true));
+			break;
+
+		case ("solid"):
+			terrain.add(new Tile(x, y, ImageLoader.getBufferedImage(filePath)));
+			break;
+		default:
+			break;
 		}
 	}
 

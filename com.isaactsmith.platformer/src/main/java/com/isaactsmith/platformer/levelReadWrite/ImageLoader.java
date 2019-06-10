@@ -1,4 +1,4 @@
-package com.isaactsmith.platformer.ReadWrite;
+package com.isaactsmith.platformer.levelReadWrite;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;

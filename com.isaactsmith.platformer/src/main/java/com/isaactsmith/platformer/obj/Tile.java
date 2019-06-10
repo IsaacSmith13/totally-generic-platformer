@@ -9,10 +9,16 @@ import com.isaactsmith.platformer.handler.UnitHandler;
 public class Tile extends Obj {
 
 	private Rectangle tileAsRect;
+	private boolean isPassable = false;
 
 	public Tile(int x, int y, BufferedImage image) {
 		super(x, y, image);
 		tileAsRect = new Rectangle(x, y, getWidth(), getHeight());
+	}
+	
+	public Tile(int x, int y, BufferedImage image, boolean isPassable) {
+		this(x, y, image);
+		this.setPassable(isPassable);
 	}
 
 	@Override
@@ -24,5 +30,13 @@ public class Tile extends Obj {
 
 	public Rectangle getTileAsRect() {
 		return tileAsRect;
+	}
+
+	public boolean isPassable() {
+		return isPassable;
+	}
+
+	public void setPassable(boolean isPassable) {
+		this.isPassable = isPassable;
 	}
 }

@@ -11,8 +11,8 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import com.isaactsmith.platformer.ReadWrite.LevelReader;
-import com.isaactsmith.platformer.ReadWrite.LevelWriter;
+import com.isaactsmith.platformer.levelReadWrite.LevelReader;
+import com.isaactsmith.platformer.levelReadWrite.LevelWriter;
 import com.isaactsmith.platformer.obj.Tile;
 import com.isaactsmith.platformer.obj.unit.PlayerUnit;
 
@@ -20,8 +20,8 @@ public class FrameHandler extends JPanel implements KeyListener {
 
 	private static final long serialVersionUID = 1L;
 	private static final String LEVEL_PATH = "testlevel.level";
-	public static final int WINDOW_WIDTH = 1200;
-	public static final int WINDOW_HEIGHT = 1080;
+	public static final int WINDOW_WIDTH = 800;
+	public static final int WINDOW_HEIGHT = 600;
 	private boolean isRunning = true;
 	private List<Tile> terrain;
 //	private List<EnemyUnit> enemies;
@@ -86,7 +86,6 @@ public class FrameHandler extends JPanel implements KeyListener {
 	}
 
 	public void tick() {
-		repaint();
 		unitHandler.tick(player);
 		unitHandler.scroll(this);
 
