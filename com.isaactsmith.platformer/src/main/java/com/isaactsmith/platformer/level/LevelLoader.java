@@ -39,6 +39,9 @@ public class LevelLoader {
 				String[] tiles = line.split(",");
 				for (int x = 0; x < width; x++) {
 					int id = Integer.parseInt(tiles[x]);
+					if (id == -1) {
+						continue;
+					}
 					if (id < 20) {
 						terrain[y][x] = new Tile(x * Obj.GLOBAL_SIZE, y * Obj.GLOBAL_SIZE, id, true);
 					} else {

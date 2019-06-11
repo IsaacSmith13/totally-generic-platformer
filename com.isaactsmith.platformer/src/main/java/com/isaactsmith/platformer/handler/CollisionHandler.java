@@ -20,9 +20,12 @@ public class CollisionHandler {
 		int unitY = unit.getYOffset();
 		int size = Obj.GLOBAL_SIZE;
 
-		for (int i = 0; i < terrain.length; i++) {
-			for (int j = 0; j < terrain[0].length; j++) {
-				Tile tile = terrain[i][j];
+		for (int y = 0, height = terrain.length; y < height; y++) {
+			for (int x = 0, width = terrain[y].length; x < width; x++) {
+				if (terrain[y][x] == null) {
+					continue;
+				}
+				Tile tile = terrain[y][x];
 
 				if (!tile.isPassable()) {
 					handleRightwardCollision(unit, unitX, unitY, size, tile);
