@@ -8,10 +8,11 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 
 public class ImageLoader {
-	
+
 	private static Map<String, BufferedImage> images = new HashMap<String, BufferedImage>();
-	
+
 	public static BufferedImage getBufferedImage(String filePath) {
+		filePath = "images/" + filePath + ".png";
 		BufferedImage image = images.get(filePath);
 		if (image == null) {
 			try {
@@ -23,8 +24,19 @@ public class ImageLoader {
 		}
 		return image;
 	}
-	
+
 	public static BufferedImage getImageById(int id, boolean isTile) {
-		return ImageLoader.getBufferedImage("images/SolidBlock.png");
+		if (isTile) {
+			switch (id) {
+			case (0):
+				return getBufferedImage("SolidBlock");
+			case (1): 
+				return getBufferedImage("PassableBlock");
+			default:
+				return null;
+			}
+		}
+		// TODO implement non-tile id image loading
+		return null;
 	}
 }

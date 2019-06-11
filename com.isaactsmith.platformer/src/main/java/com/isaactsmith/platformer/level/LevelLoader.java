@@ -13,7 +13,7 @@ import com.isaactsmith.platformer.obj.unit.PlayerUnit;
 public class LevelLoader {
 
 	private static final String[] DIRECTIONS = { "Right", "Left" };
-	private static final String PLAYER_IMG = "images/Player";
+	private static final String PLAYER_IMG = "Player";
 	private String levelpath;
 	private int width;
 	private int height;
@@ -66,7 +66,7 @@ public class LevelLoader {
 		for (int j = 0; j < DIRECTIONS.length; j++) {
 			for (int i = 0; i < 3; i++) {
 				// Math to make each image enter the array in a different index
-				images[imageNumber++] = ImageLoader.getBufferedImage(PLAYER_IMG + DIRECTIONS[j] + i + ".png");
+				images[imageNumber++] = ImageLoader.getBufferedImage(PLAYER_IMG + DIRECTIONS[j] + i);
 			}
 		}
 		return new PlayerUnit(images);

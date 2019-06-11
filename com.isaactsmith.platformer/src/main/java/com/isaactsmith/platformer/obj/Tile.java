@@ -2,7 +2,6 @@ package com.isaactsmith.platformer.obj;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
 
 import com.isaactsmith.platformer.handler.FrameHandler;
 import com.isaactsmith.platformer.handler.UnitHandler;
@@ -15,25 +14,13 @@ public class Tile extends Obj {
 	private String type;
 	private boolean isPassable = false;
 
-	public Tile(int x, int y, BufferedImage image) {
-		super(x, y, image);
-		tileAsRect = new Rectangle(x, y, getWidth(), getHeight());
-	}
-	
 	public Tile(int x, int y, int id) {
-		this(x, y, ImageLoader.getImageById(id, true));
+		super(x, y, ImageLoader.getImageById(id, true));
+		tileAsRect = new Rectangle(x, y, getWidth(), getHeight());
 		this.setId(id);
-	}
-
-	public Tile(int x, int y, BufferedImage image, boolean isPassable) {
-		this(x, y, image);
-		this.setPassable(isPassable);
-	}
-	
-	public Tile(int x, int y, BufferedImage image, String type, boolean isPassable) {
-		this(x, y, image);
-		this.setType(type);
-		this.setPassable(isPassable);
+		if (id == 1) {
+			isPassable = true;
+		}
 	}
 
 	@Override
