@@ -31,22 +31,28 @@ public abstract class Unit extends Obj {
 
 	@Override
 	public void paint(Graphics g) {
-		// Turns into 0 or 1 depending on whether or not the unit was last moving right
-		// or left
+		// selects a default standing image facing the last moved direction to use if
+		// not moving
 		int imageToRender = ((lastImage) / 3) * 3;
 
 		if (right) {
-			imageToRender = imageCounter / FRAMES_PER_IMAGE_CHANGE;
+			if (isJumping || isFalling) {
+				imageToRender = 1;
+			} else {
+				imageToRender = imageCounter / FRAMES_PER_IMAGE_CHANGE;
+			}
 		} else if (left) {
-			imageToRender = imageCounter / FRAMES_PER_IMAGE_CHANGE + 3;
+			if (isJumping || isFalling) {
+				imageToRender = 4;
+			} else {
+				imageToRender = imageCounter / FRAMES_PER_IMAGE_CHANGE + 3;
+			}
 		}
 
 		g.drawImage(getImages()[imageToRender], (int) Math.round(getX()), (int) Math.round(getY()) + 1, getWidth(),
 				getHeight(), null);
-		if (imageCounter / FRAMES_PER_IMAGE_CHANGE == 2) {
+		if (++imageCounter / FRAMES_PER_IMAGE_CHANGE == 3) {
 			imageCounter = 0;
-		} else {
-			imageCounter++;
 		}
 		lastImage = imageToRender;
 	}
