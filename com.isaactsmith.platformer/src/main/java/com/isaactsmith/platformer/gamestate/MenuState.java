@@ -80,5 +80,4 @@ public class MenuState extends GameState {
 	public void keyReleased(int e) {
 
 	}
-
 }

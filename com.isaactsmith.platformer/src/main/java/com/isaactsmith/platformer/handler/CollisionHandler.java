@@ -3,6 +3,7 @@ package com.isaactsmith.platformer.handler;
 import java.awt.Point;
 import java.util.List;
 
+import com.isaactsmith.platformer.obj.Obj;
 import com.isaactsmith.platformer.obj.Tile;
 import com.isaactsmith.platformer.obj.unit.Unit;
 
@@ -15,52 +16,69 @@ public class CollisionHandler {
 	}
 
 	public void handleTileCollision(Unit unit) {
-		boolean willCollideRight = false;
-		boolean willCollideLeft = false;
-		int unitX = (int) (unit.getX() + UnitHandler.getXOffset());
-		int unitY = (int) (unit.getY() + UnitHandler.getYOffset());
+		unit.resetCollision();
+		int unitX = unit.getOffsetX();
+		int unitY = unit.getOffsetY();
+		int size = Obj.GLOBAL_SIZE;
 
 		for (Tile tile : terrain) {
-			int width = tile.getWidth();
-			int height = tile.getHeight();
+			
+
 			if (!tile.isPassable()) {
-				// Left side of tile collision
-				if (determineIfInSideOfTile(new Point(unitX + width + 2, unitY), tile)
-						|| determineIfInSideOfTile(new Point(unitX + width + 2, unitY + height - 1), tile)) {
-					willCollideRight = true;
-				}
-				// Right side of tile collision
-				if (determineIfInSideOfTile(new Point(unitX - 2, unitY + 2), tile)
-						|| determineIfInSideOfTile(new Point(unitX - 2, unitY + height - 1), tile)) {
-					willCollideLeft = true;
-				}
-				// Bottom side of tile collision
-				if (determineIfInSideOfTile(new Point(unitX + 1, unitY), tile)
-						|| determineIfInSideOfTile(new Point(unitX + width - 1, unitY), tile)) {
-					unit.setJumping(false);
-				}
+				handleRightwardCollision(unit, unitX, unitY, size, tile);
+				handleLeftwardCollision(unit, unitX, unitY, size, tile);
+				handleUpwardCollision(unit, unitX, unitY, size, tile);
 			}
-			// Top side of tile collision
-			if (determineIfInSideOfTile(new Point(unitX, unitY + height), tile)
-					|| determineIfInSideOfTile(new Point(unitX + width, unitY + height), tile)) {
+			handleDownwardCollision(unit, unitX, unitY, size, tile);
+		}
+	}
+
+	private void handleDownwardCollision(Unit unit, int unitX, int unitY, int size, Tile tile) {
+
+		int unitLocationOnTopOfTile = (int) tile.getY() - size;
+
+		if (unitY <= unitLocationOnTopOfTile + unit.getTerminalVelocity() + 1) {
+			if (handleOneSideOfCollision(new Point(unitX + 1, unitY + size + 1), tile)
+					|| handleOneSideOfCollision(new Point(unitX + size - 1, unitY + size + 1), tile)) {
 				unit.setFalling(false);
 				unit.setCollideTop(true);
-			} else {
-				if (!unit.willCollideTop() && !unit.isJumping()) {
-					unit.setFalling(true);
-				} else {
-					unit.setFalling(false);
+				if (unitY >= (int) tile.getY() - size && !unit.isFalling() && !unit.isJumping()) {
+					unit.setY(tile.getY() - UnitHandler.getYOffset() - size - 1);
 				}
+			} else {
+				unit.setFalling(!unit.willCollideTop() && !unit.isJumping());
 			}
 		}
-
-		unit.setCollideTop(false);
-		unit.setCollideRight(willCollideRight);
-		unit.setCollideLeft(willCollideLeft);
 	}
 
-	private boolean determineIfInSideOfTile(Point pointInObj, Tile tile) {
+	private void handleUpwardCollision(Unit unit, int unitX, int unitY, int size, Tile tile) {
+		if (unit.getYVelocity() != 0) {
+			if (handleOneSideOfCollision(new Point(unitX + 1, unitY), tile)
+					|| handleOneSideOfCollision(new Point(unitX + size - 1, unitY), tile)) {
+				unit.setJumping(false);
+			}
+		}
+	}
+
+	private void handleLeftwardCollision(Unit unit, int unitX, int unitY, int size, Tile tile) {
+		if (unit.isLeft()) {
+			if (handleOneSideOfCollision(new Point(unitX - 2, unitY + 2), tile)
+					|| handleOneSideOfCollision(new Point(unitX - 2, unitY + size - 1), tile)) {
+				unit.setCollideLeft(true);
+			}
+		}
+	}
+
+	private void handleRightwardCollision(Unit unit, int unitX, int unitY, int size, Tile tile) {
+		if (unit.isRight()) {
+			if (handleOneSideOfCollision(new Point(unitX + size + 3, unitY + 2), tile)
+					|| handleOneSideOfCollision(new Point(unitX + size + 3, unitY + size - 1), tile)) {
+				unit.setCollideRight(true);
+			}
+		}
+	}
+
+	private boolean handleOneSideOfCollision(Point pointInObj, Tile tile) {
 		return tile.getTileAsRect().contains(pointInObj);
 	}
-
 }

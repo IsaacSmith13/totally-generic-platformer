@@ -41,7 +41,7 @@ public abstract class Unit extends Obj {
 			imageToRender = imageCounter / FRAMES_PER_IMAGE_CHANGE + 3;
 		}
 
-		g.drawImage(getImages()[imageToRender], (int) Math.round(getX()), (int) Math.round(getY()), getWidth(),
+		g.drawImage(getImages()[imageToRender], (int) Math.round(getX()), (int) Math.round(getY()) + 1, getWidth(),
 				getHeight(), null);
 		if (imageCounter / FRAMES_PER_IMAGE_CHANGE == 2) {
 			imageCounter = 0;
@@ -149,20 +149,30 @@ public abstract class Unit extends Obj {
 	public void setCollideTop(boolean topCollision) {
 		this.willCollideTop = topCollision;
 	}
-	
+
 	public boolean willCollideRight() {
 		return willCollideRight;
 	}
 
-	public void setCollideRight(boolean rightCollision) {
-		this.willCollideRight = rightCollision;
+	public void setCollideRight(boolean willCollideRight) {
+		this.willCollideRight = willCollideRight;
 	}
 
 	public boolean willCollideLeft() {
 		return willCollideLeft;
 	}
 
-	public void setCollideLeft(boolean leftCollision) {
-		this.willCollideLeft = leftCollision;
+	public void setCollideLeft(boolean willCollideLeft) {
+		this.willCollideLeft = willCollideLeft;
+	}
+
+	public void resetCollision() {
+		willCollideTop = false;
+		willCollideLeft = false;
+		willCollideRight = false;
+	}
+
+	public double getTerminalVelocity() {
+		return getHeight() / TERMINAL_VELOCITY;
 	}
 }

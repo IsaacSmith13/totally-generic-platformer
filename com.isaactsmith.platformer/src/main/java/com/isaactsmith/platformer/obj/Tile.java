@@ -28,8 +28,8 @@ public class Tile extends Obj {
 		int x = (int) (getX() - UnitHandler.getXOffset());
 		int y = (int) (getY() - UnitHandler.getYOffset());
 
-		if (x <= FrameHandler.WINDOW_WIDTH + (GLOBAL_DIAMETER * 2) && (x - 1) >= -GLOBAL_DIAMETER * 2
-				&& y <= FrameHandler.WINDOW_HEIGHT + (GLOBAL_DIAMETER * 2) && (y - 1) >= -GLOBAL_DIAMETER * 2) {
+		if (x <= FrameHandler.WINDOW_WIDTH + (GLOBAL_SIZE * 2) && (x - 1) >= -GLOBAL_SIZE * 2
+				&& y <= FrameHandler.WINDOW_HEIGHT + (GLOBAL_SIZE * 2) && (y - 1) >= -GLOBAL_SIZE * 2) {
 
 			g.drawImage(getImage(), x, y, getWidth(), getHeight(), null);
 		}
