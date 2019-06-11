@@ -22,7 +22,16 @@ public class UnitHandler {
 	private void moveUnit(Unit unit) {
 
 		collisionHandler.handleTileCollision(unit);
+		
+		handleJumping(unit);
+		
+		handleFalling(unit);
+		
+		handleWalking(unit);
 
+	}
+
+	public void handleJumping(Unit unit) {
 		if (unit.isJumping()) {
 			double currentJumpSpeed = unit.getCurrentJumpSpeed();
 			yOffset -= currentJumpSpeed;
@@ -34,23 +43,24 @@ public class UnitHandler {
 				unit.setFalling(true);
 			}
 		}
+	}
 
+	public void handleFalling(Unit unit) {
 		if (unit.isFalling()) {
 			double currentYVelocity = unit.getYVelocity();
 			yOffset += currentYVelocity;
 			unit.setYVelocity(currentYVelocity + .2);
+		} else {
+			unit.setYVelocity(0);
 		}
+	}
 
+	public void handleWalking(Unit unit) {
 		if (unit.isRight() && !unit.willCollideRight()) {
 			xOffset += unit.getMoveSpeed();
 		}
 		if (unit.isLeft() && !unit.willCollideLeft()) {
 			xOffset -= unit.getMoveSpeed();
-		}
-
-		if (!unit.isFalling()) {
-			unit.setYVelocity(.2);
-
 		}
 	}
 
