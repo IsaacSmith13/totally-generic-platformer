@@ -5,7 +5,6 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
-import com.isaactsmith.platformer.gamestate.level.Level1;
 import com.isaactsmith.platformer.handler.FrameHandler;
 import com.isaactsmith.platformer.handler.GameStateHandler;
 
@@ -64,7 +63,7 @@ public class MenuState extends GameState {
 		case (KeyEvent.VK_ENTER):
 			switch (currentSelection) {
 			case (0):
-				gameStateHandler.gameStates.push(new Level1(gameStateHandler, "Level1.level"));
+				gameStateHandler.gameStates.push(new LevelState(gameStateHandler, "Level1.level"));
 				break;
 			case (1):
 				// todo level selector

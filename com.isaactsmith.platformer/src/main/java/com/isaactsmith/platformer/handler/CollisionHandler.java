@@ -1,7 +1,6 @@
 package com.isaactsmith.platformer.handler;
 
 import java.awt.Point;
-import java.util.List;
 
 import com.isaactsmith.platformer.obj.Obj;
 import com.isaactsmith.platformer.obj.Tile;
@@ -9,27 +8,29 @@ import com.isaactsmith.platformer.obj.unit.Unit;
 
 public class CollisionHandler {
 
-	private List<Tile> terrain;
+	private Tile[][] terrain;
 
-	public CollisionHandler(List<Tile> terrain) {
+	public CollisionHandler(Tile[][] terrain) {
 		this.terrain = terrain;
 	}
 
 	public void handleTileCollision(Unit unit) {
 		unit.resetCollision();
-		int unitX = unit.getOffsetX();
-		int unitY = unit.getOffsetY();
+		int unitX = unit.getXOffset();
+		int unitY = unit.getYOffset();
 		int size = Obj.GLOBAL_SIZE;
 
-		for (Tile tile : terrain) {
-			
+		for (int i = 0; i < terrain.length; i++) {
+			for (int j = 0; j < terrain[0].length; j++) {
+				Tile tile = terrain[i][j];
 
-			if (!tile.isPassable()) {
-				handleRightwardCollision(unit, unitX, unitY, size, tile);
-				handleLeftwardCollision(unit, unitX, unitY, size, tile);
-				handleUpwardCollision(unit, unitX, unitY, size, tile);
+				if (!tile.isPassable()) {
+					handleRightwardCollision(unit, unitX, unitY, size, tile);
+					handleLeftwardCollision(unit, unitX, unitY, size, tile);
+					handleUpwardCollision(unit, unitX, unitY, size, tile);
+				}
+				handleDownwardCollision(unit, unitX, unitY, size, tile);
 			}
-			handleDownwardCollision(unit, unitX, unitY, size, tile);
 		}
 	}
 

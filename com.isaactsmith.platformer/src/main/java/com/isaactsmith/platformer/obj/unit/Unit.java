@@ -10,15 +10,15 @@ public abstract class Unit extends Obj {
 	// terminal velocity = unit height / terminal velocity pixels per frame
 	private static final int TERMINAL_VELOCITY = 8;
 	private static final int FRAMES_PER_IMAGE_CHANGE = 120;
-	private double moveSpeed = 2.5;
-	private boolean isAlive = true;
+	private static final double jumpSpeed = 8;
+	private double currentJumpSpeed = jumpSpeed;
 	private boolean isJumping = false;
+	private double moveSpeed = 2.5;
 	private boolean isFalling = false;
+	private boolean isAlive = true;
 	private double yVelocity = 0;
 	private int imageCounter = 0;
 	private int lastImage = 0;
-	private static final double jumpSpeed = 8;
-	private double currentJumpSpeed = jumpSpeed;
 	private boolean left = false;
 	private boolean right = false;
 	private boolean willCollideTop = false;
@@ -27,6 +27,11 @@ public abstract class Unit extends Obj {
 
 	public Unit(int x, int y, BufferedImage[] images) {
 		super(x, y, images);
+	}
+	
+	public Unit(int x, int y, BufferedImage[] images, double moveSpeed) {
+		super(x, y, images);
+		this.moveSpeed = moveSpeed;
 	}
 
 	@Override

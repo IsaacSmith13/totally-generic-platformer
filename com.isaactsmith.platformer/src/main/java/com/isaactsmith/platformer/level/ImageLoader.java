@@ -1,4 +1,4 @@
-package com.isaactsmith.platformer.levelReadWrite;
+package com.isaactsmith.platformer.level;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -17,10 +17,14 @@ public class ImageLoader {
 			try {
 				image = ImageIO.read(ImageLoader.class.getClassLoader().getResource(filePath));
 			} catch (IOException e) {
-				System.out.println("Level file contains invalid image path");
+				System.out.println("Invalid image path");
 				e.printStackTrace();
 			}
 		}
 		return image;
+	}
+	
+	public static BufferedImage getImageById(int id, boolean isTile) {
+		return ImageLoader.getBufferedImage("images/SolidBlock.png");
 	}
 }

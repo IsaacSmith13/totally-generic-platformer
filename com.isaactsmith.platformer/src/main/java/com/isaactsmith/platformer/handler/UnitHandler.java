@@ -1,7 +1,5 @@
 package com.isaactsmith.platformer.handler;
 
-import java.util.List;
-
 import com.isaactsmith.platformer.obj.Tile;
 import com.isaactsmith.platformer.obj.unit.Unit;
 
@@ -11,7 +9,7 @@ public class UnitHandler {
 	private static double yOffset = 0;
 	private CollisionHandler collisionHandler;
 
-	public UnitHandler(List<Tile> terrain) {
+	public UnitHandler(Tile[][] terrain) {
 		collisionHandler = new CollisionHandler(terrain);
 	}
 

@@ -40,13 +40,6 @@ public class FrameHandler extends JPanel implements KeyListener {
 
 		gameStateHandler = new GameStateHandler();
 
-		new Thread();
-		try {
-			Thread.sleep(100);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		// While game is running, render a new frame every second
 		long lastUpdate = System.nanoTime();
 		long lastRender = System.nanoTime();
@@ -62,9 +55,9 @@ public class FrameHandler extends JPanel implements KeyListener {
 				gameStateHandler.tick();
 				lastUpdate = System.nanoTime();
 			}
-			if (delta >= 1) {
+			if (delta >= 2) {
 				repaint();
-				delta--;
+				delta = 0;
 			}
 		}
 	}
@@ -75,7 +68,7 @@ public class FrameHandler extends JPanel implements KeyListener {
 			requestFocusInWindow();
 			gameStateHandler.paint(g);
 		} catch (NullPointerException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 	}
 

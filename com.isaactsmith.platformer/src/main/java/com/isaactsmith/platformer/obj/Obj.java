@@ -55,11 +55,11 @@ public abstract class Obj {
 		this.y = y;
 	}
 
-	public int getOffsetX() {
+	public int getXOffset() {
 		return (int) (x + UnitHandler.getXOffset());
 	}
 
-	public int getOffsetY() {
+	public int getYOffset() {
 		return (int) (y + UnitHandler.getYOffset());
 	}
 

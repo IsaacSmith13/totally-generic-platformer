@@ -6,19 +6,33 @@ import java.awt.image.BufferedImage;
 
 import com.isaactsmith.platformer.handler.FrameHandler;
 import com.isaactsmith.platformer.handler.UnitHandler;
+import com.isaactsmith.platformer.level.ImageLoader;
 
 public class Tile extends Obj {
 
 	private Rectangle tileAsRect;
+	private int id;
+	private String type;
 	private boolean isPassable = false;
 
 	public Tile(int x, int y, BufferedImage image) {
 		super(x, y, image);
 		tileAsRect = new Rectangle(x, y, getWidth(), getHeight());
 	}
+	
+	public Tile(int x, int y, int id, boolean isTile) {
+		this(x, y, ImageLoader.getImageById(id, isTile));
+		this.setId(id);
+	}
 
 	public Tile(int x, int y, BufferedImage image, boolean isPassable) {
 		this(x, y, image);
+		this.setPassable(isPassable);
+	}
+	
+	public Tile(int x, int y, BufferedImage image, String type, boolean isPassable) {
+		this(x, y, image);
+		this.setType(type);
 		this.setPassable(isPassable);
 	}
 
@@ -45,5 +59,21 @@ public class Tile extends Obj {
 
 	public void setPassable(boolean isPassable) {
 		this.isPassable = isPassable;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 }
