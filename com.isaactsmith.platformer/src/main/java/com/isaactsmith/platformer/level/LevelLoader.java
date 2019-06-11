@@ -2,12 +2,9 @@ package com.isaactsmith.platformer.level;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Scanner;
+import java.io.InputStreamReader;
 
 import com.isaactsmith.platformer.obj.Obj;
 import com.isaactsmith.platformer.obj.Tile;
@@ -30,7 +27,8 @@ public class LevelLoader {
 	}
 
 	public void readLevel() {
-		try (BufferedReader reader = new BufferedReader(new FileReader(levelpath))) {
+		try (InputStream in = getClass().getResourceAsStream(levelpath);
+				BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
 			int width = Integer.parseInt(reader.readLine());
 			int height = Integer.parseInt(reader.readLine());
 
