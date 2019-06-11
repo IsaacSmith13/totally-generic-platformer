@@ -1,12 +1,12 @@
 package com.isaactsmith.platformer.handler;
 
+import com.isaactsmith.platformer.obj.Obj;
 import com.isaactsmith.platformer.obj.Tile;
 import com.isaactsmith.platformer.obj.unit.Unit;
 
 public class UnitHandler {
 
 	private static double xOffset = 0;
-	private static double yOffset = 0;
 	private CollisionHandler collisionHandler;
 
 	public UnitHandler(Tile[][] terrain) {
@@ -20,11 +20,11 @@ public class UnitHandler {
 	private void moveUnit(Unit unit) {
 
 		collisionHandler.handleTileCollision(unit);
-		
+
 		handleJumping(unit);
-		
+
 		handleFalling(unit);
-		
+
 		handleWalking(unit);
 
 	}
@@ -32,7 +32,7 @@ public class UnitHandler {
 	public void handleJumping(Unit unit) {
 		if (unit.isJumping()) {
 			double currentJumpSpeed = unit.getCurrentJumpSpeed();
-			yOffset -= currentJumpSpeed;
+			unit.setY(unit.getY() - currentJumpSpeed);
 			unit.setCurrentJumpSpeed(currentJumpSpeed - .2);
 
 			if (unit.getCurrentJumpSpeed() <= 0.1) {
@@ -46,27 +46,36 @@ public class UnitHandler {
 	public void handleFalling(Unit unit) {
 		if (unit.isFalling()) {
 			double currentYVelocity = unit.getYVelocity();
-			yOffset += currentYVelocity;
+			unit.setY(unit.getY() + currentYVelocity);
 			unit.setYVelocity(currentYVelocity + .2);
 		} else {
 			unit.setYVelocity(0);
 		}
+		handleDeathByFalling(unit);
+	}
+
+	private void handleDeathByFalling(Unit unit) {
+		if (unit.getY() > FrameHandler.WINDOW_HEIGHT) {
+			if ((int) xOffset > 0) {
+				xOffset -= 2;
+			} else if ((int) xOffset < 0) {
+				xOffset += 2;
+			} else {
+				unit.setLocation((FrameHandler.WINDOW_WIDTH / 2) - (Obj.GLOBAL_SIZE / 2),
+						(FrameHandler.WINDOW_HEIGHT / 2) - (Obj.GLOBAL_SIZE / 2));
+			}
+		}
 	}
 
 	public void handleWalking(Unit unit) {
-		if (unit.isRight() && !unit.willCollideRight()) {
-			xOffset += unit.getMoveSpeed();
-		}
-		if (unit.isLeft() && !unit.willCollideLeft()) {
-			xOffset -= unit.getMoveSpeed();
-		}
+		unit.walk();
 	}
 
 	public static double getXOffset() {
 		return xOffset;
 	}
 
-	public static double getYOffset() {
-		return yOffset;
+	public static void setXOffset(double xOffset) {
+		UnitHandler.xOffset = xOffset;
 	}
 }

@@ -12,8 +12,8 @@ import javax.swing.JPanel;
 public class FrameHandler extends JPanel implements KeyListener {
 
 	private static final long serialVersionUID = 1L;
-	public static final int WINDOW_WIDTH = 800;
-	public static final int WINDOW_HEIGHT = 600;
+	public static final int WINDOW_WIDTH = 1280;
+	public static final int WINDOW_HEIGHT = 720;
 //	private List<EnemyUnit> enemies;
 	private GameStateHandler gameStateHandler;
 

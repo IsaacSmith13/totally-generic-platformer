@@ -43,7 +43,7 @@ public class LevelLoader {
 						continue;
 					}
 					if (id < 20) {
-						terrain[y][x] = new Tile(x * Obj.GLOBAL_SIZE, y * Obj.GLOBAL_SIZE, id, true);
+						terrain[y][x] = new Tile(x * Obj.GLOBAL_SIZE, y * Obj.GLOBAL_SIZE, id);
 					} else {
 						// TODO make enemy if id > 20
 					}

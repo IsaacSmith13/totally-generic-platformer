@@ -4,11 +4,21 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 import com.isaactsmith.platformer.handler.FrameHandler;
+import com.isaactsmith.platformer.handler.UnitHandler;
 
 public class PlayerUnit extends Unit {
 
 	public PlayerUnit(BufferedImage[] images) {
-		super(FrameHandler.WINDOW_WIDTH / 2, FrameHandler.WINDOW_HEIGHT / 2, images);
+		super((FrameHandler.WINDOW_WIDTH / 2) - (GLOBAL_SIZE / 2), (FrameHandler.WINDOW_HEIGHT / 2) - (GLOBAL_SIZE / 2), images);
+	}
+
+	public void walk() {
+		if (isRight() && !willCollideRight()) {
+			UnitHandler.setXOffset(UnitHandler.getXOffset() + getMoveSpeed());
+		}
+		if (isLeft() && !willCollideLeft()) {
+			UnitHandler.setXOffset(UnitHandler.getXOffset() - getMoveSpeed());
+		}
 	}
 
 	public void keyPressed(int e) {

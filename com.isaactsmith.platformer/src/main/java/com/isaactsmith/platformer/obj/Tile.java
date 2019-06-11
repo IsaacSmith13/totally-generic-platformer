@@ -20,8 +20,8 @@ public class Tile extends Obj {
 		tileAsRect = new Rectangle(x, y, getWidth(), getHeight());
 	}
 	
-	public Tile(int x, int y, int id, boolean isTile) {
-		this(x, y, ImageLoader.getImageById(id, isTile));
+	public Tile(int x, int y, int id) {
+		this(x, y, ImageLoader.getImageById(id, true));
 		this.setId(id);
 	}
 
@@ -40,7 +40,7 @@ public class Tile extends Obj {
 	public void paint(Graphics g) {
 
 		int x = (int) (getX() - UnitHandler.getXOffset());
-		int y = (int) (getY() - UnitHandler.getYOffset());
+		int y = (int) (getY());
 
 		if (x <= FrameHandler.WINDOW_WIDTH + (GLOBAL_SIZE * 2) && (x - 1) >= -GLOBAL_SIZE * 2
 				&& y <= FrameHandler.WINDOW_HEIGHT + (GLOBAL_SIZE * 2) && (y - 1) >= -GLOBAL_SIZE * 2) {

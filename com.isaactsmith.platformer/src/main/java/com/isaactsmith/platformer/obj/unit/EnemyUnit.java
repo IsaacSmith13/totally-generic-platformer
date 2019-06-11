@@ -13,4 +13,14 @@ public abstract class EnemyUnit extends Unit {
 	public static boolean isEnemy() {
 		return isEnemy;
 	}
+	
+	@Override
+	public void walk() {
+		if (isRight() && !willCollideRight()) {
+			setX(getX() + getMoveSpeed());
+		}
+		if (isLeft() && !willCollideLeft()) {
+			setX(getX() - getMoveSpeed());
+		}
+	}
 }

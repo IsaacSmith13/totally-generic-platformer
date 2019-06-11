@@ -59,10 +59,6 @@ public abstract class Obj {
 		return (int) (x + UnitHandler.getXOffset());
 	}
 
-	public int getYOffset() {
-		return (int) (y + UnitHandler.getYOffset());
-	}
-
 	public BufferedImage getImage() {
 		return image;
 	}

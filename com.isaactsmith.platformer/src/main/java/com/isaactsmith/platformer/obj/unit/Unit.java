@@ -28,7 +28,7 @@ public abstract class Unit extends Obj {
 	public Unit(int x, int y, BufferedImage[] images) {
 		super(x, y, images);
 	}
-	
+
 	public Unit(int x, int y, BufferedImage[] images, double moveSpeed) {
 		super(x, y, images);
 		this.moveSpeed = moveSpeed;
@@ -84,6 +84,8 @@ public abstract class Unit extends Obj {
 			break;
 		}
 	}
+
+	public abstract void walk();
 
 	public boolean isAlive() {
 		return isAlive;
