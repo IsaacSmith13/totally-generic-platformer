@@ -3,8 +3,6 @@ package com.isaactsmith.platformer.obj;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
-import com.isaactsmith.platformer.handler.UnitHandler;
-
 public abstract class Obj {
 
 	public static final int GLOBAL_SIZE = 32;
@@ -54,11 +52,6 @@ public abstract class Obj {
 	public void setY(double y) {
 		this.y = y;
 	}
-
-	public int getXOffset() {
-		return (int) (x + UnitHandler.getXOffset());
-	}
-
 	public BufferedImage getImage() {
 		return image;
 	}

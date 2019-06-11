@@ -1,6 +1,5 @@
 package com.isaactsmith.platformer.handler;
 
-import com.isaactsmith.platformer.obj.Obj;
 import com.isaactsmith.platformer.obj.Tile;
 import com.isaactsmith.platformer.obj.unit.Unit;
 
@@ -51,19 +50,8 @@ public class UnitHandler {
 		} else {
 			unit.setYVelocity(0);
 		}
-		handleDeathByFalling(unit);
-	}
-
-	private void handleDeathByFalling(Unit unit) {
 		if (unit.getY() > FrameHandler.WINDOW_HEIGHT) {
-			if ((int) xOffset > 0) {
-				xOffset -= 2;
-			} else if ((int) xOffset < 0) {
-				xOffset += 2;
-			} else {
-				unit.setLocation((FrameHandler.WINDOW_WIDTH / 2) - (Obj.GLOBAL_SIZE / 2),
-						(FrameHandler.WINDOW_HEIGHT / 2) - (Obj.GLOBAL_SIZE / 2));
-			}
+			unit.die();
 		}
 	}
 

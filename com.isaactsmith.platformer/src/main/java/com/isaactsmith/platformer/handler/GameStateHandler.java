@@ -8,12 +8,12 @@ import com.isaactsmith.platformer.gamestate.MenuState;
 
 public class GameStateHandler {
 
-	public Stack<GameState> gameStates = new Stack<GameState>();
+	private Stack<GameState> gameStates = new Stack<GameState>();
 
 	public GameStateHandler() {
 		gameStates.push(new MenuState(this));
 	}
-
+	
 	public void tick() {
 		gameStates.peek().tick();
 	}
@@ -28,14 +28,9 @@ public class GameStateHandler {
 
 	public void keyReleased(int e) {
 		gameStates.peek().keyReleased(e);
-
 	}
-
+	
 	public Stack<GameState> getGameStates() {
 		return gameStates;
-	}
-
-	public void setGameStates(Stack<GameState> gameStates) {
-		this.gameStates = gameStates;
 	}
 }

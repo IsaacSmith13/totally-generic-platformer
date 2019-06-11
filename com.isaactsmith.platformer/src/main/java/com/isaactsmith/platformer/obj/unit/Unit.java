@@ -188,4 +188,6 @@ public abstract class Unit extends Obj {
 	public double getTerminalVelocity() {
 		return getHeight() / TERMINAL_VELOCITY;
 	}
+
+	public abstract void die();
 }

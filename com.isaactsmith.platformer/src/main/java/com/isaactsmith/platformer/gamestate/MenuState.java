@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
+import java.util.Stack;
 
 import com.isaactsmith.platformer.handler.FrameHandler;
 import com.isaactsmith.platformer.handler.GameStateHandler;
@@ -41,7 +42,7 @@ public class MenuState extends GameState {
 			}
 			g.setFont(new Font("helvetica", Font.BOLD, 50));
 
-			g.drawString(options[i], FrameHandler.WINDOW_WIDTH / 3 + 50, 150 + i * 150);
+			g.drawString(options[i], (int)(FrameHandler.WINDOW_WIDTH / 2.3), 200 + i * 150);
 		}
 	}
 
@@ -63,7 +64,8 @@ public class MenuState extends GameState {
 		case (KeyEvent.VK_ENTER):
 			switch (currentSelection) {
 			case (0):
-				gameStateHandler.gameStates.push(new LevelState(gameStateHandler, "Level1.level"));
+				Stack<GameState> gameStates = gameStateHandler.getGameStates();
+				gameStates.push(new LevelState(gameStateHandler, "Level1.level"));
 				break;
 			case (1):
 				// todo level selector

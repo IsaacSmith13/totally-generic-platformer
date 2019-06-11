@@ -16,7 +16,7 @@ public class CollisionHandler {
 
 	public void handleTileCollision(Unit unit) {
 		unit.resetCollision();
-		int unitX = unit.getXOffset();
+		int unitX = (int) (unit.getX() + UnitHandler.getXOffset());
 		int unitY = (int) unit.getY();
 		int size = Obj.GLOBAL_SIZE;
 
@@ -47,7 +47,7 @@ public class CollisionHandler {
 				unit.setFalling(false);
 				unit.setCollideTop(true);
 				if (unitY >= (int) tile.getY() - size && !unit.isFalling() && !unit.isJumping()) {
-					unit.setY(tile.getY()  - size - 1);
+					unit.setY(tile.getY() - size - 1);
 				}
 			} else {
 				unit.setFalling(!unit.willCollideTop() && !unit.isJumping());

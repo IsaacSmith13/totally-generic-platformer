@@ -16,6 +16,7 @@ public class FrameHandler extends JPanel implements KeyListener {
 	public static final int WINDOW_HEIGHT = 720;
 //	private List<EnemyUnit> enemies;
 	private GameStateHandler gameStateHandler;
+	private static boolean isRunning;
 
 	public FrameHandler(JFrame frame) {
 		// Initialize the window
@@ -37,29 +38,33 @@ public class FrameHandler extends JPanel implements KeyListener {
 	}
 
 	public void run() {
-
-		gameStateHandler = new GameStateHandler();
-
-		// While game is running, render a new frame every second
-		long lastUpdate = System.nanoTime();
-		long lastRender = System.nanoTime();
-		double ups = 100;
-		double wait = 1000 / ups;
-		double delta = 0;
-		long time;
-		gameStateHandler.tick();
 		while (true) {
-			time = System.nanoTime();
-			delta += (time - lastRender) / 1000000;
-			if ((time - lastUpdate) / 1000000 >= wait) {
-				gameStateHandler.tick();
-				lastUpdate = System.nanoTime();
-			}
-			if (delta >= 2) {
-				repaint();
-				delta = 0;
+			isRunning = true;
+			gameStateHandler = new GameStateHandler();
+			long lastUpdate = System.nanoTime();
+			long lastRender = System.nanoTime();
+			double ups = 100;
+			double wait = 1000 / ups;
+			double delta = 0;
+			long time;
+			gameStateHandler.tick();
+			while (isRunning) {
+				time = System.nanoTime();
+				delta += (time - lastRender) / 1000000;
+				if ((time - lastUpdate) / 1000000 >= wait) {
+					gameStateHandler.tick();
+					lastUpdate = System.nanoTime();
+				}
+				if (delta >= 2) {
+					repaint();
+					delta = 0;
+				}
 			}
 		}
+	}
+
+	public static void setRunning(boolean isRunning) {
+		FrameHandler.isRunning = isRunning;
 	}
 
 	@Override
@@ -68,7 +73,8 @@ public class FrameHandler extends JPanel implements KeyListener {
 			requestFocusInWindow();
 			gameStateHandler.paint(g);
 		} catch (NullPointerException e) {
-//			e.printStackTrace();
+			System.out.println("objects not here yet");
+			// all objects aren't created in the first few frames, so ignore those starting null pointer exceptions
 		}
 	}
 
