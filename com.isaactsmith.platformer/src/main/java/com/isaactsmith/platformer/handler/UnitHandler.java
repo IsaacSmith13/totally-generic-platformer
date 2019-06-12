@@ -13,11 +13,6 @@ public class UnitHandler {
 	}
 
 	public void tick(Unit unit) {
-		moveUnit(unit);
-	}
-
-	private void moveUnit(Unit unit) {
-
 		collisionHandler.handleTileCollision(unit);
 
 		handleJumping(unit);
@@ -25,7 +20,6 @@ public class UnitHandler {
 		handleFalling(unit);
 
 		unit.walk();
-
 	}
 
 	public void handleJumping(Unit unit) {
