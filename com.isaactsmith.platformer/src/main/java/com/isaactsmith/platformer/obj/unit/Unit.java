@@ -55,8 +55,8 @@ public abstract class Unit extends Obj {
 			}
 		}
 
-		g.drawImage(getImages()[imageToRender], (int) Math.round(getX()), (int) Math.round(getY()) + 1, getWidth(),
-				getHeight(), null);
+		g.drawImage(getImages()[imageToRender], (int) Math.round(getX()) - 3, (int) Math.round(getY()) - 3, getHeight() + 5,
+				getWidth() + 5, null);
 		if (++imageCounter / FRAMES_PER_IMAGE_CHANGE == 3) {
 			imageCounter = 0;
 		}
@@ -118,6 +118,7 @@ public abstract class Unit extends Obj {
 
 	public void setJumping(boolean isJumping) {
 		this.isJumping = isJumping;
+		currentJumpSpeed = jumpSpeed;
 	}
 
 	public double getCurrentJumpSpeed() {

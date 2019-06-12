@@ -35,7 +35,6 @@ public class UnitHandler {
 			unit.setCurrentJumpSpeed(currentJumpSpeed - .2);
 
 			if (unit.getCurrentJumpSpeed() <= 0.1) {
-				unit.setCurrentJumpSpeed(unit.getJumpspeed());
 				unit.setJumping(false);
 				unit.setFalling(true);
 			}
@@ -48,7 +47,7 @@ public class UnitHandler {
 			unit.setY(unit.getY() + currentYVelocity);
 			unit.setYVelocity(currentYVelocity + .2);
 		} else {
-			unit.setYVelocity(.2);
+			unit.setYVelocity(0.2);
 		}
 		if (unit.getY() > FrameHandler.WINDOW_HEIGHT) {
 			unit.die();

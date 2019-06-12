@@ -21,9 +21,9 @@ public class CollisionHandler {
 		int unitY = (int) unit.getY();
 		int size = Obj.GLOBAL_SIZE;
 		unit.setFallingHandled(false);
-		int startX = Math.max(Math.min((int) (unit.isLeft() ? (unitX - unit.getMoveSpeed()) / size : unitX / size), terrain[0].length - 1), 0);
+		int startX = Math.max(Math.min(-2 + (int) (unit.isLeft() ? (unitX - unit.getMoveSpeed()) / size : unitX / size), terrain[0].length - 1), 0);
 		int endX = Math.max(Math.min(2 + (int) (unit.isRight() ? (unitX + unit.getMoveSpeed()) / size : unitX / size), terrain[0].length - 1),0);
-		int startY = Math.max(Math.min((int) (unit.isJumping() ? (unitY - unit.getCurrentJumpSpeed()) / size : unitY / size), terrain.length - 1),0);
+		int startY = Math.max(Math.min(-2 + (int) (unit.isJumping() ? (unitY - unit.getCurrentJumpSpeed()) / size : unitY / size), terrain.length - 1),0);
 		int endY = Math.max(Math.min(2 + (int) ((unitY + unit.getYVelocity()) / size), terrain.length - 1),0);
 		
 		for (int y = startY; y <= endY; y++) {
