@@ -15,17 +15,22 @@ public class CollisionHandler {
 	}
 
 	public void handleTileCollision(Unit unit) {
-		unit.resetCollision();		
-		
+		unit.resetCollision();
+
 		int unitX = (int) (unit.getX() + UnitHandler.getXOffset());
 		int unitY = (int) unit.getY();
 		int size = Obj.GLOBAL_SIZE;
 		unit.setFallingHandled(false);
-		int startX = Math.max(Math.min(-2 + (int) (unit.isLeft() ? (unitX - unit.getMoveSpeed()) / size : unitX / size), terrain[0].length - 1), 0);
-		int endX = Math.max(Math.min(2 + (int) (unit.isRight() ? (unitX + unit.getMoveSpeed()) / size : unitX / size), terrain[0].length - 1),0);
-		int startY = Math.max(Math.min(-2 + (int) (unit.isJumping() ? (unitY - unit.getCurrentJumpSpeed()) / size : unitY / size), terrain.length - 1),0);
-		int endY = Math.max(Math.min(2 + (int) ((unitY + unit.getYVelocity()) / size), terrain.length - 1),0);
-		
+		int startX = Math.max(Math.min(-2 + (int) (unit.isLeft() ? (unitX - unit.getMoveSpeed()) / size : unitX / size),
+				terrain[0].length - 1), 0);
+		int endX = Math.max(Math.min(2 + (int) (unit.isRight() ? (unitX + unit.getMoveSpeed()) / size : unitX / size),
+				terrain[0].length - 1), 0);
+		int startY = Math.max(
+				Math.min(-2 + (int) (unit.isJumping() ? (unitY - unit.getCurrentJumpSpeed()) / size : unitY / size),
+						terrain.length - 1),
+				0);
+		int endY = Math.max(Math.min(2 + (int) ((unitY + unit.getYVelocity()) / size), terrain.length - 1), 0);
+
 		for (int y = startY; y <= endY; y++) {
 			for (int x = startX; x <= endX; x++) {
 				if (terrain[y][x] == null) {
@@ -49,7 +54,7 @@ public class CollisionHandler {
 	private void handleDownwardCollision(Unit unit, int unitX, int unitY, int size, Tile tile) {
 
 		int unitLocationOnTopOfTile = (int) tile.getY() - size;
-		
+
 		if (unitY <= unitLocationOnTopOfTile + unit.getTerminalVelocity() + 1) {
 			if (handleOneSideOfCollision(new Point(unitX + 1, unitY + size + 1), tile)
 					|| handleOneSideOfCollision(new Point(unitX + size - 1, unitY + size + 1), tile)) {

@@ -13,7 +13,7 @@ public class GameStateHandler {
 	public GameStateHandler() {
 		gameStates.push(new MenuState(this));
 	}
-	
+
 	public void tick() {
 		gameStates.peek().tick();
 	}
@@ -29,7 +29,7 @@ public class GameStateHandler {
 	public void keyReleased(int e) {
 		gameStates.peek().keyReleased(e);
 	}
-	
+
 	public Stack<GameState> getGameStates() {
 		return gameStates;
 	}

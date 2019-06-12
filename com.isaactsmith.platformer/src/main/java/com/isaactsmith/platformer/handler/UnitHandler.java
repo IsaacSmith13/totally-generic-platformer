@@ -24,7 +24,7 @@ public class UnitHandler {
 
 		handleFalling(unit);
 
-		handleWalking(unit);
+		unit.walk();
 
 	}
 
@@ -52,10 +52,6 @@ public class UnitHandler {
 		if (unit.getY() > FrameHandler.WINDOW_HEIGHT) {
 			unit.die();
 		}
-	}
-
-	public void handleWalking(Unit unit) {
-		unit.walk();
 	}
 
 	public static double getXOffset() {

@@ -42,7 +42,7 @@ public class MenuState extends GameState {
 			}
 			g.setFont(new Font("helvetica", Font.BOLD, 50));
 
-			g.drawString(options[i], (int)(FrameHandler.WINDOW_WIDTH / 2.3), 200 + i * 150);
+			g.drawString(options[i], (int) (FrameHandler.WINDOW_WIDTH / 2.3), 200 + i * 150);
 		}
 	}
 
