@@ -29,9 +29,11 @@ public class ImageLoader {
 		if (isTile) {
 			switch (id) {
 			case (0):
-				return getBufferedImage("SolidBlock");
+				return getBufferedImage("SolidDirt");
 			case (1): 
-				return getBufferedImage("PassableBlock");
+				return getBufferedImage("SolidGrass");
+			case(2):
+				return getBufferedImage("PassableGrass");
 			default:
 				return null;
 			}

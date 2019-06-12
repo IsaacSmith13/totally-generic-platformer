@@ -18,7 +18,7 @@ public class Tile extends Obj {
 		super(x, y, ImageLoader.getImageById(id, true));
 		tileAsRect = new Rectangle(x, y, getWidth(), getHeight());
 		this.setId(id);
-		if (id == 1) {
+		if (id == 2) {
 			isPassable = true;
 		}
 	}

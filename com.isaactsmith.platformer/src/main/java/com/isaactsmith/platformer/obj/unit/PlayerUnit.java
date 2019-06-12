@@ -9,7 +9,6 @@ import com.isaactsmith.platformer.obj.Obj;
 
 public class PlayerUnit extends Unit {
 
-	private static final int deathCameraSpeed = GLOBAL_SIZE / 8;
 	private int lives = 3;
 
 	public PlayerUnit(BufferedImage[] images) {
@@ -29,6 +28,7 @@ public class PlayerUnit extends Unit {
 	public void die() {
 		if (lives > 0) {
 			int xOffset = (int) UnitHandler.getXOffset();
+			int deathCameraSpeed = Math.max(Math.abs(xOffset) / GLOBAL_SIZE, 4);
 			if (xOffset > deathCameraSpeed) {
 				xOffset -= deathCameraSpeed;
 			} else if (xOffset < -deathCameraSpeed) {
