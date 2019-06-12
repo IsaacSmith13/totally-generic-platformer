@@ -48,7 +48,7 @@ public class UnitHandler {
 			unit.setY(unit.getY() + currentYVelocity);
 			unit.setYVelocity(currentYVelocity + .2);
 		} else {
-			unit.setYVelocity(0);
+			unit.setYVelocity(.2);
 		}
 		if (unit.getY() > FrameHandler.WINDOW_HEIGHT) {
 			unit.die();

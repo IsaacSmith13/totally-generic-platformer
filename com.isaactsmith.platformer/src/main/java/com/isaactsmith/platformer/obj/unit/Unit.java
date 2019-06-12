@@ -21,6 +21,7 @@ public abstract class Unit extends Obj {
 	private int lastImage = 0;
 	private boolean left = false;
 	private boolean right = false;
+	private boolean isFallingHandled = false;
 	private boolean willCollideTop = false;
 	private boolean willCollideRight = false;
 	private boolean willCollideLeft = false;
@@ -190,4 +191,12 @@ public abstract class Unit extends Obj {
 	}
 
 	public abstract void die();
+
+	public boolean isFallingHandled() {
+		return isFallingHandled;
+	}
+
+	public void setFallingHandled(boolean isFallingHandled) {
+		this.isFallingHandled = isFallingHandled;
+	}
 }
