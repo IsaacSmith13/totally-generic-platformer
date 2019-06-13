@@ -4,6 +4,7 @@ import java.awt.Point;
 
 import com.isaactsmith.platformer.obj.Obj;
 import com.isaactsmith.platformer.obj.Tile;
+import com.isaactsmith.platformer.obj.unit.PlayerUnit;
 import com.isaactsmith.platformer.obj.unit.Unit;
 
 public class CollisionHandler {
@@ -16,9 +17,11 @@ public class CollisionHandler {
 
 	public void handleTileCollision(Unit unit) {
 		unit.resetCollision();
-
-		int unitX = (int) (unit.getX() + UnitHandler.getXOffset());
+		int unitX = (int) unit.getX();
 		int unitY = (int) unit.getY();
+		if (unit instanceof PlayerUnit) {
+			unitX += UnitHandler.getXOffset();
+		}
 		int size = Obj.GLOBAL_SIZE;
 		unit.setFallingHandled(false);
 		int startX = Math.max(Math.min(-2 + (int) (unit.isLeft() ? (unitX - unit.getMoveSpeed()) / size : unitX / size),

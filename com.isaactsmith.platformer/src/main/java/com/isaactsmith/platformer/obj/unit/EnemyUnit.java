@@ -37,6 +37,16 @@ public abstract class EnemyUnit extends Unit {
 
 	@Override
 	public void walk() {
+		int randomNum = (int) (Math.random() * 1000);
+		if (randomNum < 2) {
+			setRight(false);
+			setLeft(true);
+		} else if (randomNum < 5) {
+			setLeft(false);
+			setRight(true);
+		} else if (randomNum < 20) {
+			jump();
+		}
 		if (isRight() && !willCollideRight()) {
 			setX(getX() + getMoveSpeed());
 		}
