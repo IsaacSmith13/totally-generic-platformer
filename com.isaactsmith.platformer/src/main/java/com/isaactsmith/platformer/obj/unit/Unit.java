@@ -10,7 +10,7 @@ public abstract class Unit extends Obj {
 	// terminal velocity = unit height / terminal velocity pixels per frame
 	private static final int TERMINAL_VELOCITY = 8;
 	private static final int FRAMES_PER_IMAGE_CHANGE = 120;
-	private static final double jumpSpeed = 8;
+	private double jumpSpeed = 8;
 	private double currentJumpSpeed = jumpSpeed;
 	private boolean isJumping = false;
 	private double moveSpeed = 2.5;
@@ -201,5 +201,9 @@ public abstract class Unit extends Obj {
 
 	public void setFallingHandled(boolean isFallingHandled) {
 		this.isFallingHandled = isFallingHandled;
+	}
+
+	public void setJumpSpeed(double jumpSpeed) {
+		this.jumpSpeed = jumpSpeed;
 	}
 }

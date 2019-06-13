@@ -62,7 +62,7 @@ public class LevelLoader {
 	private void makeEnemy(int x, int y, int id) {
 		switch (id) {
 		case (20):
-			enemies.add(new SkeletonEnemy(x, y, ImageLoader.getUnitImagesById(id), 2));
+			enemies.add(new SkeletonEnemy(x, y, ImageLoader.getUnitImagesById(id), 1, 6));
 		}
 	}
 

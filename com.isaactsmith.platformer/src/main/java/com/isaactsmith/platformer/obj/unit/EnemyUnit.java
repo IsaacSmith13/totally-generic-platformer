@@ -22,6 +22,11 @@ public abstract class EnemyUnit extends Unit {
 		this(x, y, images);
 		setMoveSpeed(moveSpeed);
 	}
+	
+	public EnemyUnit(int x, int y, BufferedImage[] images, double moveSpeed, double jumpSpeed) {
+		this(x, y, images, moveSpeed);
+		setJumpSpeed(jumpSpeed);
+	}
 
 	@Override
 	public void paint(Graphics g) {
