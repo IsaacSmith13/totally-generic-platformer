@@ -153,7 +153,7 @@ public abstract class Unit extends Obj {
 		return moveSpeed;
 	}
 
-	public void setMoveSpeed(int moveSpeed) {
+	public void setMoveSpeed(double moveSpeed) {
 		this.moveSpeed = moveSpeed;
 	}
 

@@ -25,19 +25,17 @@ public class LevelState extends GameState {
 		super(gameStateHandler);
 		currentLevel = new LevelLoader(levelFilePath);
 		terrain = currentLevel.getTerrain();
-//		enemies = currentLevel.getEnemies();
+		enemies = currentLevel.getEnemies();
 		player = currentLevel.getPlayer();
 		unitHandler = new UnitHandler(terrain);
 	}
 
-	public void deleteEnemy(EnemyUnit enemy) {
-		enemies.remove(enemy);
-	}
-
 	@Override
 	public void tick() {
+		for (int i = 0; i < enemies.size(); i++) {
+			unitHandler.tick(enemies.get(i));
+		}
 		unitHandler.tick(player);
-		// foreach enemy, tick
 	}
 
 	@Override
@@ -65,7 +63,10 @@ public class LevelState extends GameState {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		// Paint enemies
+		for (int i = 0; i < enemies.size(); i++) {
+			enemies.get(i).paint(g);
+		}
 		// Paint player
 		player.paint(g);
 	}

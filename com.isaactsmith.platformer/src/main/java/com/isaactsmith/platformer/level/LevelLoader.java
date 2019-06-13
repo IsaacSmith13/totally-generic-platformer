@@ -1,28 +1,30 @@
 package com.isaactsmith.platformer.level;
 
-import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.isaactsmith.platformer.obj.Obj;
 import com.isaactsmith.platformer.obj.Tile;
+import com.isaactsmith.platformer.obj.unit.EnemyUnit;
 import com.isaactsmith.platformer.obj.unit.PlayerUnit;
+import com.isaactsmith.platformer.obj.unit.SkeletonEnemy;
 
 public class LevelLoader {
 
-	private static final String[] DIRECTIONS = { "Right", "Left" };
-	private static final String PLAYER_IMG = "Player";
 	private String levelpath;
 	private int width;
 	private int height;
 	private Tile[][] terrain;
+	private List<EnemyUnit> enemies = new ArrayList<EnemyUnit>();
 	private PlayerUnit player;
 
 	public LevelLoader(String levelPath) {
 		this.levelpath = levelPath;
-		player = makePlayer();
+		player = new PlayerUnit(ImageLoader.getUnitImagesById(-1));
 		readLevel();
 	}
 
@@ -45,31 +47,22 @@ public class LevelLoader {
 					if (id < 20) {
 						terrain[y][x] = new Tile(x * Obj.GLOBAL_SIZE, y * Obj.GLOBAL_SIZE, id);
 					} else {
-						// TODO make enemy if id > 20
+						makeEnemy(x, y, id);
 					}
 				}
 			}
 
-		} catch ( NumberFormatException  | IOException e) {
+		} catch (NumberFormatException | IOException e) {
 			System.out.println("Error in level file");
 			e.printStackTrace();
 		}
 	}
 
-	public PlayerUnit makePlayer() {
-		BufferedImage[] images = new BufferedImage[6];
-		// Makes an array with <imageName>Right0, <imageName>Right1, <imageName>Right2,
-		// <imageName>Left0, etc.
-		// There are three images in the walking animation, and two sides a unit can
-		// face
-		int imageNumber = 0;
-		for (int j = 0; j < DIRECTIONS.length; j++) {
-			for (int i = 0; i < 3; i++) {
-				// Math to make each image enter the array in a different index
-				images[imageNumber++] = ImageLoader.getBufferedImage(PLAYER_IMG + DIRECTIONS[j] + i);
-			}
+	private void makeEnemy(int x, int y, int id) {
+		switch(id) {
+		case(20):
+			enemies.add(new SkeletonEnemy(x, y, ImageLoader.getUnitImagesById(id), enemies));
 		}
-		return new PlayerUnit(images);
 	}
 
 	public int getWidth() {
@@ -86,5 +79,9 @@ public class LevelLoader {
 
 	public PlayerUnit getPlayer() {
 		return player;
+	}
+	
+	public List<EnemyUnit> getEnemies() {
+		return enemies;
 	}
 }

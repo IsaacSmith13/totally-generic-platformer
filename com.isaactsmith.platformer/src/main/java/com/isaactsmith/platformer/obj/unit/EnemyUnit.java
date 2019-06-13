@@ -12,6 +12,11 @@ public abstract class EnemyUnit extends Unit {
 		super(x, y, images);
 		this.enemies = enemies;
 	}
+	
+	public EnemyUnit(int x, int y, BufferedImage[] images, List<EnemyUnit> enemies, double moveSpeed) {
+		this(x, y, images, enemies);
+		setMoveSpeed(moveSpeed);
+	}
 
 	public static boolean isEnemy() {
 		return isEnemy;

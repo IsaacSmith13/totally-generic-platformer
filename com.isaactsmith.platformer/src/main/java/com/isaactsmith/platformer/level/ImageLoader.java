@@ -10,6 +10,9 @@ import javax.imageio.ImageIO;
 public class ImageLoader {
 
 	private static Map<String, BufferedImage> images = new HashMap<String, BufferedImage>();
+	private static final String[] DIRECTIONS = { "Right", "Left" };
+	private static final String PLAYER_IMG = "Player";
+	private static final String SKELETON_IMG = "Skeleton";
 
 	public static BufferedImage getBufferedImage(String filePath) {
 		filePath = "images/" + filePath + ".png";
@@ -25,20 +28,43 @@ public class ImageLoader {
 		return image;
 	}
 
-	public static BufferedImage getImageById(int id, boolean isTile) {
-		if (isTile) {
-			switch (id) {
-			case (0):
-				return getBufferedImage("SolidDirt");
-			case (1): 
-				return getBufferedImage("SolidGrass");
-			case(2):
-				return getBufferedImage("PassableGrass");
-			default:
-				return null;
+	public static BufferedImage getTileImageById(int id) {
+		switch (id) {
+		case (0):
+			return getBufferedImage("SolidDirt");
+		case (1):
+			return getBufferedImage("SolidGrass");
+		case (2):
+			return getBufferedImage("PassableGrass");
+		default:
+			return null;
+		}
+	}
+
+	public static BufferedImage[] getUnitImagesById(int id) {
+		switch(id) {
+		case(-1):
+			return createImagesArray(PLAYER_IMG);
+		case(20):
+			return createImagesArray(SKELETON_IMG);
+		default:
+			return null;
+		}
+	}
+
+	private static BufferedImage[] createImagesArray(String imagePath) {
+		BufferedImage[] images = new BufferedImage[6];
+		// Makes an array with <imageName>Right0, <imageName>Right1, <imageName>Right2,
+		// <imageName>Left0, etc.
+		// There are three images in the walking animation, and two sides a unit can
+		// face
+		int imageNumber = 0;
+		for (int j = 0; j < DIRECTIONS.length; j++) {
+			for (int i = 0; i < 3; i++) {
+				// Math to make each image enter the array in a different index
+				images[imageNumber++] = ImageLoader.getBufferedImage(imagePath + DIRECTIONS[j] + i);
 			}
 		}
-		// TODO implement non-tile id image loading
-		return null;
+		return images;
 	}
 }
