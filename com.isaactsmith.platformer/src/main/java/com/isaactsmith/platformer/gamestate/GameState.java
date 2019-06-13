@@ -11,8 +11,6 @@ public abstract class GameState {
 		this.gameStateHandler = gameStateHandler;
 	}
 
-	public abstract void init();
-
 	public abstract void tick();
 
 	public abstract void paint(Graphics g);

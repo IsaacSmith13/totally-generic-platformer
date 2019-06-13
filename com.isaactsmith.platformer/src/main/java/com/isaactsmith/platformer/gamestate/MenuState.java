@@ -11,6 +11,8 @@ import com.isaactsmith.platformer.handler.GameStateHandler;
 
 public class MenuState extends GameState {
 
+	private static final String level1Path = "Level1.level";
+
 	String[] options = { "Start", "Levels", "Quit" };
 	private int currentSelection = 0;
 
@@ -19,13 +21,7 @@ public class MenuState extends GameState {
 	}
 
 	@Override
-	public void init() {
-
-	}
-
-	@Override
 	public void tick() {
-
 	}
 
 	@Override
@@ -41,7 +37,6 @@ public class MenuState extends GameState {
 				g.setColor(Color.BLACK);
 			}
 			g.setFont(new Font("helvetica", Font.BOLD, 50));
-
 			g.drawString(options[i], (int) (FrameHandler.WINDOW_WIDTH / 2.3), 200 + i * 150);
 		}
 	}
@@ -65,12 +60,14 @@ public class MenuState extends GameState {
 			switch (currentSelection) {
 			case (0):
 				Stack<GameState> gameStates = gameStateHandler.getGameStates();
-				gameStates.push(new LevelState(gameStateHandler, "Level1.level"));
+				gameStates.push(new LevelState(gameStateHandler, level1Path));
 				break;
 			case (1):
-				// todo level selector
+				break;
+			// todo level selector
 			case (2):
 				System.exit(0);
+				break;
 			}
 		default:
 			break;

@@ -9,7 +9,7 @@ import java.awt.event.KeyListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class FrameHandler extends JPanel implements KeyListener {
+public class FrameHandler extends JPanel implements KeyListener, Runnable {
 
 	private static final long serialVersionUID = 1L;
 	public static final int WINDOW_WIDTH = 1280;
@@ -37,6 +37,7 @@ public class FrameHandler extends JPanel implements KeyListener {
 		addKeyListener(this);
 	}
 
+	@Override
 	public void run() {
 		while (true) {
 			isRunning = true;

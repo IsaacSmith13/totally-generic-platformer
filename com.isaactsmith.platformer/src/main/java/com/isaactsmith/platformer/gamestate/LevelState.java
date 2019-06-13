@@ -20,25 +20,18 @@ public class LevelState extends GameState {
 	private List<EnemyUnit> enemies;
 	private PlayerUnit player;
 	private UnitHandler unitHandler;
-	private String levelFilePath;
 
 	public LevelState(GameStateHandler gameStateHandler, String levelFilePath) {
 		super(gameStateHandler);
-		this.levelFilePath = levelFilePath;
-		init();
-	}
-
-	public void deleteEnemy(EnemyUnit enemy) {
-		enemies.remove(enemy);
-	}
-
-	@Override
-	public void init() {
 		currentLevel = new LevelLoader(levelFilePath);
 		terrain = currentLevel.getTerrain();
 //		enemies = currentLevel.getEnemies();
 		player = currentLevel.getPlayer();
 		unitHandler = new UnitHandler(terrain);
+	}
+
+	public void deleteEnemy(EnemyUnit enemy) {
+		enemies.remove(enemy);
 	}
 
 	@Override
