@@ -36,7 +36,9 @@ public abstract class Unit extends Obj {
 	}
 
 	@Override
-	public void paint(Graphics g) {
+	public abstract void paint(Graphics g);
+
+	public BufferedImage getImageToRender() {
 		// selects a default standing image facing the last moved direction to use if
 		// not moving
 		int imageToRender = ((lastImage) / 3) * 3;
@@ -55,12 +57,11 @@ public abstract class Unit extends Obj {
 			}
 		}
 
-		g.drawImage(getImages()[imageToRender], (int) Math.round(getX()) - 3, (int) Math.round(getY()) - 3, getHeight() + 5,
-				getWidth() + 5, null);
 		if (++imageCounter / FRAMES_PER_IMAGE_CHANGE == 3) {
 			imageCounter = 0;
 		}
 		lastImage = imageToRender;
+		return getImages()[imageToRender];
 	}
 
 	public void jump() {

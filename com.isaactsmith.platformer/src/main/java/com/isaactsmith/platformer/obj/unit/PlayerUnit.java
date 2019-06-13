@@ -1,5 +1,6 @@
 package com.isaactsmith.platformer.obj.unit;
 
+import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
@@ -14,6 +15,12 @@ public class PlayerUnit extends Unit {
 	public PlayerUnit(BufferedImage[] images) {
 		super((FrameHandler.WINDOW_WIDTH / 2) - (GLOBAL_SIZE / 2), (FrameHandler.WINDOW_HEIGHT / 2) - (GLOBAL_SIZE / 2),
 				images);
+	}
+	
+	@Override
+	public void paint(Graphics g) {
+		g.drawImage(getImageToRender(), (int) Math.round(getX()) - 3, (int) Math.round(getY()) - 3,
+				getHeight() + 5, getWidth() + 5, null);
 	}
 
 	public void walk() {

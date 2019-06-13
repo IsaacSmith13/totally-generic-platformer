@@ -33,6 +33,7 @@ public class LevelLoader {
 				BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
 			int width = Integer.parseInt(reader.readLine());
 			int height = Integer.parseInt(reader.readLine());
+			int size = Obj.GLOBAL_SIZE;
 
 			terrain = new Tile[height][width];
 
@@ -45,9 +46,9 @@ public class LevelLoader {
 						continue;
 					}
 					if (id < 20) {
-						terrain[y][x] = new Tile(x * Obj.GLOBAL_SIZE, y * Obj.GLOBAL_SIZE, id);
+						terrain[y][x] = new Tile(x * size, y * size, id);
 					} else {
-						makeEnemy(x, y, id);
+						makeEnemy(x * size, y * size, id);
 					}
 				}
 			}
@@ -59,8 +60,8 @@ public class LevelLoader {
 	}
 
 	private void makeEnemy(int x, int y, int id) {
-		switch(id) {
-		case(20):
+		switch (id) {
+		case (20):
 			enemies.add(new SkeletonEnemy(x, y, ImageLoader.getUnitImagesById(id), enemies));
 		}
 	}
@@ -80,7 +81,7 @@ public class LevelLoader {
 	public PlayerUnit getPlayer() {
 		return player;
 	}
-	
+
 	public List<EnemyUnit> getEnemies() {
 		return enemies;
 	}
