@@ -2,23 +2,24 @@ package com.isaactsmith.platformer.obj.unit;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.util.List;
 
 import com.isaactsmith.platformer.handler.FrameHandler;
 import com.isaactsmith.platformer.handler.UnitHandler;
 
 public abstract class EnemyUnit extends Unit {
 
-	private List<EnemyUnit> enemies;
 	private boolean isActive = false;
+	private int startX;
+	private int startY;
 
-	public EnemyUnit(int x, int y, BufferedImage[] images, List<EnemyUnit> enemies) {
+	public EnemyUnit(int x, int y, BufferedImage[] images) {
 		super(x, y, images);
-		this.enemies = enemies;
+		this.startX = x;
+		this.startY = y;
 	}
 
-	public EnemyUnit(int x, int y, BufferedImage[] images, List<EnemyUnit> enemies, double moveSpeed) {
-		this(x, y, images, enemies);
+	public EnemyUnit(int x, int y, BufferedImage[] images, double moveSpeed) {
+		this(x, y, images);
 		setMoveSpeed(moveSpeed);
 	}
 
@@ -34,7 +35,8 @@ public abstract class EnemyUnit extends Unit {
 	}
 
 	public void die() {
-		enemies.remove(this);
+		setY(-1000);
+		setActive(false);
 	}
 
 	@Override
@@ -63,5 +65,17 @@ public abstract class EnemyUnit extends Unit {
 	
 	public void setActive(boolean isActive) {
 		this.isActive = isActive;
+	}
+	
+	public int getStartX() {
+		return startX;
+	}
+
+	public int getStartY() {
+		return startY;
+	}
+
+	public void reset() {
+		setLocation(startX, startY);
 	}
 }

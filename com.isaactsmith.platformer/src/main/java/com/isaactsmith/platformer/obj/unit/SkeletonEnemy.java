@@ -1,15 +1,14 @@
 package com.isaactsmith.platformer.obj.unit;
 
 import java.awt.image.BufferedImage;
-import java.util.List;
 
 public class SkeletonEnemy extends EnemyUnit {
 
-	public SkeletonEnemy(int x, int y, BufferedImage[] images, List<EnemyUnit> enemies) {
-		super(x, y, images, enemies);
+	public SkeletonEnemy(int x, int y, BufferedImage[] images) {
+		super(x, y, images);
 	}
-	
-	public SkeletonEnemy(int x, int y, BufferedImage[] images, List<EnemyUnit> enemies, double movespeed) {
-		super(x, y, images, enemies, movespeed);
+
+	public SkeletonEnemy(int x, int y, BufferedImage[] images, double movespeed) {
+		super(x, y, images, movespeed);
 	}
 }

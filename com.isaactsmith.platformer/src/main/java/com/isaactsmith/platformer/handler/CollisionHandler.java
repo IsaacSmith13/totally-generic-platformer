@@ -14,22 +14,16 @@ public class CollisionHandler {
 	private Tile[][] terrain;
 	private List<EnemyUnit> enemies;
 	private PlayerUnit player;
+	private UnitHandler unitHandler;
 
-	public CollisionHandler(Tile[][] terrain, List<EnemyUnit> enemies, PlayerUnit player) {
+	public CollisionHandler(Tile[][] terrain, List<EnemyUnit> enemies, PlayerUnit player, UnitHandler unitHandler) {
 		this.terrain = terrain;
 		this.enemies = enemies;
 		this.player = player;
+		this.unitHandler = unitHandler;
 	}
 
-	public void handleEnemyCollision() {
-		for (int i = 0; i < enemies.size(); i++) {
-			// TODO - handle collision
-			
-			}
-		}
-	
-
-	public void handleTileCollision(Unit unit) {
+	public void handleCollision(Unit unit) {
 		unit.resetCollision();
 		int unitX = (int) unit.getX();
 		int unitY = (int) unit.getY();
@@ -37,7 +31,27 @@ public class CollisionHandler {
 			unitX += UnitHandler.getXOffset();
 		}
 		int size = Obj.GLOBAL_SIZE;
-		unit.setFallingHandled(false);
+
+		handleTileCollision(unit, unitX, unitY, size);
+	}
+
+	public void handleEnemyCollision() {
+		for (int i = 0; i < enemies.size(); i++) {
+			EnemyUnit enemy = enemies.get(i);
+			if (player.getRect().intersects(enemy.getRect())) {
+				if (player.getY() <= enemy.getY() - enemy.getHeight() + player.getYVelocity()
+						+ enemy.getCurrentJumpSpeed()) {
+					enemy.die();
+				} else {
+					unitHandler.resetEnemies();
+					player.die();
+				}
+			}
+		}
+	}
+
+	public void handleTileCollision(Unit unit, int unitX, int unitY, int size) {
+
 		int startX = Math.max(Math.min(-2 + (int) (unit.isLeft() ? (unitX - unit.getMoveSpeed()) / size : unitX / size),
 				terrain[0].length - 1), 0);
 		int endX = Math.max(Math.min(2 + (int) (unit.isRight() ? (unitX + unit.getMoveSpeed()) / size : unitX / size),
@@ -69,7 +83,6 @@ public class CollisionHandler {
 	}
 
 	private void handleDownwardCollision(Unit unit, int unitX, int unitY, int size, Obj object) {
-
 		int unitLocationOnTopOfObj = (int) object.getY() - size;
 
 		if (unitY <= unitLocationOnTopOfObj + unit.getTerminalVelocity() + 1) {

@@ -1,6 +1,7 @@
 package com.isaactsmith.platformer.obj.unit;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
@@ -11,16 +12,17 @@ import com.isaactsmith.platformer.obj.Obj;
 public class PlayerUnit extends Unit {
 
 	private int lives = 3;
+	private double timeOfDeath = -1;
 
 	public PlayerUnit(BufferedImage[] images) {
 		super((FrameHandler.WINDOW_WIDTH / 2) - (GLOBAL_SIZE / 2), (FrameHandler.WINDOW_HEIGHT / 2) - (GLOBAL_SIZE / 2),
 				images);
 	}
-	
+
 	@Override
 	public void paint(Graphics g) {
-		g.drawImage(getImageToRender(), (int) Math.round(getX()) - 3, (int) Math.round(getY()) - 3,
-				getHeight() + 5, getWidth() + 5, null);
+		g.drawImage(getImageToRender(), (int) Math.round(getX()) - 3, (int) Math.round(getY()) - 3, getHeight() + 5,
+				getWidth() + 5, null);
 	}
 
 	public void walk() {
@@ -34,13 +36,20 @@ public class PlayerUnit extends Unit {
 
 	public void die() {
 		if (lives > 0) {
+			if (timeOfDeath < 0) {
+				setAlive(false);
+				setY(FrameHandler.WINDOW_HEIGHT + 50);
+				timeOfDeath = System.currentTimeMillis() / 1000;
+			}
 			int xOffset = (int) UnitHandler.getXOffset();
 			int deathCameraSpeed = Math.max(Math.abs(xOffset) / GLOBAL_SIZE, 4);
 			if (xOffset > deathCameraSpeed) {
 				xOffset -= deathCameraSpeed;
 			} else if (xOffset < -deathCameraSpeed) {
 				xOffset += deathCameraSpeed;
-			} else {
+			} else if (System.currentTimeMillis() / 1000 > timeOfDeath + 3) {
+				setAlive(true);
+				timeOfDeath = -1;
 				lives--;
 				xOffset = 0;
 				setLocation((FrameHandler.WINDOW_WIDTH / 2) - (Obj.GLOBAL_SIZE / 2),
@@ -96,6 +105,10 @@ public class PlayerUnit extends Unit {
 		default:
 			break;
 		}
+	}
+
+	public Rectangle getRect() {
+		return new Rectangle((int) (getX() + UnitHandler.getXOffset()), (int) getY(), getWidth(), getHeight() + 2);
 	}
 
 	public int getLives() {

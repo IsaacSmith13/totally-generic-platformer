@@ -15,28 +15,29 @@ public class UnitHandler {
 	PlayerUnit player;
 
 	public UnitHandler(Tile[][] terrain, List<EnemyUnit> enemies, PlayerUnit player) {
-		collisionHandler = new CollisionHandler(terrain, enemies, player);
+		collisionHandler = new CollisionHandler(terrain, enemies, player, this);
 		this.enemies = enemies;
 		this.player = player;
 	}
 
 	public void tick() {
+		// Handle enemy collision
+		collisionHandler.handleEnemyCollision();
+		// Handle player tick logic
+		collisionHandler.handleCollision(player);
+		handleJumping(player);
+		handleFalling(player);
+		player.walk();
 		// Handle enemy tick logic
 		for (int i = 0; i < enemies.size(); i++) {
 			Unit currentEnemy = enemies.get(i);
-			if (((EnemyUnit) currentEnemy).isActive()) {
-				collisionHandler.handleTileCollision(currentEnemy);
+			if (((EnemyUnit) currentEnemy).isActive() && player.isAlive()) {
+				collisionHandler.handleCollision(currentEnemy);
 				handleJumping(currentEnemy);
 				handleFalling(currentEnemy);
 				currentEnemy.walk();
 			}
 		}
-		// Handle player tick logic
-		collisionHandler.handleTileCollision(player);
-		collisionHandler.handleEnemyCollision();
-		handleJumping(player);
-		handleFalling(player);
-		player.walk();
 	}
 
 	public void handleJumping(Unit unit) {
@@ -61,6 +62,9 @@ public class UnitHandler {
 			unit.setYVelocity(0.2);
 		}
 		if (unit.getY() > FrameHandler.WINDOW_HEIGHT) {
+			if (unit instanceof PlayerUnit) {
+				resetEnemies();
+			}
 			unit.die();
 		}
 	}
@@ -71,5 +75,11 @@ public class UnitHandler {
 
 	public static void setXOffset(double xOffset) {
 		UnitHandler.xOffset = xOffset;
+	}
+
+	public void resetEnemies() {
+		for (int i = 0, numberOfEnemies = enemies.size(); i < numberOfEnemies; i++) {
+			enemies.get(i).reset();
+		}
 	}
 }
