@@ -20,12 +20,14 @@ public class CollisionHandler {
 		this.enemies = enemies;
 		this.player = player;
 	}
-	
+
 	public void handleEnemyCollision() {
 		for (int i = 0; i < enemies.size(); i++) {
 			// TODO - handle collision
+			
+			}
 		}
-	}
+	
 
 	public void handleTileCollision(Unit unit) {
 		unit.resetCollision();
@@ -66,18 +68,18 @@ public class CollisionHandler {
 		}
 	}
 
-	private void handleDownwardCollision(Unit unit, int unitX, int unitY, int size, Tile tile) {
+	private void handleDownwardCollision(Unit unit, int unitX, int unitY, int size, Obj object) {
 
-		int unitLocationOnTopOfTile = (int) tile.getY() - size;
+		int unitLocationOnTopOfObj = (int) object.getY() - size;
 
-		if (unitY <= unitLocationOnTopOfTile + unit.getTerminalVelocity() + 1) {
-			if (handleOneSideOfCollision(new Point(unitX + 1, unitY + size + 1), tile)
-					|| handleOneSideOfCollision(new Point(unitX + size - 1, unitY + size + 1), tile)) {
+		if (unitY <= unitLocationOnTopOfObj + unit.getTerminalVelocity() + 1) {
+			if (handleOneSideOfCollision(new Point(unitX + 1, unitY + size + 1), object)
+					|| handleOneSideOfCollision(new Point(unitX + size - 1, unitY + size + 1), object)) {
 				unit.setFalling(false);
 				unit.setCollideTop(true);
 				unit.setFallingHandled(true);
-				if (unitY >= (int) tile.getY() - size && !unit.isFalling() && !unit.isJumping()) {
-					unit.setY(tile.getY() - size - 1);
+				if (unitY >= (int) object.getY() - size && !unit.isFalling() && !unit.isJumping()) {
+					unit.setY(object.getY() - size - 1);
 				}
 			} else {
 				unit.setFalling(!unit.willCollideTop() && !unit.isJumping());
@@ -85,34 +87,34 @@ public class CollisionHandler {
 		}
 	}
 
-	private void handleUpwardCollision(Unit unit, int unitX, int unitY, int size, Tile tile) {
+	private void handleUpwardCollision(Unit unit, int unitX, int unitY, int size, Obj object) {
 		if (unit.getYVelocity() != 0) {
-			if (handleOneSideOfCollision(new Point(unitX + 1, unitY), tile)
-					|| handleOneSideOfCollision(new Point(unitX + size - 1, unitY), tile)) {
+			if (handleOneSideOfCollision(new Point(unitX + 1, unitY), object)
+					|| handleOneSideOfCollision(new Point(unitX + size - 1, unitY), object)) {
 				unit.setJumping(false);
 			}
 		}
 	}
 
-	private void handleLeftwardCollision(Unit unit, int unitX, int unitY, int size, Tile tile) {
+	private void handleLeftwardCollision(Unit unit, int unitX, int unitY, int size, Obj object) {
 		if (unit.isLeft()) {
-			if (handleOneSideOfCollision(new Point(unitX - 2, unitY + 2), tile)
-					|| handleOneSideOfCollision(new Point(unitX - 2, unitY + size - 1), tile)) {
+			if (handleOneSideOfCollision(new Point(unitX - 2, unitY + 2), object)
+					|| handleOneSideOfCollision(new Point(unitX - 2, unitY + size - 1), object)) {
 				unit.setCollideLeft(true);
 			}
 		}
 	}
 
-	private void handleRightwardCollision(Unit unit, int unitX, int unitY, int size, Tile tile) {
+	private void handleRightwardCollision(Unit unit, int unitX, int unitY, int size, Obj object) {
 		if (unit.isRight()) {
-			if (handleOneSideOfCollision(new Point(unitX + size + 3, unitY + 2), tile)
-					|| handleOneSideOfCollision(new Point(unitX + size + 3, unitY + size - 1), tile)) {
+			if (handleOneSideOfCollision(new Point(unitX + size + 3, unitY + 2), object)
+					|| handleOneSideOfCollision(new Point(unitX + size + 3, unitY + size - 1), object)) {
 				unit.setCollideRight(true);
 			}
 		}
 	}
 
-	private boolean handleOneSideOfCollision(Point pointInObj, Tile tile) {
-		return tile.getTileAsRect().contains(pointInObj);
+	private boolean handleOneSideOfCollision(Point pointInObj, Obj object) {
+		return object.getRect().contains(pointInObj);
 	}
 }

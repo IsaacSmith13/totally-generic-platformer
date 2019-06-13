@@ -5,6 +5,8 @@ import java.awt.image.BufferedImage;
 
 import com.isaactsmith.platformer.obj.Obj;
 
+import javafx.scene.shape.Rectangle;
+
 public abstract class Unit extends Obj {
 
 	// terminal velocity = unit height / terminal velocity pixels per frame

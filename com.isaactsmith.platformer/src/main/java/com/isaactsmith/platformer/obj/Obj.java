@@ -1,7 +1,9 @@
 package com.isaactsmith.platformer.obj;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+
 
 public abstract class Obj {
 
@@ -35,6 +37,10 @@ public abstract class Obj {
 	public void setLocation(int x, int y) {
 		this.x = x;
 		this.y = y;
+	}
+	
+	public Rectangle getRect() {
+		return new Rectangle((int)getX(), (int)getY(), getWidth(), getHeight());
 	}
 
 	public double getX() {

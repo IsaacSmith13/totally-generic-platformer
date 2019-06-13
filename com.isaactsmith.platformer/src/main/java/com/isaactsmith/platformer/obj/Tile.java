@@ -36,7 +36,8 @@ public class Tile extends Obj {
 		}
 	}
 
-	public Rectangle getTileAsRect() {
+	@Override
+	public Rectangle getRect() {
 		return tileAsRect;
 	}
 
