@@ -37,7 +37,6 @@ public class FrameHandler extends JPanel implements KeyListener, Runnable {
 		addKeyListener(this);
 	}
 
-	@Override
 	public void run() {
 		while (true) {
 			isRunning = true;
@@ -79,17 +78,14 @@ public class FrameHandler extends JPanel implements KeyListener, Runnable {
 		}
 	}
 
-	@Override
 	public void keyPressed(KeyEvent e) {
 		gameStateHandler.keyPressed(e.getKeyCode());
 	}
 
-	@Override
 	public void keyReleased(KeyEvent e) {
 		gameStateHandler.keyReleased(e.getKeyCode());
 	}
 
-	@Override
 	public void keyTyped(KeyEvent e) {
 	}
 }

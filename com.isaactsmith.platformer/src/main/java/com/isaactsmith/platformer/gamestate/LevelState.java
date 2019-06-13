@@ -27,15 +27,12 @@ public class LevelState extends GameState {
 		terrain = currentLevel.getTerrain();
 		enemies = currentLevel.getEnemies();
 		player = currentLevel.getPlayer();
-		unitHandler = new UnitHandler(terrain);
+		unitHandler = new UnitHandler(terrain, enemies, player);
 	}
 
 	@Override
 	public void tick() {
-		for (int i = 0; i < enemies.size(); i++) {
-			unitHandler.tick(enemies.get(i));
-		}
-		unitHandler.tick(player);
+		unitHandler.tick();
 	}
 
 	@Override

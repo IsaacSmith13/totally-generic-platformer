@@ -1,18 +1,30 @@
 package com.isaactsmith.platformer.handler;
 
 import java.awt.Point;
+import java.util.List;
 
 import com.isaactsmith.platformer.obj.Obj;
 import com.isaactsmith.platformer.obj.Tile;
+import com.isaactsmith.platformer.obj.unit.EnemyUnit;
 import com.isaactsmith.platformer.obj.unit.PlayerUnit;
 import com.isaactsmith.platformer.obj.unit.Unit;
 
 public class CollisionHandler {
 
 	private Tile[][] terrain;
+	private List<EnemyUnit> enemies;
+	private PlayerUnit player;
 
-	public CollisionHandler(Tile[][] terrain) {
+	public CollisionHandler(Tile[][] terrain, List<EnemyUnit> enemies, PlayerUnit player) {
 		this.terrain = terrain;
+		this.enemies = enemies;
+		this.player = player;
+	}
+	
+	public void handleEnemyCollision() {
+		for (int i = 0; i < enemies.size(); i++) {
+			// TODO - handle collision
+		}
 	}
 
 	public void handleTileCollision(Unit unit) {

@@ -1,25 +1,40 @@
 package com.isaactsmith.platformer.handler;
 
+import java.util.List;
+
 import com.isaactsmith.platformer.obj.Tile;
+import com.isaactsmith.platformer.obj.unit.EnemyUnit;
+import com.isaactsmith.platformer.obj.unit.PlayerUnit;
 import com.isaactsmith.platformer.obj.unit.Unit;
 
 public class UnitHandler {
 
 	private static double xOffset = 0;
 	private CollisionHandler collisionHandler;
+	private List<EnemyUnit> enemies;
+	PlayerUnit player;
 
-	public UnitHandler(Tile[][] terrain) {
-		collisionHandler = new CollisionHandler(terrain);
+	public UnitHandler(Tile[][] terrain, List<EnemyUnit> enemies, PlayerUnit player) {
+		collisionHandler = new CollisionHandler(terrain, enemies, player);
+		this.enemies = enemies;
+		this.player = player;
 	}
 
-	public void tick(Unit unit) {
-		collisionHandler.handleTileCollision(unit);
-
-		handleJumping(unit);
-
-		handleFalling(unit);
-
-		unit.walk();
+	public void tick() {
+		// Handle enemy tick logic
+		for (int i = 0; i < enemies.size(); i++) {
+			Unit currentEnemy = enemies.get(i);
+			collisionHandler.handleTileCollision(currentEnemy);
+			handleJumping(currentEnemy);
+			handleFalling(currentEnemy);
+			currentEnemy.walk();
+		}
+		// Handle player tick logic
+		collisionHandler.handleTileCollision(player);
+		collisionHandler.handleEnemyCollision();
+		handleJumping(player);
+		handleFalling(player);
+		player.walk();
 	}
 
 	public void handleJumping(Unit unit) {
