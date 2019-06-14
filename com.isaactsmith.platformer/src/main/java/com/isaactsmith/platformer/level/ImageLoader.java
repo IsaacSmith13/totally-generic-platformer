@@ -36,6 +36,8 @@ public class ImageLoader {
 			return getBufferedImage("SolidGrass");
 		case (2):
 			return getBufferedImage("PassableGrass");
+		case (40):
+			return getBufferedImage("Bush");
 		default:
 			return null;
 		}

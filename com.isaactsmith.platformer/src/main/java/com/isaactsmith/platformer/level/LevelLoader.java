@@ -36,45 +36,29 @@ public class LevelLoader {
 			int width = Integer.parseInt(reader.readLine());
 			int height = Integer.parseInt(reader.readLine());
 			tiles = new Tile[height][width];
-
-			readForegroundObjects(reader);
-			readBackgroundObjects(reader);
+			for (int y = 0; y < height * 2; y++) {
+				String line = reader.readLine();
+				String[] tileIDs = line.split(",");
+				for (int x = 0; x < width; x++) {
+					int id = Integer.parseInt(tileIDs[x]);
+					if (id == -1) {
+						continue;
+					}
+					if (id < 20) {
+						tiles[y][x] = new Tile(x * size, y * size, id);
+					} else if (id < 40) {
+						makeEnemy(x * size, y * size, id);
+					} else {
+						terrain.add(new Tile(x * size, (y / 2) * size, id, true));
+					}
+				}
+			}
+//			readForegroundObjects(reader);
+//			readBackgroundObjects(reader);
 
 		} catch (NumberFormatException | IOException e) {
 			System.out.println("Error in level file");
 			e.printStackTrace();
-		}
-	}
-
-	private void readForegroundObjects(BufferedReader reader) throws IOException {
-		for (int y = 0; y < height; y++) {
-			String line = reader.readLine();
-			String[] tileIDs = line.split(",");
-			for (int x = 0; x < width; x++) {
-				int id = Integer.parseInt(tileIDs[x]);
-				if (id == -1) {
-					continue;
-				}
-				if (id < 20) {
-					tiles[y][x] = new Tile(x * size, y * size, id);
-				} else {
-					makeEnemy(x * size, y * size, id);
-				}
-			}
-		}
-	}
-
-	private void readBackgroundObjects(BufferedReader reader) throws IOException {
-		for (int y = 0; y < height; y++) {
-			String line = reader.readLine();
-			String[] tileIDs = line.split(",");
-			for (int x = 0; x < width; x++) {
-				int id = Integer.parseInt(tileIDs[x]);
-				if (id == -1) {
-					continue;
-				}
-				terrain.add(new Tile(x, y, id, true));
-			}
 		}
 	}
 
@@ -91,6 +75,10 @@ public class LevelLoader {
 
 	public int getHeight() {
 		return height;
+	}
+	
+	public List<Tile> getTerrain() {
+		return terrain;
 	}
 
 	public Tile[][] gettiles() {
