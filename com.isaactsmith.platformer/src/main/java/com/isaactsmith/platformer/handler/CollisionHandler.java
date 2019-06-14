@@ -11,13 +11,13 @@ import com.isaactsmith.platformer.obj.unit.Unit;
 
 public class CollisionHandler {
 
-	private Tile[][] terrain;
+	private Tile[][] tiles;
 	private List<EnemyUnit> enemies;
 	private PlayerUnit player;
 	private UnitHandler unitHandler;
 
-	public CollisionHandler(Tile[][] terrain, List<EnemyUnit> enemies, PlayerUnit player, UnitHandler unitHandler) {
-		this.terrain = terrain;
+	public CollisionHandler(Tile[][] tiles, List<EnemyUnit> enemies, PlayerUnit player, UnitHandler unitHandler) {
+		this.tiles = tiles;
 		this.enemies = enemies;
 		this.player = player;
 		this.unitHandler = unitHandler;
@@ -53,21 +53,20 @@ public class CollisionHandler {
 	public void handleTileCollision(Unit unit, int unitX, int unitY, int size) {
 
 		int startX = Math.max(Math.min(-2 + (int) (unit.isLeft() ? (unitX - unit.getMoveSpeed()) / size : unitX / size),
-				terrain[0].length - 1), 0);
+				tiles[0].length - 1), 0);
 		int endX = Math.max(Math.min(2 + (int) (unit.isRight() ? (unitX + unit.getMoveSpeed()) / size : unitX / size),
-				terrain[0].length - 1), 0);
+				tiles[0].length - 1), 0);
 		int startY = Math.max(
 				Math.min(-2 + (int) (unit.isJumping() ? (unitY - unit.getCurrentJumpSpeed()) / size : unitY / size),
-						terrain.length - 1),
-				0);
-		int endY = Math.max(Math.min(2 + (int) ((unitY + unit.getYVelocity()) / size), terrain.length - 1), 0);
+						tiles.length - 1), 0);
+		int endY = Math.max(Math.min(2 + (int) ((unitY + unit.getYVelocity()) / size), tiles.length - 1), 0);
 
 		for (int y = startY; y <= endY; y++) {
 			for (int x = startX; x <= endX; x++) {
-				if (terrain[y][x] == null) {
+				if (tiles[y][x] == null) {
 					continue;
 				}
-				Tile tile = terrain[y][x];
+				Tile tile = tiles[y][x];
 
 				if (!tile.isPassable()) {
 					handleRightwardCollision(unit, unitX, unitY, size, tile);

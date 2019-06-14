@@ -16,7 +16,7 @@ import com.isaactsmith.platformer.obj.unit.PlayerUnit;
 public class LevelState extends GameState {
 
 	private LevelLoader currentLevel;
-	private Tile[][] terrain;
+	private Tile[][] tiles;
 	private List<EnemyUnit> enemies;
 	private PlayerUnit player;
 	private UnitHandler unitHandler;
@@ -24,10 +24,10 @@ public class LevelState extends GameState {
 	public LevelState(GameStateHandler gameStateHandler, String levelFilePath) {
 		super(gameStateHandler);
 		currentLevel = new LevelLoader(levelFilePath);
-		terrain = currentLevel.getTerrain();
+		tiles = currentLevel.gettiles();
 		enemies = currentLevel.getEnemies();
 		player = currentLevel.getPlayer();
-		unitHandler = new UnitHandler(terrain, enemies, player);
+		unitHandler = new UnitHandler(tiles, enemies, player);
 	}
 
 	@Override
@@ -41,10 +41,10 @@ public class LevelState extends GameState {
 		g.setColor(new Color(135, 206, 235));
 		g.fillRect(0, 0, FrameHandler.WINDOW_WIDTH, FrameHandler.WINDOW_HEIGHT);
 		// Paint tiles
-		for (int y = 0, height = terrain.length; y < height; y++) {
-			for (int x = 0, width = terrain[y].length; x < width; x++) {
-				if (terrain[y][x] != null) {
-					terrain[y][x].paint(g);
+		for (int y = 0, height = tiles.length; y < height; y++) {
+			for (int x = 0, width = tiles[y].length; x < width; x++) {
+				if (tiles[y][x] != null) {
+					tiles[y][x].paint(g);
 				}
 			}
 		}

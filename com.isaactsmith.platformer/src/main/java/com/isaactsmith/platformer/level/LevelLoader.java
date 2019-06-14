@@ -18,7 +18,7 @@ public class LevelLoader {
 	private String levelpath;
 	private int width;
 	private int height;
-	private Tile[][] terrain;
+	private Tile[][] tiles;
 	private List<EnemyUnit> enemies = new ArrayList<EnemyUnit>();
 	private PlayerUnit player;
 
@@ -35,18 +35,18 @@ public class LevelLoader {
 			int height = Integer.parseInt(reader.readLine());
 			int size = Obj.GLOBAL_SIZE;
 
-			terrain = new Tile[height][width];
+			tiles = new Tile[height][width];
 
 			for (int y = 0; y < height; y++) {
 				String line = reader.readLine();
-				String[] tiles = line.split(",");
+				String[] tileIDs = line.split(",");
 				for (int x = 0; x < width; x++) {
-					int id = Integer.parseInt(tiles[x]);
+					int id = Integer.parseInt(tileIDs[x]);
 					if (id == -1) {
 						continue;
 					}
 					if (id < 20) {
-						terrain[y][x] = new Tile(x * size, y * size, id);
+						tiles[y][x] = new Tile(x * size, y * size, id);
 					} else {
 						makeEnemy(x * size, y * size, id);
 					}
@@ -74,8 +74,8 @@ public class LevelLoader {
 		return height;
 	}
 
-	public Tile[][] getTerrain() {
-		return terrain;
+	public Tile[][] gettiles() {
+		return tiles;
 	}
 
 	public PlayerUnit getPlayer() {
