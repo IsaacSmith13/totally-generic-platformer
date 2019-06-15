@@ -17,6 +17,7 @@ public class PlayerUnit extends Unit {
 	public PlayerUnit(BufferedImage[] images) {
 		super((FrameHandler.WINDOW_WIDTH / 2) - (GLOBAL_SIZE / 2), (FrameHandler.WINDOW_HEIGHT / 2) - (GLOBAL_SIZE / 2),
 				images);
+		setActive(true);
 	}
 
 	@Override
@@ -37,7 +38,7 @@ public class PlayerUnit extends Unit {
 	public void die() {
 		if (lives > 0) {
 			if (timeOfDeath < 0) {
-				setAlive(false);
+				setActive(false);
 				setY(FrameHandler.WINDOW_HEIGHT + 50);
 				timeOfDeath = System.currentTimeMillis() / 1000;
 			}
@@ -48,7 +49,7 @@ public class PlayerUnit extends Unit {
 			} else if (xOffset < -deathCameraSpeed) {
 				xOffset += deathCameraSpeed;
 			} else if (System.currentTimeMillis() / 1000 > timeOfDeath + 3) {
-				setAlive(true);
+				setActive(true);
 				timeOfDeath = -1;
 				lives--;
 				xOffset = 0;

@@ -3,6 +3,7 @@ package com.isaactsmith.platformer.handler;
 import java.awt.Point;
 import java.util.List;
 
+import com.isaactsmith.platformer.level.PassableTile;
 import com.isaactsmith.platformer.obj.Obj;
 import com.isaactsmith.platformer.obj.Tile;
 import com.isaactsmith.platformer.obj.unit.EnemyUnit;
@@ -38,7 +39,7 @@ public class CollisionHandler {
 	public void handleEnemyCollision() {
 		for (int i = 0; i < enemies.size(); i++) {
 			EnemyUnit enemy = enemies.get(i);
-			if (enemy.isActive() && player.isAlive()) {
+			if (enemy.isActive() && player.isActive()) {
 				if (player.getRect().intersects(enemy.getRect())) {
 					if (player.getY() <= enemy.getY() - enemy.getHeight() + player.getYVelocity()
 							+ enemy.getCurrentJumpSpeed()) {
@@ -71,7 +72,7 @@ public class CollisionHandler {
 				}
 				Tile tile = tiles[y][x];
 
-				if (!tile.isPassable()) {
+				if (!(tile instanceof PassableTile)) {
 					handleRightwardCollision(unit, unitX, unitY, size, tile);
 					handleLeftwardCollision(unit, unitX, unitY, size, tile);
 					handleUpwardCollision(unit, unitX, unitY, size, tile);

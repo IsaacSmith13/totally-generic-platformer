@@ -8,7 +8,6 @@ import com.isaactsmith.platformer.handler.UnitHandler;
 
 public abstract class EnemyUnit extends Unit {
 
-	private boolean isActive = false;
 	private int startX;
 	private int startY;
 
@@ -62,14 +61,6 @@ public abstract class EnemyUnit extends Unit {
 		if (isLeft() && !willCollideLeft()) {
 			setX(getX() - getMoveSpeed());
 		}
-	}
-	
-	public boolean isActive() {
-		return isActive;
-	}
-	
-	public void setActive(boolean isActive) {
-		this.isActive = isActive;
 	}
 	
 	public int getStartX() {

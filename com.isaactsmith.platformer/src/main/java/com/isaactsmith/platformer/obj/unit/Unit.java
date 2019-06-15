@@ -7,24 +7,32 @@ import com.isaactsmith.platformer.obj.Obj;
 
 public abstract class Unit extends Obj {
 
-	// terminal velocity = unit height / terminal velocity pixels per frame
+	// Terminal velocity = unit height / terminal velocity pixels per frame
 	private static final int TERMINAL_VELOCITY = 8;
+	// For calculating which unit image to display
 	private static final int FRAMES_PER_IMAGE_CHANGE = 120;
+	private static final int ANIMATION_FRAME_COUNT = 3;
+	private static final int JUMPING_RIGHT_IMG = 1;
+	private static final int JUMPING_LEFT_IMG = 4;
+	private int imageCounter = 0;
+	private int lastImage = 0;
+	// Jump and move speeds
 	private double jumpSpeed = 8;
 	private double currentJumpSpeed = jumpSpeed;
 	private boolean isJumping = false;
 	private double moveSpeed = 2.5;
+	// Collision handlers
 	private boolean isFalling = false;
-	private boolean isAlive = true;
-	private double yVelocity = 0;
-	private int imageCounter = 0;
-	private int lastImage = 0;
-	private boolean left = false;
-	private boolean right = false;
 	private boolean isFallingHandled = false;
 	private boolean willCollideTop = false;
 	private boolean willCollideRight = false;
 	private boolean willCollideLeft = false;
+	// Movement
+	private boolean left = false;
+	private boolean right = false;
+	private double yVelocity = 0;
+	
+	private boolean isActive = false;
 
 	public Unit(int x, int y, BufferedImage[] images) {
 		super(x, y, images);
@@ -41,23 +49,23 @@ public abstract class Unit extends Obj {
 	public BufferedImage getImageToRender() {
 		// selects a default standing image facing the last moved direction to use if
 		// not moving
-		int imageToRender = ((lastImage) / 3) * 3;
+		int imageToRender = ((lastImage) / ANIMATION_FRAME_COUNT) * ANIMATION_FRAME_COUNT;
 
 		if (right) {
 			if (isJumping || isFalling) {
-				imageToRender = 1;
+				imageToRender = JUMPING_RIGHT_IMG;
 			} else {
 				imageToRender = imageCounter / FRAMES_PER_IMAGE_CHANGE;
 			}
 		} else if (left) {
 			if (isJumping || isFalling) {
-				imageToRender = 4;
+				imageToRender = JUMPING_LEFT_IMG;
 			} else {
-				imageToRender = imageCounter / FRAMES_PER_IMAGE_CHANGE + 3;
+				imageToRender = imageCounter / FRAMES_PER_IMAGE_CHANGE + ANIMATION_FRAME_COUNT;
 			}
 		}
 
-		if (++imageCounter / FRAMES_PER_IMAGE_CHANGE == 3) {
+		if (++imageCounter / FRAMES_PER_IMAGE_CHANGE == ANIMATION_FRAME_COUNT) {
 			imageCounter = 0;
 		}
 		lastImage = imageToRender;
@@ -89,12 +97,12 @@ public abstract class Unit extends Obj {
 
 	public abstract void walk();
 
-	public boolean isAlive() {
-		return isAlive;
+	public boolean isActive() {
+		return isActive;
 	}
-
-	public void setAlive(boolean isAlive) {
-		this.isAlive = isAlive;
+	
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
 	}
 
 	public double getYVelocity() {

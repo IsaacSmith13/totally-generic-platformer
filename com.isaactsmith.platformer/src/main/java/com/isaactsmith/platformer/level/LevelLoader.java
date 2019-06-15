@@ -15,6 +15,10 @@ import com.isaactsmith.platformer.obj.unit.SkeletonEnemy;
 
 public class LevelLoader {
 
+	private static final int MAX_PASSABLE_ID = 4;
+	private static final int MAX_MOVING_ID = 9;
+	private static final int MAX_SOLID_ID = 19;
+	private static final int MAX_ENEMY_ID = 39;
 	private String levelpath;
 	private int width;
 	private int height;
@@ -33,30 +37,37 @@ public class LevelLoader {
 	public void readLevel() {
 		try (InputStream in = getClass().getResourceAsStream(levelpath);
 				BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
-			int width = Integer.parseInt(reader.readLine());
-			int height = Integer.parseInt(reader.readLine());
-			tiles = new Tile[height][width];
-			for (int y = 0; y < height * 2; y++) {
+			int mapWidth = Integer.parseInt(reader.readLine());
+			int mapHeight = Integer.parseInt(reader.readLine());
+			tiles = new Tile[mapHeight][mapWidth];
+			for (int y = 0; y < mapHeight * 2; y++) {
 				String line = reader.readLine();
 				String[] tileIDs = line.split(",");
-				for (int x = 0; x < width; x++) {
+				for (int x = 0; x < mapWidth; x++) {
+					int tileX = x * size;
+					int tileY = y * size;
 					int id = Integer.parseInt(tileIDs[x]);
-					if (id == -1) {
+					if (id < 0) {
 						continue;
-					}
-					if (id < 20) {
+					} else if (id <= MAX_PASSABLE_ID) {
+						tiles[y][x] = new PassableTile(tileX, tileY, id);
+					} else if (id <= MAX_MOVING_ID) {
+						tiles[y][x] = new MovingTile(tileX, tileY, id);
+					} else if (id <= MAX_SOLID_ID) {
 						tiles[y][x] = new Tile(x * size, y * size, id);
-					} else if (id < 40) {
+					} else if (id <= MAX_ENEMY_ID) {
 						makeEnemy(x * size, y * size, id);
 					} else {
-						terrain.add(new Tile(x * size, (y / 2) * size, id, true));
+						terrain.add(new BackgroundTile(x * size, (y / 2) * size, id));
 					}
 				}
 			}
 //			readForegroundObjects(reader);
 //			readBackgroundObjects(reader);
 
-		} catch (NumberFormatException | IOException e) {
+		} catch (NumberFormatException |
+
+				IOException e) {
 			System.out.println("Error in level file");
 			e.printStackTrace();
 		}
@@ -76,7 +87,7 @@ public class LevelLoader {
 	public int getHeight() {
 		return height;
 	}
-	
+
 	public List<Tile> getTerrain() {
 		return terrain;
 	}

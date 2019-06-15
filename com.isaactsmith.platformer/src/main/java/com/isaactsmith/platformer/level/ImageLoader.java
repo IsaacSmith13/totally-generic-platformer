@@ -31,11 +31,11 @@ public class ImageLoader {
 	public static BufferedImage getTileImageById(int id) {
 		switch (id) {
 		case (0):
-			return getBufferedImage("SolidDirt");
-		case (1):
-			return getBufferedImage("SolidGrass");
-		case (2):
 			return getBufferedImage("PassableGrass");
+		case (10):
+			return getBufferedImage("SolidGrass");
+		case (11):
+			return getBufferedImage("SolidDirt");
 		case (40):
 			return getBufferedImage("Bush");
 		default:

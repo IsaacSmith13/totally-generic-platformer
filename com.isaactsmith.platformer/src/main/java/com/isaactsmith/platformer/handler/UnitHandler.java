@@ -31,7 +31,7 @@ public class UnitHandler {
 		// Handle enemy tick logic
 		for (int i = 0; i < enemies.size(); i++) {
 			Unit currentEnemy = enemies.get(i);
-			if (((EnemyUnit) currentEnemy).isActive() && player.isAlive()) {
+			if (((EnemyUnit) currentEnemy).isActive() && player.isActive()) {
 				collisionHandler.handleCollision(currentEnemy);
 				handleJumping(currentEnemy);
 				handleFalling(currentEnemy);
