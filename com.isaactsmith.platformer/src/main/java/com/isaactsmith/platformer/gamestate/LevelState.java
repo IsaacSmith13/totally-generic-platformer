@@ -3,11 +3,14 @@ package com.isaactsmith.platformer.gamestate;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
 import java.util.List;
 
 import com.isaactsmith.platformer.handler.FrameHandler;
 import com.isaactsmith.platformer.handler.GameStateHandler;
 import com.isaactsmith.platformer.handler.UnitHandler;
+import com.isaactsmith.platformer.level.ImageLoader;
 import com.isaactsmith.platformer.level.LevelLoader;
 import com.isaactsmith.platformer.obj.Tile;
 import com.isaactsmith.platformer.obj.unit.EnemyUnit;
@@ -15,7 +18,9 @@ import com.isaactsmith.platformer.obj.unit.PlayerUnit;
 
 public class LevelState extends GameState {
 
+	private static final String backgroundImagePath = "Background";
 	private LevelLoader currentLevel;
+	private BufferedImage background;
 	private List<Tile> terrain;
 	private Tile[][] tiles;
 	private List<EnemyUnit> enemies;
@@ -25,6 +30,7 @@ public class LevelState extends GameState {
 	public LevelState(GameStateHandler gameStateHandler, String levelFilePath) {
 		super(gameStateHandler);
 		currentLevel = new LevelLoader(levelFilePath);
+		background = ImageLoader.getBufferedImage(backgroundImagePath);
 		terrain = currentLevel.getTerrain();
 		tiles = currentLevel.gettiles();
 		enemies = currentLevel.getEnemies();
@@ -40,8 +46,7 @@ public class LevelState extends GameState {
 	@Override
 	public void paint(Graphics g) {
 		// Paint background
-		g.setColor(new Color(135, 206, 235));
-		g.fillRect(0, 0, FrameHandler.WINDOW_WIDTH, FrameHandler.WINDOW_HEIGHT);
+		paintBackground(g);
 		// Paint terrain
 		for (int i = 0, terrainAmount = terrain.size(); i < terrainAmount; i++) {
 			terrain.get(i).paint(g);
@@ -72,6 +77,16 @@ public class LevelState extends GameState {
 		}
 		// Paint player
 		player.paint(g);
+	}
+
+	public void paintBackground(Graphics g) {
+		int xOffsetParallax = (int) (UnitHandler.getXOffset() * -.5);
+		int width = FrameHandler.WINDOW_WIDTH;
+		int height = FrameHandler.WINDOW_HEIGHT;
+		g.drawImage(background, xOffsetParallax, 0, width,
+				height, null);
+		g.drawImage(background, xOffsetParallax + width - 3, 0,
+				width, height, null);
 	}
 
 	@Override
