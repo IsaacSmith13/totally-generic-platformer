@@ -93,8 +93,12 @@ public class CollisionHandler {
 
 	private void handleMovingTileCollision(Unit unit, int unitX, int unitY, int size) {
 		for (int i = 0, movingTilesAmount = movingTiles.size(); i < movingTilesAmount; i++) {
-			if (handleDownwardCollision(unit, unitX, unitY, size, movingTiles.get(i))) {
-				unit.setX(unit.getX() + ((MovingTile) movingTiles.get(i)).getMoveSpeed());
+			if (handleDownwardCollision(unit, unitX, unitY, size, movingTiles.get(i)) && !unit.isJumping()) {
+				if (unit instanceof PlayerUnit) {
+					TickHandler.setXOffset(TickHandler.getXOffset() + ((MovingTile) movingTiles.get(i)).getMoveSpeed());
+				} else {
+					unit.setX(unit.getX() + ((MovingTile) movingTiles.get(i)).getMoveSpeed());
+				}
 			}
 		}
 	}
@@ -110,11 +114,10 @@ public class CollisionHandler {
 				unit.setFallingHandled(true);
 				if (unitY >= (int) object.getY() - size && !unit.isFalling() && !unit.isJumping()) {
 					unit.setY(object.getY() - size - 1);
-					return true;
 				}
+				return true;
 			} else {
 				unit.setFalling(!unit.willCollideTop() && !unit.isJumping());
-				return true;
 			}
 		}
 		return false;
