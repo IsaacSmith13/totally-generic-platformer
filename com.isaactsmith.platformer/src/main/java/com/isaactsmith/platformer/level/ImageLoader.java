@@ -40,6 +40,8 @@ public class ImageLoader {
 			return getBufferedImage("SolidDirt");
 		case (40):
 			return getBufferedImage("Bush");
+		case (99):
+			return getBufferedImage("WinningTile");
 		default:
 			return null;
 		}

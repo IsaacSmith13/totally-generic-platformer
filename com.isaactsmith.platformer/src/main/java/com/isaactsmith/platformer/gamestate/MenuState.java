@@ -11,8 +11,6 @@ import com.isaactsmith.platformer.handler.GameStateHandler;
 
 public class MenuState extends GameState {
 
-	private static final String LEVEL_1_PATH = "Level1.level";
-
 	String[] options = { "Start", "Levels", "Quit" };
 	private int currentSelection = 0;
 
@@ -60,7 +58,7 @@ public class MenuState extends GameState {
 			switch (currentSelection) {
 			case (0):
 				Stack<GameState> gameStates = gameStateHandler.getGameStates();
-				gameStates.push(new LevelState(gameStateHandler, LEVEL_1_PATH));
+				gameStates.push(new LevelState(gameStateHandler, 1));
 				break;
 			case (1):
 				break;

@@ -20,20 +20,22 @@ public class LevelLoader {
 
 	private static final int MAX_PASSABLE_ID = 4;
 	private static final int MAX_SOLID_ID = 19;
+	private static final int WINNING_ID = 99;
 	private static final int MAX_ENEMY_ID = 39;
 	private static final int TERRAIN_LAYER_NUMBER = 2;
 	private String levelpath;
 	private int width;
 	private int height;
 	private int size = Obj.GLOBAL_SIZE;
-	private List<Tile> terrain = new ArrayList<Tile>();
+	private List<Tile> winningTiles = new ArrayList<Tile>();
 	private Tile[][] tiles;
+	private List<Tile> terrain = new ArrayList<Tile>();
 	private List<Tile> movingTiles = new ArrayList<Tile>();
 	private List<EnemyUnit> enemies = new ArrayList<EnemyUnit>();
 	private PlayerUnit player;
 
-	public LevelLoader(String levelPath) {
-		this.levelpath = levelPath;
+	public LevelLoader(int levelNumber) {
+		this.levelpath = "Level" + levelNumber + ".level";
 		player = new PlayerUnit(ImageLoader.getUnitImagesById(-1));
 		readLevel();
 	}
@@ -60,9 +62,11 @@ public class LevelLoader {
 					} else if (id <= MAX_PASSABLE_ID) {
 						tiles[y][x] = new PassableTile(tileX, tileY, id);
 					} else if (id <= MAX_SOLID_ID) {
-						tiles[y][x] = new Tile(x * size, y * size, id);
+						tiles[y][x] = new Tile(tileX, tileY, id);
 					} else if (id <= MAX_ENEMY_ID) {
-						makeEnemy(x * size, y * size, id);
+						makeEnemy(tileX, tileY, id);
+					} else if (id == WINNING_ID) {
+						winningTiles.add(new Tile(tileX, tileY, id));
 					} else {
 						terrain.add(new BackgroundTile(x * size, (y / TERRAIN_LAYER_NUMBER) * size, id));
 					}
@@ -77,7 +81,8 @@ public class LevelLoader {
 	private void makeMovingTile(int x, int y, String params) {
 		// legend: id|width|rightLimit(number of tiles to the right to travel)|moveSpeed
 		String[] properties = params.split("\\|");
-		movingTiles.add(new MovingTile(x, y, Integer.parseInt(properties[0]), Integer.parseInt(properties[1]), Integer.parseInt(properties[2]), Integer.parseInt(properties[3])));
+		movingTiles.add(new MovingTile(x, y, Integer.parseInt(properties[0]), Integer.parseInt(properties[1]),
+				Integer.parseInt(properties[2]), Integer.parseInt(properties[3])));
 	}
 
 	private void makeEnemy(int x, int y, int id) {
@@ -99,10 +104,10 @@ public class LevelLoader {
 		return terrain;
 	}
 
-	public Tile[][] gettiles() {
+	public Tile[][] getTiles() {
 		return tiles;
 	}
-	
+
 	public List<Tile> getMovingTiles() {
 		return movingTiles;
 	}
@@ -113,5 +118,9 @@ public class LevelLoader {
 
 	public List<EnemyUnit> getEnemies() {
 		return enemies;
+	}
+
+	public List<Tile> getWinningTiles() {
+		return winningTiles;
 	}
 }

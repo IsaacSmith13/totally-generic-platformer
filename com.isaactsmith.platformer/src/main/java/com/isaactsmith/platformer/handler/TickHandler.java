@@ -10,20 +10,25 @@ import com.isaactsmith.platformer.obj.unit.Unit;
 
 public class TickHandler {
 
-	private static double xOffset = 0;
+	private static double xOffset;
 	private CollisionHandler collisionHandler;
 	private List<Tile> movingTiles;
 	private List<EnemyUnit> enemies;
 	PlayerUnit player;
 
-	public TickHandler(Tile[][] tiles, List<Tile> movingTiles, List<EnemyUnit> enemies, PlayerUnit player) {
-		collisionHandler = new CollisionHandler(tiles, movingTiles, enemies, player, this);
+	public TickHandler(List<Tile> winningTiles, Tile[][] tiles, List<Tile> movingTiles, List<EnemyUnit> enemies, PlayerUnit player) {
+		collisionHandler = new CollisionHandler(winningTiles, tiles, movingTiles, enemies, player, this);
 		this.movingTiles = movingTiles;
 		this.enemies = enemies;
 		this.player = player;
+		xOffset = 0;
 	}
 
-	public void tick() {
+	public boolean tick() {
+		if (collisionHandler.handleWinning() ) {
+			return true;
+		}
+		
 		handleMovingTiles();
 
 		// Handle player tick logic
@@ -34,6 +39,7 @@ public class TickHandler {
 		player.walk();
 
 		handleEnemies();
+		return false;
 	}
 
 	public void handleMovingTiles() {

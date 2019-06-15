@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.List;
+import java.util.Stack;
 
 import com.isaactsmith.platformer.handler.FrameHandler;
 import com.isaactsmith.platformer.handler.GameStateHandler;
@@ -25,30 +26,37 @@ public class LevelState extends GameState {
 	private static final String BACKGROUND_IMAGE_PATH = "Background";
 	private static final int WINDOW_WIDTH = FrameHandler.WINDOW_WIDTH;
 	private static final int WINDOW_HEIGHT = FrameHandler.WINDOW_HEIGHT;
+	private final int currentLevelNumber;
 	private LevelLoader currentLevel;
 	private BufferedImage background;
-	private List<Tile> terrain;
+	private List<Tile> winningTiles;
 	private Tile[][] tiles;
+	private List<Tile> terrain;
 	private List<Tile> movingTiles;
 	private List<EnemyUnit> enemies;
 	private PlayerUnit player;
 	private TickHandler tickHandler;
 
-	public LevelState(GameStateHandler gameStateHandler, String levelFilePath) {
+	public LevelState(GameStateHandler gameStateHandler, int levelNumber) {
 		super(gameStateHandler);
-		currentLevel = new LevelLoader(levelFilePath);
+		currentLevelNumber = levelNumber;
+		currentLevel = new LevelLoader(levelNumber);
 		background = ImageLoader.getBufferedImage(BACKGROUND_IMAGE_PATH);
+		winningTiles = currentLevel.getWinningTiles();
+		tiles = currentLevel.getTiles();
 		terrain = currentLevel.getTerrain();
-		tiles = currentLevel.gettiles();
 		movingTiles = currentLevel.getMovingTiles();
 		enemies = currentLevel.getEnemies();
 		player = currentLevel.getPlayer();
-		tickHandler = new TickHandler(tiles, movingTiles, enemies, player);
+		tickHandler = new TickHandler(winningTiles, tiles, movingTiles, enemies, player);
 	}
 
 	@Override
 	public void tick() {
-		tickHandler.tick();
+		if (tickHandler.tick()) {
+			Stack<GameState> gameStates = gameStateHandler.getGameStates();
+			gameStates.push(new LevelState(gameStateHandler, currentLevelNumber + 1));
+		}
 	}
 
 	@Override
@@ -90,6 +98,9 @@ public class LevelState extends GameState {
 		}
 		for (int i = 0, movingTilesAmount = movingTiles.size(); i < movingTilesAmount; i++) {
 			movingTiles.get(i).paint(g);
+		}
+		for (int i = 0, winningTilesAmount = winningTiles.size(); i < winningTilesAmount; i++) {
+			winningTiles.get(i).paint(g);
 		}
 	}
 

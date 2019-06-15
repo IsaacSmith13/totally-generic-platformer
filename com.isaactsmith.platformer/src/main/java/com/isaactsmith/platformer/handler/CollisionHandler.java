@@ -13,36 +13,31 @@ import com.isaactsmith.platformer.obj.unit.Unit;
 
 public class CollisionHandler {
 
+	private List<Tile> winningTiles;
 	private Tile[][] tiles;
 	private List<Tile> movingTiles;
 	private List<EnemyUnit> enemies;
 	private PlayerUnit player;
 	private TickHandler tickHandler;
 
-	public CollisionHandler(Tile[][] tiles, List<Tile> movingTiles, List<EnemyUnit> enemies, PlayerUnit player,
+	public CollisionHandler(List<Tile> winningTiles, Tile[][] tiles, List<Tile> movingTiles, List<EnemyUnit> enemies, PlayerUnit player,
 			TickHandler tickHandler) {
+		this.winningTiles = winningTiles;
 		this.tiles = tiles;
 		this.movingTiles = movingTiles;
 		this.enemies = enemies;
 		this.player = player;
 		this.tickHandler = tickHandler;
 	}
-
-	public void handleEnemyCollision() {
-		for (int i = 0; i < enemies.size(); i++) {
-			EnemyUnit enemy = enemies.get(i);
-			if (enemy.isActive() && player.isActive()) {
-				if (player.getRect().intersects(enemy.getRect())) {
-					if (player.getY() <= enemy.getY() - enemy.getHeight() + player.getYVelocity()
-							+ enemy.getCurrentJumpSpeed()) {
-						enemy.die();
-					} else {
-						tickHandler.resetEnemies();
-						player.die();
-					}
-				}
+	
+	public boolean handleWinning() {
+		for (int i = 0, winningTilesAmount = winningTiles.size(); i < winningTilesAmount; i++) {
+			Tile tile = winningTiles.get(i);
+			if (player.getRect().intersects(tile.getRect())) {
+				return true;
 			}
 		}
+		return false;
 	}
 
 	public void handleTileCollision(Unit unit) {
@@ -152,5 +147,22 @@ public class CollisionHandler {
 
 	private boolean handleOneSideOfCollision(Point pointInObj, Obj object) {
 		return object.getRect().contains(pointInObj);
+	}
+	
+	public void handleEnemyCollision() {
+		for (int i = 0; i < enemies.size(); i++) {
+			EnemyUnit enemy = enemies.get(i);
+			if (enemy.isActive() && player.isActive()) {
+				if (player.getRect().intersects(enemy.getRect())) {
+					if (player.getY() <= enemy.getY() - enemy.getHeight() + player.getYVelocity()
+							+ enemy.getCurrentJumpSpeed()) {
+						enemy.die();
+					} else {
+						tickHandler.resetEnemies();
+						player.die();
+					}
+				}
+			}
+		}
 	}
 }

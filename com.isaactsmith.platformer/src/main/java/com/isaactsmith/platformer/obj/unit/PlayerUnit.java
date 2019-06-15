@@ -11,7 +11,7 @@ import com.isaactsmith.platformer.obj.Obj;
 
 public class PlayerUnit extends Unit {
 
-	private int lives = 3;
+	private static int lives = 3;
 	private double timeOfDeath = -1;
 
 	public PlayerUnit(BufferedImage[] images) {
@@ -36,11 +36,11 @@ public class PlayerUnit extends Unit {
 	}
 
 	public void die() {
-		setActive(false);
-		setLeft(false);
-		setRight(false);
 		if (lives > 0) {
 			if (timeOfDeath < 0) {
+				setActive(false);
+				setLeft(false);
+				setRight(false);
 				setY(FrameHandler.WINDOW_HEIGHT + 50);
 				timeOfDeath = System.currentTimeMillis() / 1000;
 			}
@@ -60,6 +60,7 @@ public class PlayerUnit extends Unit {
 			}
 			TickHandler.setXOffset(xOffset);
 		} else {
+			lives = 3;
 			TickHandler.setXOffset(0);
 			FrameHandler.setRunning(false);
 		}
@@ -122,6 +123,6 @@ public class PlayerUnit extends Unit {
 	}
 
 	public void setLives(int lives) {
-		this.lives = lives;
+		PlayerUnit.lives = lives;
 	}
 }
