@@ -27,23 +27,6 @@ public class CollisionHandler {
 		this.unitHandler = unitHandler;
 	}
 
-	public void handleCollision(Unit unit) {
-		unit.resetCollision();
-		int unitX = (int) unit.getX();
-		int unitY = (int) unit.getY();
-		if (unit instanceof PlayerUnit) {
-			unitX += UnitHandler.getXOffset();
-		}
-		int size = unit.getWidth();
-
-		handleStationaryTileCollision(unit, unitX, unitY, size);
-		handleMovingTileCollision(unit, unitX, unitY, size);
-		
-		if (!unit.isFallingHandled()) {
-			unit.setFalling(!unit.isJumping());
-		}
-	}
-
 	public void handleEnemyCollision() {
 		for (int i = 0; i < enemies.size(); i++) {
 			EnemyUnit enemy = enemies.get(i);
@@ -61,6 +44,23 @@ public class CollisionHandler {
 		}
 	}
 
+	public void handleTileCollision(Unit unit) {
+		unit.resetCollision();
+		int unitX = (int) unit.getX();
+		int unitY = (int) unit.getY();
+		if (unit instanceof PlayerUnit) {
+			unitX += UnitHandler.getXOffset();
+		}
+		int size = unit.getWidth();
+
+		handleStationaryTileCollision(unit, unitX, unitY, size);
+		handleMovingTileCollision(unit, unitX, unitY, size);
+
+		if (!unit.isFallingHandled()) {
+			unit.setFalling(!unit.isJumping());
+		}
+	}
+
 	public void handleStationaryTileCollision(Unit unit, int unitX, int unitY, int size) {
 
 		int startX = Math.max(Math.min(-2 + (int) (unit.isLeft() ? (unitX - unit.getMoveSpeed()) / size : unitX / size),
@@ -69,7 +69,8 @@ public class CollisionHandler {
 				tiles[0].length - 1), 0);
 		int startY = Math.max(
 				Math.min(-2 + (int) (unit.isJumping() ? (unitY - unit.getCurrentJumpSpeed()) / size : unitY / size),
-						tiles.length - 1), 0);
+						tiles.length - 1),
+				0);
 		int endY = Math.max(Math.min(2 + (int) ((unitY + unit.getYVelocity()) / size), tiles.length - 1), 0);
 
 		for (int y = startY; y <= endY; y++) {

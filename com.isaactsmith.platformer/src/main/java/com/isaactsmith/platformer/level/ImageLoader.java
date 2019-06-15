@@ -32,6 +32,8 @@ public class ImageLoader {
 		switch (id) {
 		case (0):
 			return getBufferedImage("PassableGrass");
+		case (5):
+			return getBufferedImage("MovingPlatform");
 		case (10):
 			return getBufferedImage("SolidGrass");
 		case (11):
@@ -44,10 +46,10 @@ public class ImageLoader {
 	}
 
 	public static BufferedImage[] getUnitImagesById(int id) {
-		switch(id) {
-		case(-1):
+		switch (id) {
+		case (-1):
 			return createImagesArray(PLAYER_IMG);
-		case(20):
+		case (20):
 			return createImagesArray(SKELETON_IMG);
 		default:
 			return null;

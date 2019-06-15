@@ -88,6 +88,9 @@ public class LevelState extends GameState {
 				}
 			}
 		}
+		for (int i = 0, movingTilesAmount = movingTiles.size(); i < movingTilesAmount; i++) {
+			movingTiles.get(i).paint(g);
+		}
 	}
 
 	public void paintDisplay(Graphics g) {

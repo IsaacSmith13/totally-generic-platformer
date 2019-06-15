@@ -50,8 +50,8 @@ public class LevelLoader {
 				for (int x = 0; x < mapWidth; x++) {
 					int tileX = x * size;
 					int tileY = y * size;
-					if (tileIDs[x].contains("\\|")) {
-						makeMovingTile(tileY, tileY, tileIDs[x]);
+					if (tileIDs[x].contains("|")) {
+						makeMovingTile(tileX, tileY, tileIDs[x]);
 						continue;
 					}
 					int id = Integer.parseInt(tileIDs[x]);

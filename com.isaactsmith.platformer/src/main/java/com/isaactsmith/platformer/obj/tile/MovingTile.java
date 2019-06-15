@@ -1,5 +1,7 @@
 package com.isaactsmith.platformer.obj.tile;
 
+import com.isaactsmith.platformer.obj.Obj;
+
 public class MovingTile extends PassableTile {
 
 	private int leftLimit;
@@ -10,7 +12,7 @@ public class MovingTile extends PassableTile {
 		super(x, y, id);
 		leftLimit = x;
 		setWidth(width);
-		this.rightLimit = rightLimit;
+		this.rightLimit = x + (rightLimit * Obj.GLOBAL_SIZE);
 		this.moveSpeed = moveSpeed;
 	}
 
