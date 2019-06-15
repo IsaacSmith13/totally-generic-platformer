@@ -9,12 +9,11 @@ import java.awt.event.KeyListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 public class FrameHandler extends JPanel implements KeyListener, Runnable {
 
-	private static final long serialVersionUID = 1L;
 	public static final int WINDOW_WIDTH = 1280;
 	public static final int WINDOW_HEIGHT = 720;
-//	private List<EnemyUnit> enemies;
 	private GameStateHandler gameStateHandler;
 	private static boolean isRunning;
 
@@ -37,6 +36,7 @@ public class FrameHandler extends JPanel implements KeyListener, Runnable {
 		addKeyListener(this);
 	}
 
+	@Override
 	public void run() {
 		while (true) {
 			isRunning = true;
@@ -74,18 +74,22 @@ public class FrameHandler extends JPanel implements KeyListener, Runnable {
 			gameStateHandler.paint(g);
 		} catch (NullPointerException e) {
 			System.out.println("objects not here yet");
-			// all objects aren't created in the first few frames, so ignore those starting null pointer exceptions
+			// all objects aren't created in the first few frames, so ignore those starting
+			// n
 		}
 	}
 
+	@Override
 	public void keyPressed(KeyEvent e) {
 		gameStateHandler.keyPressed(e.getKeyCode());
 	}
-
+	
+	@Override
 	public void keyReleased(KeyEvent e) {
 		gameStateHandler.keyReleased(e.getKeyCode());
 	}
-
+	
+	@Override
 	public void keyTyped(KeyEvent e) {
 	}
 }

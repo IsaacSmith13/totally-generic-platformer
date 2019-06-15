@@ -9,7 +9,7 @@ import com.isaactsmith.platformer.level.ImageLoader;
 
 public class Tile extends Obj {
 
-	private static final int passableTileID = 2;
+	private static final int PASSABLE_TILE_ID = 2;
 	private Rectangle tileAsRect;
 	private int id;
 	private String type;
@@ -20,7 +20,7 @@ public class Tile extends Obj {
 		super(x, y, ImageLoader.getTileImageById(id));
 		tileAsRect = new Rectangle(x, y, getWidth(), getHeight());
 		this.id = id;
-		if (id == passableTileID) {
+		if (id == PASSABLE_TILE_ID) {
 			isPassable = true;
 		}
 	}

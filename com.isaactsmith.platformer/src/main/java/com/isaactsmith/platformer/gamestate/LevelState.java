@@ -55,6 +55,7 @@ public class LevelState extends GameState {
 		paintTerrain(g);
 		paintTiles(g);
 		paintDisplay(g);
+		paintEnemies(g);
 		player.paint(g);
 	}
 
