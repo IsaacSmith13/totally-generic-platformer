@@ -13,10 +13,10 @@ public class PlayerUnit extends Unit {
 
 	private static int lives = 3;
 	private double timeOfDeath = -1;
+	private static final int initialX = (FrameHandler.WINDOW_WIDTH / 2) - (GLOBAL_SIZE / 2);
 
 	public PlayerUnit(BufferedImage[] images) {
-		super((FrameHandler.WINDOW_WIDTH / 2) - (GLOBAL_SIZE / 2), (FrameHandler.WINDOW_HEIGHT / 2) - (GLOBAL_SIZE / 2),
-				images);
+		super(initialX, (FrameHandler.WINDOW_HEIGHT / 2) - (GLOBAL_SIZE / 2), images);
 		setActive(true);
 	}
 
@@ -27,11 +27,22 @@ public class PlayerUnit extends Unit {
 	}
 
 	public void walk() {
+		double xOffset = TickHandler.getXOffset();
+		double x = getX();
+		double moveSpeed = getMoveSpeed();
 		if (isRight() && !willCollideRight()) {
-			TickHandler.setXOffset(TickHandler.getXOffset() + getMoveSpeed());
+			if (x < initialX) {
+				setX(x + moveSpeed);
+			} else {
+				TickHandler.setXOffset(xOffset + moveSpeed);
+			}
 		}
 		if (isLeft() && !willCollideLeft()) {
-			TickHandler.setXOffset(TickHandler.getXOffset() - getMoveSpeed());
+			if (xOffset - moveSpeed < 0) {
+				setX(x - moveSpeed);
+			} else {
+				TickHandler.setXOffset(xOffset - moveSpeed);
+			}
 		}
 	}
 
