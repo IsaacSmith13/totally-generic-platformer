@@ -16,9 +16,6 @@ public class MovingTile extends PassableTile {
 		setWidth(width);
 		this.rightLimit = x + (rightLimit * Obj.GLOBAL_SIZE);
 		this.moveSpeed = moveSpeed;
-		System.out.println(leftLimit);
-		System.out.println(this.rightLimit);
-		System.out.println(width);
 	}
 	
 	@Override

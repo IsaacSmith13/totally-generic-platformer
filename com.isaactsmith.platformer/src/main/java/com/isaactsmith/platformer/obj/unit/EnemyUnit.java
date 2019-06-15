@@ -8,6 +8,7 @@ import com.isaactsmith.platformer.handler.TickHandler;
 
 public abstract class EnemyUnit extends Unit {
 
+	private static final int AVG_TICKS_BETWEEN_JUMPS = 1000;
 	private int startX;
 	private int startY;
 
@@ -45,7 +46,7 @@ public abstract class EnemyUnit extends Unit {
 
 	@Override
 	public void walk() {
-		if ((int) (Math.random() * 100) == 100) {
+		if ((int) (Math.random() * AVG_TICKS_BETWEEN_JUMPS) == 1) {
 			jump();
 		}
 		if (!isRight() && !isLeft()) {
