@@ -14,7 +14,7 @@ public class UnitHandler {
 	private List<EnemyUnit> enemies;
 	PlayerUnit player;
 
-	public UnitHandler(Tile[][] tiles, List<EnemyUnit> enemies, PlayerUnit player) {
+	public UnitHandler(Tile[][] tiles, List<Tile> movingTiles, List<EnemyUnit> enemies, PlayerUnit player) {
 		collisionHandler = new CollisionHandler(tiles, enemies, player, this);
 		this.enemies = enemies;
 		this.player = player;

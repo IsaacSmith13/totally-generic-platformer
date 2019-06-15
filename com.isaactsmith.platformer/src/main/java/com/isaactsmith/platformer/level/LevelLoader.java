@@ -102,6 +102,10 @@ public class LevelLoader {
 	public Tile[][] gettiles() {
 		return tiles;
 	}
+	
+	public List<Tile> getMovingTiles() {
+		return movingTiles;
+	}
 
 	public PlayerUnit getPlayer() {
 		return player;

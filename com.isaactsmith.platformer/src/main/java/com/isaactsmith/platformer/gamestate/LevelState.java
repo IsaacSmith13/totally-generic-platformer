@@ -29,6 +29,7 @@ public class LevelState extends GameState {
 	private BufferedImage background;
 	private List<Tile> terrain;
 	private Tile[][] tiles;
+	private List<Tile> movingTiles;
 	private List<EnemyUnit> enemies;
 	private PlayerUnit player;
 	private UnitHandler unitHandler;
@@ -39,9 +40,10 @@ public class LevelState extends GameState {
 		background = ImageLoader.getBufferedImage(BACKGROUND_IMAGE_PATH);
 		terrain = currentLevel.getTerrain();
 		tiles = currentLevel.gettiles();
+		movingTiles = currentLevel.getMovingTiles();
 		enemies = currentLevel.getEnemies();
 		player = currentLevel.getPlayer();
-		unitHandler = new UnitHandler(tiles, enemies, player);
+		unitHandler = new UnitHandler(tiles, movingTiles, enemies, player);
 	}
 
 	@Override
