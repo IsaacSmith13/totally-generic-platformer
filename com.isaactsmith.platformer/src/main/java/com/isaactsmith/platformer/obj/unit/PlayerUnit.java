@@ -64,24 +64,26 @@ public class PlayerUnit extends Unit {
 	}
 
 	public void keyPressed(int e) {
-		switch (e) {
-		case KeyEvent.VK_A:
-			setLeft(true);
-			break;
-		case KeyEvent.VK_LEFT:
-			setLeft(true);
-			break;
-		case KeyEvent.VK_D:
-			setRight(true);
-			break;
-		case KeyEvent.VK_RIGHT:
-			setRight(true);
-			break;
-		case KeyEvent.VK_SPACE:
-			jump();
-			break;
-		default:
-			break;
+		if (isActive()) {
+			switch (e) {
+			case KeyEvent.VK_A:
+				setLeft(true);
+				break;
+			case KeyEvent.VK_LEFT:
+				setLeft(true);
+				break;
+			case KeyEvent.VK_D:
+				setRight(true);
+				break;
+			case KeyEvent.VK_RIGHT:
+				setRight(true);
+				break;
+			case KeyEvent.VK_SPACE:
+				jump();
+				break;
+			default:
+				break;
+			}
 		}
 	}
 

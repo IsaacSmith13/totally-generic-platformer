@@ -1,4 +1,4 @@
-package com.isaactsmith.platformer.obj;
+package com.isaactsmith.platformer.obj.tile;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
@@ -6,6 +6,7 @@ import java.awt.Rectangle;
 import com.isaactsmith.platformer.handler.FrameHandler;
 import com.isaactsmith.platformer.handler.UnitHandler;
 import com.isaactsmith.platformer.level.ImageLoader;
+import com.isaactsmith.platformer.obj.Obj;
 
 public class Tile extends Obj {
 

@@ -2,7 +2,7 @@ package com.isaactsmith.platformer.handler;
 
 import java.util.List;
 
-import com.isaactsmith.platformer.obj.Tile;
+import com.isaactsmith.platformer.obj.tile.Tile;
 import com.isaactsmith.platformer.obj.unit.EnemyUnit;
 import com.isaactsmith.platformer.obj.unit.PlayerUnit;
 import com.isaactsmith.platformer.obj.unit.Unit;

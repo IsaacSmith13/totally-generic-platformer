@@ -1,6 +1,4 @@
-package com.isaactsmith.platformer.level;
-
-import com.isaactsmith.platformer.obj.Tile;
+package com.isaactsmith.platformer.obj.tile;
 
 public class MovingTile extends Tile {
 	

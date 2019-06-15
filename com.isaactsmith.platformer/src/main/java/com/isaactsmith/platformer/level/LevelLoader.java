@@ -8,7 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.isaactsmith.platformer.obj.Obj;
-import com.isaactsmith.platformer.obj.Tile;
+import com.isaactsmith.platformer.obj.tile.BackgroundTile;
+import com.isaactsmith.platformer.obj.tile.MovingTile;
+import com.isaactsmith.platformer.obj.tile.PassableTile;
+import com.isaactsmith.platformer.obj.tile.Tile;
 import com.isaactsmith.platformer.obj.unit.EnemyUnit;
 import com.isaactsmith.platformer.obj.unit.PlayerUnit;
 import com.isaactsmith.platformer.obj.unit.SkeletonEnemy;

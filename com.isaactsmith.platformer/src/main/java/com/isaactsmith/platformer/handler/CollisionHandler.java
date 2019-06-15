@@ -3,9 +3,9 @@ package com.isaactsmith.platformer.handler;
 import java.awt.Point;
 import java.util.List;
 
-import com.isaactsmith.platformer.level.PassableTile;
 import com.isaactsmith.platformer.obj.Obj;
-import com.isaactsmith.platformer.obj.Tile;
+import com.isaactsmith.platformer.obj.tile.PassableTile;
+import com.isaactsmith.platformer.obj.tile.Tile;
 import com.isaactsmith.platformer.obj.unit.EnemyUnit;
 import com.isaactsmith.platformer.obj.unit.PlayerUnit;
 import com.isaactsmith.platformer.obj.unit.Unit;

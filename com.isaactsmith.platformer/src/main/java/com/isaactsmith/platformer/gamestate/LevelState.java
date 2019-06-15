@@ -11,7 +11,7 @@ import com.isaactsmith.platformer.handler.GameStateHandler;
 import com.isaactsmith.platformer.handler.UnitHandler;
 import com.isaactsmith.platformer.level.ImageLoader;
 import com.isaactsmith.platformer.level.LevelLoader;
-import com.isaactsmith.platformer.obj.Tile;
+import com.isaactsmith.platformer.obj.tile.Tile;
 import com.isaactsmith.platformer.obj.unit.EnemyUnit;
 import com.isaactsmith.platformer.obj.unit.PlayerUnit;
 
