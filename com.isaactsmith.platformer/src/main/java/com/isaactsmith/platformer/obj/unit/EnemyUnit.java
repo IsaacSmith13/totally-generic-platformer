@@ -4,7 +4,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import com.isaactsmith.platformer.handler.FrameHandler;
-import com.isaactsmith.platformer.handler.UnitHandler;
+import com.isaactsmith.platformer.handler.TickHandler;
 
 public abstract class EnemyUnit extends Unit {
 
@@ -29,7 +29,7 @@ public abstract class EnemyUnit extends Unit {
 
 	@Override
 	public void paint(Graphics g) {
-		int x = (int) Math.round(getX() - UnitHandler.getXOffset());
+		int x = (int) Math.round(getX() - TickHandler.getXOffset());
 		int y = (int) Math.round(getY());
 		if (x <= FrameHandler.WINDOW_WIDTH + (GLOBAL_SIZE * 2) && (x - 1) >= -GLOBAL_SIZE * 2
 				&& y <= FrameHandler.WINDOW_HEIGHT + (GLOBAL_SIZE * 2) && (y - 1) >= -GLOBAL_SIZE * 2) {

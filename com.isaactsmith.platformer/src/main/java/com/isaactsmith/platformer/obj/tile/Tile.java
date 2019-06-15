@@ -4,7 +4,7 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 
 import com.isaactsmith.platformer.handler.FrameHandler;
-import com.isaactsmith.platformer.handler.UnitHandler;
+import com.isaactsmith.platformer.handler.TickHandler;
 import com.isaactsmith.platformer.level.ImageLoader;
 import com.isaactsmith.platformer.obj.Obj;
 
@@ -23,7 +23,7 @@ public class Tile extends Obj {
 	@Override
 	public void paint(Graphics g) {
 
-		int x = (int) (getX() - UnitHandler.getXOffset());
+		int x = (int) (getX() - TickHandler.getXOffset());
 		int y = (int) (getY());
 		int width = getWidth();
 		int height = getHeight();

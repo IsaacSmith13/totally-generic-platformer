@@ -8,7 +8,7 @@ import com.isaactsmith.platformer.obj.unit.EnemyUnit;
 import com.isaactsmith.platformer.obj.unit.PlayerUnit;
 import com.isaactsmith.platformer.obj.unit.Unit;
 
-public class UnitHandler {
+public class TickHandler {
 
 	private static double xOffset = 0;
 	private CollisionHandler collisionHandler;
@@ -16,7 +16,7 @@ public class UnitHandler {
 	private List<EnemyUnit> enemies;
 	PlayerUnit player;
 
-	public UnitHandler(Tile[][] tiles, List<Tile> movingTiles, List<EnemyUnit> enemies, PlayerUnit player) {
+	public TickHandler(Tile[][] tiles, List<Tile> movingTiles, List<EnemyUnit> enemies, PlayerUnit player) {
 		collisionHandler = new CollisionHandler(tiles, movingTiles, enemies, player, this);
 		this.movingTiles = movingTiles;
 		this.enemies = enemies;
@@ -39,16 +39,16 @@ public class UnitHandler {
 	public void handleMovingTiles() {
 		for (int i = 0, movingTileAmount = movingTiles.size(); i < movingTileAmount; i++) {
 			MovingTile tile = (MovingTile) (movingTiles.get(i));
-			double tileX = tile.getX();
-			double xOffset = UnitHandler.getXOffset();
-			double tileXOffset = tileX - xOffset;
+			int tileX = (int) tile.getX();
 			int moveSpeed = tile.getMoveSpeed();
-			if (tileXOffset + tile.getWidth() >= tile.getRightLimit() - xOffset && moveSpeed != 1) {
+			if (tileX + tile.getWidth() > tile.getRightLimit() && moveSpeed > 0) {
 				moveSpeed *= -1;
-			} else if (tileXOffset <= tile.getLeftLimit() - xOffset && moveSpeed != 1) {
+			}
+			if (tileX < tile.getLeftLimit() && moveSpeed < 0) {
 				moveSpeed *= -1;
 			}
 			tile.setX(tileX + moveSpeed);
+			tile.setMoveSpeed(moveSpeed);
 		}
 	}
 
@@ -101,7 +101,7 @@ public class UnitHandler {
 	}
 
 	public static void setXOffset(double xOffset) {
-		UnitHandler.xOffset = xOffset;
+		TickHandler.xOffset = xOffset;
 	}
 
 	public void resetEnemies() {

@@ -1,12 +1,14 @@
 package com.isaactsmith.platformer.obj.tile;
 
+import java.awt.Rectangle;
+
 import com.isaactsmith.platformer.obj.Obj;
 
 public class MovingTile extends PassableTile {
 
 	private int leftLimit;
 	private int rightLimit;
-	private int moveSpeed = 1;
+	private int moveSpeed;
 
 	public MovingTile(int x, int y, int id, int width, int rightLimit, int moveSpeed) {
 		super(x, y, id);
@@ -14,6 +16,14 @@ public class MovingTile extends PassableTile {
 		setWidth(width);
 		this.rightLimit = x + (rightLimit * Obj.GLOBAL_SIZE);
 		this.moveSpeed = moveSpeed;
+		System.out.println(leftLimit);
+		System.out.println(this.rightLimit);
+		System.out.println(width);
+	}
+	
+	@Override
+	public Rectangle getRect() {
+		return new Rectangle((int) getX(), (int) getY(), getWidth(), getHeight());
 	}
 
 	public int getLeftLimit() {

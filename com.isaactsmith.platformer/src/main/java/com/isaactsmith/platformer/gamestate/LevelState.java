@@ -8,7 +8,7 @@ import java.util.List;
 
 import com.isaactsmith.platformer.handler.FrameHandler;
 import com.isaactsmith.platformer.handler.GameStateHandler;
-import com.isaactsmith.platformer.handler.UnitHandler;
+import com.isaactsmith.platformer.handler.TickHandler;
 import com.isaactsmith.platformer.level.ImageLoader;
 import com.isaactsmith.platformer.level.LevelLoader;
 import com.isaactsmith.platformer.obj.tile.Tile;
@@ -32,7 +32,7 @@ public class LevelState extends GameState {
 	private List<Tile> movingTiles;
 	private List<EnemyUnit> enemies;
 	private PlayerUnit player;
-	private UnitHandler unitHandler;
+	private TickHandler tickHandler;
 
 	public LevelState(GameStateHandler gameStateHandler, String levelFilePath) {
 		super(gameStateHandler);
@@ -43,12 +43,12 @@ public class LevelState extends GameState {
 		movingTiles = currentLevel.getMovingTiles();
 		enemies = currentLevel.getEnemies();
 		player = currentLevel.getPlayer();
-		unitHandler = new UnitHandler(tiles, movingTiles, enemies, player);
+		tickHandler = new TickHandler(tiles, movingTiles, enemies, player);
 	}
 
 	@Override
 	public void tick() {
-		unitHandler.tick();
+		tickHandler.tick();
 	}
 
 	@Override
@@ -62,7 +62,7 @@ public class LevelState extends GameState {
 	}
 
 	public void paintBackground(Graphics g) {
-		int xOffsetParallax = (int) (UnitHandler.getXOffset() * PARALLAX_MODIFIER);
+		int xOffsetParallax = (int) (TickHandler.getXOffset() * PARALLAX_MODIFIER);
 
 		while (xOffsetParallax < WINDOW_WIDTH * BACKGROUND_OFFSET * PARALLAX_MODIFIER) {
 			xOffsetParallax += WINDOW_WIDTH - BACKGROUND_OFFSET;

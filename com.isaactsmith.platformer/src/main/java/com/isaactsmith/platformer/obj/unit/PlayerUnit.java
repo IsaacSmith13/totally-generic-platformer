@@ -6,7 +6,7 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 import com.isaactsmith.platformer.handler.FrameHandler;
-import com.isaactsmith.platformer.handler.UnitHandler;
+import com.isaactsmith.platformer.handler.TickHandler;
 import com.isaactsmith.platformer.obj.Obj;
 
 public class PlayerUnit extends Unit {
@@ -28,10 +28,10 @@ public class PlayerUnit extends Unit {
 
 	public void walk() {
 		if (isRight() && !willCollideRight()) {
-			UnitHandler.setXOffset(UnitHandler.getXOffset() + getMoveSpeed());
+			TickHandler.setXOffset(TickHandler.getXOffset() + getMoveSpeed());
 		}
 		if (isLeft() && !willCollideLeft()) {
-			UnitHandler.setXOffset(UnitHandler.getXOffset() - getMoveSpeed());
+			TickHandler.setXOffset(TickHandler.getXOffset() - getMoveSpeed());
 		}
 	}
 
@@ -42,7 +42,7 @@ public class PlayerUnit extends Unit {
 				setY(FrameHandler.WINDOW_HEIGHT + 50);
 				timeOfDeath = System.currentTimeMillis() / 1000;
 			}
-			int xOffset = (int) UnitHandler.getXOffset();
+			int xOffset = (int) TickHandler.getXOffset();
 			int deathCameraSpeed = Math.max(Math.abs(xOffset) / GLOBAL_SIZE, 4);
 			if (xOffset > deathCameraSpeed) {
 				xOffset -= deathCameraSpeed;
@@ -56,9 +56,9 @@ public class PlayerUnit extends Unit {
 				setLocation((FrameHandler.WINDOW_WIDTH / 2) - (Obj.GLOBAL_SIZE / 2),
 						(FrameHandler.WINDOW_HEIGHT / 2) - (Obj.GLOBAL_SIZE / 2));
 			}
-			UnitHandler.setXOffset(xOffset);
+			TickHandler.setXOffset(xOffset);
 		} else {
-			UnitHandler.setXOffset(0);
+			TickHandler.setXOffset(0);
 			FrameHandler.setRunning(false);
 		}
 	}
@@ -112,7 +112,7 @@ public class PlayerUnit extends Unit {
 	}
 
 	public Rectangle getRect() {
-		return new Rectangle((int) (getX() + UnitHandler.getXOffset()), (int) getY(), getWidth(), getHeight() + 2);
+		return new Rectangle((int) (getX() + TickHandler.getXOffset()), (int) getY(), getWidth(), getHeight() + 2);
 	}
 
 	public int getLives() {

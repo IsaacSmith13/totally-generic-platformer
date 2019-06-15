@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.util.List;
 
 import com.isaactsmith.platformer.obj.Obj;
+import com.isaactsmith.platformer.obj.tile.MovingTile;
 import com.isaactsmith.platformer.obj.tile.PassableTile;
 import com.isaactsmith.platformer.obj.tile.Tile;
 import com.isaactsmith.platformer.obj.unit.EnemyUnit;
@@ -16,15 +17,15 @@ public class CollisionHandler {
 	private List<Tile> movingTiles;
 	private List<EnemyUnit> enemies;
 	private PlayerUnit player;
-	private UnitHandler unitHandler;
+	private TickHandler tickHandler;
 
 	public CollisionHandler(Tile[][] tiles, List<Tile> movingTiles, List<EnemyUnit> enemies, PlayerUnit player,
-			UnitHandler unitHandler) {
+			TickHandler tickHandler) {
 		this.tiles = tiles;
 		this.movingTiles = movingTiles;
 		this.enemies = enemies;
 		this.player = player;
-		this.unitHandler = unitHandler;
+		this.tickHandler = tickHandler;
 	}
 
 	public void handleEnemyCollision() {
@@ -36,7 +37,7 @@ public class CollisionHandler {
 							+ enemy.getCurrentJumpSpeed()) {
 						enemy.die();
 					} else {
-						unitHandler.resetEnemies();
+						tickHandler.resetEnemies();
 						player.die();
 					}
 				}
@@ -49,7 +50,7 @@ public class CollisionHandler {
 		int unitX = (int) unit.getX();
 		int unitY = (int) unit.getY();
 		if (unit instanceof PlayerUnit) {
-			unitX += UnitHandler.getXOffset();
+			unitX += TickHandler.getXOffset();
 		}
 		int size = unit.getWidth();
 
@@ -92,11 +93,13 @@ public class CollisionHandler {
 
 	private void handleMovingTileCollision(Unit unit, int unitX, int unitY, int size) {
 		for (int i = 0, movingTilesAmount = movingTiles.size(); i < movingTilesAmount; i++) {
-			handleDownwardCollision(unit, unitX, unitY, size, movingTiles.get(i));
+			if (handleDownwardCollision(unit, unitX, unitY, size, movingTiles.get(i))) {
+				unit.setX(unit.getX() + ((MovingTile) movingTiles.get(i)).getMoveSpeed());
+			}
 		}
 	}
 
-	private void handleDownwardCollision(Unit unit, int unitX, int unitY, int size, Obj object) {
+	private boolean handleDownwardCollision(Unit unit, int unitX, int unitY, int size, Obj object) {
 		int unitLocationOnTopOfObj = (int) object.getY() - size;
 
 		if (unitY <= unitLocationOnTopOfObj + unit.getTerminalVelocity() + 1) {
@@ -107,11 +110,14 @@ public class CollisionHandler {
 				unit.setFallingHandled(true);
 				if (unitY >= (int) object.getY() - size && !unit.isFalling() && !unit.isJumping()) {
 					unit.setY(object.getY() - size - 1);
+					return true;
 				}
 			} else {
 				unit.setFalling(!unit.willCollideTop() && !unit.isJumping());
+				return true;
 			}
 		}
+		return false;
 	}
 
 	private void handleUpwardCollision(Unit unit, int unitX, int unitY, int size, Obj object) {
