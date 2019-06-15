@@ -37,6 +37,10 @@ public class UnitHandler {
 				handleFalling(currentEnemy);
 				currentEnemy.walk();
 			}
+			else {
+				currentEnemy.setRight(false);
+				currentEnemy.setLeft(false);
+			}
 		}
 	}
 

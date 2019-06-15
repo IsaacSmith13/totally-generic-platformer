@@ -8,11 +8,11 @@ public class SkeletonEnemy extends EnemyUnit {
 		super(x, y, images);
 	}
 
-	public SkeletonEnemy(int x, int y, BufferedImage[] images, double movespeed) {
-		super(x, y, images, movespeed);
+	public SkeletonEnemy(int x, int y, BufferedImage[] images, double moveSpeed) {
+		super(x, y, images, moveSpeed);
 	}
 	
-	public SkeletonEnemy(int x, int y, BufferedImage[] images, double movespeed, double jumpSpeed) {
-		super(x, y, images, movespeed, jumpSpeed);
+	public SkeletonEnemy(int x, int y, BufferedImage[] images, double moveSpeed, double jumpSpeed) {
+		super(x, y, images, moveSpeed, jumpSpeed);
 	}
 }

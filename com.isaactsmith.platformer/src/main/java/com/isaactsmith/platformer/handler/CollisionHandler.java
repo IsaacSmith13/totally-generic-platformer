@@ -31,7 +31,7 @@ public class CollisionHandler {
 		if (unit instanceof PlayerUnit) {
 			unitX += UnitHandler.getXOffset();
 		}
-		int size = Obj.GLOBAL_SIZE;
+		int size = unit.getWidth();
 
 		handleTileCollision(unit, unitX, unitY, size);
 	}

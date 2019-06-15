@@ -19,15 +19,16 @@ import com.isaactsmith.platformer.obj.unit.SkeletonEnemy;
 public class LevelLoader {
 
 	private static final int MAX_PASSABLE_ID = 4;
-	private static final int MAX_MOVING_ID = 9;
 	private static final int MAX_SOLID_ID = 19;
 	private static final int MAX_ENEMY_ID = 39;
+	private static final int TERRAIN_LAYER_NUMBER = 2;
 	private String levelpath;
 	private int width;
 	private int height;
 	private int size = Obj.GLOBAL_SIZE;
-	private Tile[][] tiles;
 	private List<Tile> terrain = new ArrayList<Tile>();
+	private Tile[][] tiles;
+	private List<Tile> movingTiles = new ArrayList<Tile>();
 	private List<EnemyUnit> enemies = new ArrayList<EnemyUnit>();
 	private PlayerUnit player;
 
@@ -49,31 +50,34 @@ public class LevelLoader {
 				for (int x = 0; x < mapWidth; x++) {
 					int tileX = x * size;
 					int tileY = y * size;
+					if (tileIDs[x].contains("\\|")) {
+						makeMovingTile(tileY, tileY, tileIDs[x]);
+						continue;
+					}
 					int id = Integer.parseInt(tileIDs[x]);
 					if (id < 0) {
 						continue;
 					} else if (id <= MAX_PASSABLE_ID) {
 						tiles[y][x] = new PassableTile(tileX, tileY, id);
-					} else if (id <= MAX_MOVING_ID) {
-						tiles[y][x] = new MovingTile(tileX, tileY, id);
 					} else if (id <= MAX_SOLID_ID) {
 						tiles[y][x] = new Tile(x * size, y * size, id);
 					} else if (id <= MAX_ENEMY_ID) {
 						makeEnemy(x * size, y * size, id);
 					} else {
-						terrain.add(new BackgroundTile(x * size, (y / 2) * size, id));
+						terrain.add(new BackgroundTile(x * size, (y / TERRAIN_LAYER_NUMBER) * size, id));
 					}
 				}
 			}
-//			readForegroundObjects(reader);
-//			readBackgroundObjects(reader);
-
-		} catch (NumberFormatException |
-
-				IOException e) {
+		} catch (NumberFormatException | IOException e) {
 			System.out.println("Error in level file");
 			e.printStackTrace();
 		}
+	}
+
+	private void makeMovingTile(int x, int y, String params) {
+		// legend: id|rightLimit(number of tiles to the right to travel)|moveSpeed
+		String[] properties = params.split("\\|");
+		movingTiles.add(new MovingTile(x, y, Integer.parseInt(properties[0]), Integer.parseInt(properties[1]), Integer.parseInt(properties[2])));
 	}
 
 	private void makeEnemy(int x, int y, int id) {
