@@ -57,6 +57,7 @@ public class PlayerUnit extends Unit {
 			}
 			UnitHandler.setXOffset(xOffset);
 		} else {
+			UnitHandler.setXOffset(0);
 			FrameHandler.setRunning(false);
 		}
 	}
