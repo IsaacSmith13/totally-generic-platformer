@@ -2,6 +2,7 @@ package com.isaactsmith.platformer.handler;
 
 import java.util.List;
 
+import com.isaactsmith.platformer.obj.tile.MovingTile;
 import com.isaactsmith.platformer.obj.tile.Tile;
 import com.isaactsmith.platformer.obj.unit.EnemyUnit;
 import com.isaactsmith.platformer.obj.unit.PlayerUnit;
@@ -11,24 +12,47 @@ public class UnitHandler {
 
 	private static double xOffset = 0;
 	private CollisionHandler collisionHandler;
+	private List<Tile> movingTiles;
 	private List<EnemyUnit> enemies;
 	PlayerUnit player;
 
 	public UnitHandler(Tile[][] tiles, List<Tile> movingTiles, List<EnemyUnit> enemies, PlayerUnit player) {
-		collisionHandler = new CollisionHandler(tiles, enemies, player, this);
+		collisionHandler = new CollisionHandler(tiles, movingTiles, enemies, player, this);
+		this.movingTiles = movingTiles;
 		this.enemies = enemies;
 		this.player = player;
 	}
 
 	public void tick() {
-		// Handle enemy collision
-		collisionHandler.handleEnemyCollision();
+		handleMovingTiles();
+
 		// Handle player tick logic
+		collisionHandler.handleEnemyCollision();
 		collisionHandler.handleCollision(player);
 		handleJumping(player);
 		handleFalling(player);
 		player.walk();
-		// Handle enemy tick logic
+
+		handleEnemies();
+	}
+
+	public void handleMovingTiles() {
+		for (int i = 0, movingTileAmount = movingTiles.size(); i < movingTileAmount; i++) {
+			MovingTile tile = (MovingTile) (movingTiles.get(i));
+			double tileX = tile.getX();
+			double xOffset = UnitHandler.getXOffset();
+			double tileXOffset = tileX - xOffset;
+			int moveSpeed = tile.getMoveSpeed();
+			if (tileXOffset + tile.getWidth() >= tile.getRightLimit() - xOffset && moveSpeed != 1) {
+				moveSpeed *= -1;
+			} else if (tileXOffset <= tile.getLeftLimit() - xOffset && moveSpeed != 1) {
+				moveSpeed *= -1;
+			}
+			tile.setX(tileX + moveSpeed);
+		}
+	}
+
+	public void handleEnemies() {
 		for (int i = 0; i < enemies.size(); i++) {
 			Unit currentEnemy = enemies.get(i);
 			if (((EnemyUnit) currentEnemy).isActive() && player.isActive()) {
@@ -36,8 +60,7 @@ public class UnitHandler {
 				handleJumping(currentEnemy);
 				handleFalling(currentEnemy);
 				currentEnemy.walk();
-			}
-			else {
+			} else {
 				currentEnemy.setRight(false);
 				currentEnemy.setLeft(false);
 			}

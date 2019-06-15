@@ -13,12 +13,15 @@ import com.isaactsmith.platformer.obj.unit.Unit;
 public class CollisionHandler {
 
 	private Tile[][] tiles;
+	private List<Tile> movingTiles;
 	private List<EnemyUnit> enemies;
 	private PlayerUnit player;
 	private UnitHandler unitHandler;
 
-	public CollisionHandler(Tile[][] tiles, List<EnemyUnit> enemies, PlayerUnit player, UnitHandler unitHandler) {
+	public CollisionHandler(Tile[][] tiles, List<Tile> movingTiles, List<EnemyUnit> enemies, PlayerUnit player,
+			UnitHandler unitHandler) {
 		this.tiles = tiles;
+		this.movingTiles = movingTiles;
 		this.enemies = enemies;
 		this.player = player;
 		this.unitHandler = unitHandler;
@@ -33,7 +36,12 @@ public class CollisionHandler {
 		}
 		int size = unit.getWidth();
 
-		handleTileCollision(unit, unitX, unitY, size);
+		handleStationaryTileCollision(unit, unitX, unitY, size);
+		handleMovingTileCollision(unit, unitX, unitY, size);
+		
+		if (!unit.isFallingHandled()) {
+			unit.setFalling(!unit.isJumping());
+		}
 	}
 
 	public void handleEnemyCollision() {
@@ -53,7 +61,7 @@ public class CollisionHandler {
 		}
 	}
 
-	public void handleTileCollision(Unit unit, int unitX, int unitY, int size) {
+	public void handleStationaryTileCollision(Unit unit, int unitX, int unitY, int size) {
 
 		int startX = Math.max(Math.min(-2 + (int) (unit.isLeft() ? (unitX - unit.getMoveSpeed()) / size : unitX / size),
 				tiles[0].length - 1), 0);
@@ -61,8 +69,7 @@ public class CollisionHandler {
 				tiles[0].length - 1), 0);
 		int startY = Math.max(
 				Math.min(-2 + (int) (unit.isJumping() ? (unitY - unit.getCurrentJumpSpeed()) / size : unitY / size),
-						tiles.length - 1),
-				0);
+						tiles.length - 1), 0);
 		int endY = Math.max(Math.min(2 + (int) ((unitY + unit.getYVelocity()) / size), tiles.length - 1), 0);
 
 		for (int y = startY; y <= endY; y++) {
@@ -80,8 +87,11 @@ public class CollisionHandler {
 				handleDownwardCollision(unit, unitX, unitY, size, tile);
 			}
 		}
-		if (!unit.isFallingHandled()) {
-			unit.setFalling(!unit.isJumping());
+	}
+
+	private void handleMovingTileCollision(Unit unit, int unitX, int unitY, int size) {
+		for (int i = 0, movingTilesAmount = movingTiles.size(); i < movingTilesAmount; i++) {
+			handleDownwardCollision(unit, unitX, unitY, size, movingTiles.get(i));
 		}
 	}
 

@@ -1,33 +1,40 @@
 package com.isaactsmith.platformer.obj.tile;
 
-import com.isaactsmith.platformer.handler.UnitHandler;
-
-public class MovingTile extends Tile {
+public class MovingTile extends PassableTile {
 
 	private int leftLimit;
 	private int rightLimit;
 	private int moveSpeed = 1;
 
-	public MovingTile(int x, int y, int id, int rightLimit) {
+	public MovingTile(int x, int y, int id, int width, int rightLimit, int moveSpeed) {
 		super(x, y, id);
 		leftLimit = x;
+		setWidth(width);
 		this.rightLimit = rightLimit;
-	}
-
-	public MovingTile(int x, int y, int id, int rightLimit, int moveSpeed) {
-		this(x, y, id, rightLimit);
 		this.moveSpeed = moveSpeed;
 	}
 
-	public void tick() {
-		if (getX() + getWidth() - UnitHandler.getXOffset() >= rightLimit - UnitHandler.getXOffset() && moveSpeed != 1) {
-			moveSpeed *= -1;
-		}
+	public int getLeftLimit() {
+		return leftLimit;
+	}
 
-		if (getX() - UnitHandler.getXOffset() <= -leftLimit - UnitHandler.getXOffset() && moveSpeed != 1) {
-			moveSpeed *= -1;
-		}
+	public void setLeftLimit(int leftLimit) {
+		this.leftLimit = leftLimit;
+	}
 
-		setX(getX() + moveSpeed);
+	public int getRightLimit() {
+		return rightLimit;
+	}
+
+	public void setRightLimit(int rightLimit) {
+		this.rightLimit = rightLimit;
+	}
+
+	public int getMoveSpeed() {
+		return moveSpeed;
+	}
+
+	public void setMoveSpeed(int moveSpeed) {
+		this.moveSpeed = moveSpeed;
 	}
 }

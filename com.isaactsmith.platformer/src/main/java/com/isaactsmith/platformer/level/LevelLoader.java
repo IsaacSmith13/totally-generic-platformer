@@ -75,9 +75,9 @@ public class LevelLoader {
 	}
 
 	private void makeMovingTile(int x, int y, String params) {
-		// legend: id|rightLimit(number of tiles to the right to travel)|moveSpeed
+		// legend: id|width|rightLimit(number of tiles to the right to travel)|moveSpeed
 		String[] properties = params.split("\\|");
-		movingTiles.add(new MovingTile(x, y, Integer.parseInt(properties[0]), Integer.parseInt(properties[1]), Integer.parseInt(properties[2])));
+		movingTiles.add(new MovingTile(x, y, Integer.parseInt(properties[0]), Integer.parseInt(properties[1]), Integer.parseInt(properties[2]), Integer.parseInt(properties[3])));
 	}
 
 	private void makeEnemy(int x, int y, int id) {
