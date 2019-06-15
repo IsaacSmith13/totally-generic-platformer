@@ -38,13 +38,15 @@ public class CollisionHandler {
 	public void handleEnemyCollision() {
 		for (int i = 0; i < enemies.size(); i++) {
 			EnemyUnit enemy = enemies.get(i);
-			if (player.getRect().intersects(enemy.getRect())) {
-				if (player.getY() <= enemy.getY() - enemy.getHeight() + player.getYVelocity()
-						+ enemy.getCurrentJumpSpeed()) {
-					enemy.die();
-				} else {
-					unitHandler.resetEnemies();
-					player.die();
+			if (enemy.isActive() && player.isAlive()) {
+				if (player.getRect().intersects(enemy.getRect())) {
+					if (player.getY() <= enemy.getY() - enemy.getHeight() + player.getYVelocity()
+							+ enemy.getCurrentJumpSpeed()) {
+						enemy.die();
+					} else {
+						unitHandler.resetEnemies();
+						player.die();
+					}
 				}
 			}
 		}
@@ -58,7 +60,8 @@ public class CollisionHandler {
 				tiles[0].length - 1), 0);
 		int startY = Math.max(
 				Math.min(-2 + (int) (unit.isJumping() ? (unitY - unit.getCurrentJumpSpeed()) / size : unitY / size),
-						tiles.length - 1), 0);
+						tiles.length - 1),
+				0);
 		int endY = Math.max(Math.min(2 + (int) ((unitY + unit.getYVelocity()) / size), tiles.length - 1), 0);
 
 		for (int y = startY; y <= endY; y++) {
