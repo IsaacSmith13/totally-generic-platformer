@@ -36,9 +36,11 @@ public class PlayerUnit extends Unit {
 	}
 
 	public void die() {
+		setActive(false);
+		setLeft(false);
+		setRight(false);
 		if (lives > 0) {
 			if (timeOfDeath < 0) {
-				setActive(false);
 				setY(FrameHandler.WINDOW_HEIGHT + 50);
 				timeOfDeath = System.currentTimeMillis() / 1000;
 			}
