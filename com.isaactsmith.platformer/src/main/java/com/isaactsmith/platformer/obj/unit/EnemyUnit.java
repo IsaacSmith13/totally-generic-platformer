@@ -21,7 +21,7 @@ public abstract class EnemyUnit extends Unit {
 		this(x, y, images);
 		setMoveSpeed(moveSpeed);
 	}
-	
+
 	public EnemyUnit(int x, int y, BufferedImage[] images, double moveSpeed, double jumpSpeed) {
 		this(x, y, images, moveSpeed);
 		setJumpSpeed(jumpSpeed);
@@ -45,24 +45,32 @@ public abstract class EnemyUnit extends Unit {
 
 	@Override
 	public void walk() {
-		int randomNum = (int) (Math.random() * 1000);
-		if (randomNum < 2) {
-			setRight(false);
-			setLeft(true);
-		} else if (randomNum < 5) {
-			setLeft(false);
-			setRight(true);
-		} else if (randomNum < 20) {
+		if ((int) (Math.random() * 100) == 100) {
 			jump();
 		}
-		if (isRight() && !willCollideRight()) {
-			setX(getX() + getMoveSpeed());
-		}
-		if (isLeft() && !willCollideLeft()) {
-			setX(getX() - getMoveSpeed());
+		if (!isRight() && !isLeft()) {
+			if (TickHandler.getXOffset() + (FrameHandler.WINDOW_WIDTH / 2) > getX()) {
+				setRight(true);
+			} else {
+				setLeft(true);
+			}
+		} else if (isRight()) {
+			if (!willCollideRight()) {
+				setX(getX() + getMoveSpeed());
+			} else {
+				setRight(false);
+				setLeft(true);
+			}
+		} else if (isLeft()) {
+			if (!willCollideLeft()) {
+				setX(getX() - getMoveSpeed());
+			} else {
+				setLeft(false);
+				setRight(true);
+			}
 		}
 	}
-	
+
 	public int getStartX() {
 		return startX;
 	}
