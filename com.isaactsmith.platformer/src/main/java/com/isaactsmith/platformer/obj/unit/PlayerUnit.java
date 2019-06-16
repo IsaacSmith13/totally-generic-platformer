@@ -21,12 +21,6 @@ public class PlayerUnit extends Unit {
 		setActive(true);
 	}
 
-	@Override
-	public void paint(Graphics g) {
-		g.drawImage(getImageToRender(), (int) Math.round(getX()) - 3, (int) Math.round(getY()) - 3, getHeight() + 5,
-				getWidth() + 5, null);
-	}
-
 	public void walk() {
 		double xOffset = TickHandler.getXOffset();
 		double x = getX();

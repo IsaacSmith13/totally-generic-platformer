@@ -31,7 +31,7 @@ public abstract class Unit extends Obj {
 	private boolean left = false;
 	private boolean right = false;
 	private double yVelocity = 0;
-	
+
 	private boolean isActive = false;
 
 	public Unit(int x, int y, BufferedImage[] images) {
@@ -44,7 +44,10 @@ public abstract class Unit extends Obj {
 	}
 
 	@Override
-	public abstract void paint(Graphics g);
+	public void paint(Graphics g) {
+		g.drawImage(getImageToRender(), (int) Math.round(getX()) - 3, (int) Math.round(getY()) - 3, getHeight() + 6,
+				getWidth() + 6, null);
+	}
 
 	public BufferedImage getImageToRender() {
 		// selects a default standing image facing the last moved direction to use if
@@ -100,7 +103,7 @@ public abstract class Unit extends Obj {
 	public boolean isActive() {
 		return isActive;
 	}
-	
+
 	public void setActive(boolean isActive) {
 		this.isActive = isActive;
 	}

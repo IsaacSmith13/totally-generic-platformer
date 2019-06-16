@@ -35,7 +35,7 @@ public abstract class EnemyUnit extends Unit {
 		if (x <= FrameHandler.WINDOW_WIDTH + (GLOBAL_SIZE * 2) && (x - 1) >= -GLOBAL_SIZE * 2
 				&& y <= FrameHandler.WINDOW_HEIGHT + (GLOBAL_SIZE * 2) && (y - 1) >= -GLOBAL_SIZE * 2) {
 			setActive(true);
-			g.drawImage(getImageToRender(), x, y, getHeight(), getWidth(), null);
+			super.paint(g);
 		}
 	}
 
