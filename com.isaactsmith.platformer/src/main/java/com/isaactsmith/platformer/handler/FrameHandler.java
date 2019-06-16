@@ -16,6 +16,7 @@ public class FrameHandler extends JPanel implements KeyListener, Runnable {
 	public static final int WINDOW_HEIGHT = 720;
 	private GameStateHandler gameStateHandler;
 	private static boolean isRunning;
+	private final double startTime = System.currentTimeMillis();
 
 	public FrameHandler(JFrame frame) {
 		// Initialize the window
@@ -73,9 +74,13 @@ public class FrameHandler extends JPanel implements KeyListener, Runnable {
 			requestFocusInWindow();
 			gameStateHandler.paint(g);
 		} catch (NullPointerException e) {
-			System.out.println("objects not here yet");
-			// all objects aren't created in the first few frames, so ignore those starting
-			// n
+			// Sometimes objects don't load in the first few seconds, so ignore error if game just launched
+			if (startTime + 5000 > System.currentTimeMillis()) {
+				System.out.println("Objects not loaded yet");
+			}
+			else {
+				e.printStackTrace();
+			}
 		}
 	}
 
