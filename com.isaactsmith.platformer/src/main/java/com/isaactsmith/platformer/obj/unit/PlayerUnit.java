@@ -11,12 +11,14 @@ import com.isaactsmith.platformer.obj.Obj;
 
 public class PlayerUnit extends Unit {
 
+	private static final int spawnX = GLOBAL_SIZE * 5;
+	private static final int initialX = (FrameHandler.WINDOW_WIDTH / 2) - (GLOBAL_SIZE / 2);
+	private static final int initialY = (FrameHandler.WINDOW_HEIGHT / 2) - (GLOBAL_SIZE / 2);
 	private static int lives = 3;
 	private double timeOfDeath = -1;
-	private static final int initialX = (FrameHandler.WINDOW_WIDTH / 2) - (GLOBAL_SIZE / 2);
 
 	public PlayerUnit(BufferedImage[] images) {
-		super(GLOBAL_SIZE * 5, (FrameHandler.WINDOW_HEIGHT / 2) - (GLOBAL_SIZE / 2), images);
+		super(GLOBAL_SIZE * 5, initialY, images);
 		setActive(true);
 	}
 
@@ -68,8 +70,7 @@ public class PlayerUnit extends Unit {
 				timeOfDeath = -1;
 				lives--;
 				xOffset = 0;
-				setLocation((FrameHandler.WINDOW_WIDTH / 2) - (Obj.GLOBAL_SIZE / 2),
-						(FrameHandler.WINDOW_HEIGHT / 2) - (Obj.GLOBAL_SIZE / 2));
+				setLocation(spawnX, initialY);
 			}
 			TickHandler.setXOffset(xOffset);
 		} else {
