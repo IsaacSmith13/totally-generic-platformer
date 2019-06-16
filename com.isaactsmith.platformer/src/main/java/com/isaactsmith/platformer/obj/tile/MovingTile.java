@@ -18,6 +18,10 @@ public class MovingTile extends PassableTile {
 		this.moveSpeed = moveSpeed;
 	}
 	
+	public void reset() {
+		setX(leftLimit);
+	}
+	
 	@Override
 	public Rectangle getRect() {
 		return new Rectangle((int) getX(), (int) getY(), getWidth(), getHeight());

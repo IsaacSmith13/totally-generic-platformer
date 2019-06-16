@@ -158,7 +158,7 @@ public class CollisionHandler {
 							+ enemy.getCurrentJumpSpeed()) {
 						enemy.die();
 					} else {
-						tickHandler.resetEnemies();
+						tickHandler.reset();
 						player.die();
 					}
 				}

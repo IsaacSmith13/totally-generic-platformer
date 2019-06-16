@@ -16,7 +16,8 @@ public class TickHandler {
 	private List<EnemyUnit> enemies;
 	PlayerUnit player;
 
-	public TickHandler(List<Tile> winningTiles, Tile[][] tiles, List<Tile> movingTiles, List<EnemyUnit> enemies, PlayerUnit player) {
+	public TickHandler(List<Tile> winningTiles, Tile[][] tiles, List<Tile> movingTiles, List<EnemyUnit> enemies,
+			PlayerUnit player) {
 		collisionHandler = new CollisionHandler(winningTiles, tiles, movingTiles, enemies, player, this);
 		this.movingTiles = movingTiles;
 		this.enemies = enemies;
@@ -25,10 +26,10 @@ public class TickHandler {
 	}
 
 	public boolean tick() {
-		if (collisionHandler.handleWinning() ) {
+		if (collisionHandler.handleWinning()) {
 			return true;
 		}
-		
+
 		handleMovingTiles();
 
 		// Handle player tick logic
@@ -43,18 +44,20 @@ public class TickHandler {
 	}
 
 	public void handleMovingTiles() {
-		for (int i = 0, movingTileAmount = movingTiles.size(); i < movingTileAmount; i++) {
-			MovingTile tile = (MovingTile) (movingTiles.get(i));
-			int tileX = (int) tile.getX();
-			int moveSpeed = tile.getMoveSpeed();
-			if (tileX + tile.getWidth() > tile.getRightLimit() && moveSpeed > 0) {
-				moveSpeed *= -1;
+		if (player.isActive()) {
+			for (int i = 0, movingTileAmount = movingTiles.size(); i < movingTileAmount; i++) {
+				MovingTile tile = (MovingTile) (movingTiles.get(i));
+				int tileX = (int) tile.getX();
+				int moveSpeed = tile.getMoveSpeed();
+				if (tileX + tile.getWidth() > tile.getRightLimit() && moveSpeed > 0) {
+					moveSpeed *= -1;
+				}
+				if (tileX < tile.getLeftLimit() && moveSpeed < 0) {
+					moveSpeed *= -1;
+				}
+				tile.setX(tileX + moveSpeed);
+				tile.setMoveSpeed(moveSpeed);
 			}
-			if (tileX < tile.getLeftLimit() && moveSpeed < 0) {
-				moveSpeed *= -1;
-			}
-			tile.setX(tileX + moveSpeed);
-			tile.setMoveSpeed(moveSpeed);
 		}
 	}
 
@@ -96,7 +99,7 @@ public class TickHandler {
 		}
 		if (unit.getY() > FrameHandler.WINDOW_HEIGHT) {
 			if (unit instanceof PlayerUnit) {
-				resetEnemies();
+				reset();
 			}
 			unit.die();
 		}
@@ -110,7 +113,10 @@ public class TickHandler {
 		TickHandler.xOffset = xOffset;
 	}
 
-	public void resetEnemies() {
+	public void reset() {
+		for (int i = 0, numberOfMovingTiles = movingTiles.size(); i < numberOfMovingTiles; i++) {
+			((MovingTile) movingTiles.get(i)).reset();
+		}
 		for (int i = 0, numberOfEnemies = enemies.size(); i < numberOfEnemies; i++) {
 			enemies.get(i).reset();
 		}
