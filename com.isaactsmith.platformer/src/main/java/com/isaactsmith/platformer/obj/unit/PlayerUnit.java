@@ -131,11 +131,11 @@ public class PlayerUnit extends Unit {
 		return new Rectangle((int) (getX() + TickHandler.getXOffset()), (int) getY(), getWidth(), getHeight() + 2);
 	}
 
-	public int getLives() {
+	public static int getLives() {
 		return lives;
 	}
 
-	public void setLives(int lives) {
+	public static void setLives(int lives) {
 		PlayerUnit.lives = lives;
 	}
 }

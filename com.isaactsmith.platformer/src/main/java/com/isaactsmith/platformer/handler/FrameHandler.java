@@ -11,6 +11,9 @@ import java.awt.event.KeyListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import com.isaactsmith.platformer.level.ImageLoader;
+import com.isaactsmith.platformer.obj.unit.PlayerUnit;
+
 @SuppressWarnings("serial")
 public class FrameHandler extends JPanel implements KeyListener, Runnable {
 
@@ -93,22 +96,18 @@ public class FrameHandler extends JPanel implements KeyListener, Runnable {
 	}
 
 	private void paintLoadingScreen(Graphics g) {
-		try {
-			requestFocusInWindow();
-			g.setColor(Color.BLACK);
-			g.fillRect(0, 0, FrameHandler.WINDOW_WIDTH, FrameHandler.WINDOW_HEIGHT);
-			g.setColor(new Color(242, 2, 190));
-			g.setFont(new Font("helvetica", Font.BOLD, 72));
-			g.drawString("Level " + levelNumber, (int) (FrameHandler.WINDOW_WIDTH / 2.4), WINDOW_HEIGHT / 2);
-		} catch (NullPointerException e) {
-			// Sometimes objects don't load in the first few seconds, so ignore error if
-			// game just launched
-			if (startTime + 5000 > System.currentTimeMillis()) {
-				System.out.println("Objects not loaded yet");
-			} else {
-				e.printStackTrace();
-			}
+		requestFocusInWindow();
+		g.setColor(Color.BLACK);
+		g.fillRect(0, 0, FrameHandler.WINDOW_WIDTH, FrameHandler.WINDOW_HEIGHT);
+		g.setColor(new Color(242, 2, 190));
+		g.setFont(new Font("helvetica", Font.BOLD, 72));
+		g.drawString("Level " + levelNumber, (int) (FrameHandler.WINDOW_WIDTH / 2.45), WINDOW_HEIGHT / 2);
+		for (int i = PlayerUnit.getLives(); i > 0; i--) {
+			g.drawImage(ImageLoader.getBufferedImage("PlayerRight0"),
+					(int) (WINDOW_WIDTH / 2 + (i * 40) - PlayerUnit.getLives() * 35), WINDOW_HEIGHT / 2 + 32, 32, 32,
+					null);
 		}
+
 	}
 
 	@Override
