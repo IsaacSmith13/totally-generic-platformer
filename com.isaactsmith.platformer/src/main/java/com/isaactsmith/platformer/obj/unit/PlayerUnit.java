@@ -16,7 +16,7 @@ public class PlayerUnit extends Unit {
 	private static final int initialX = (FrameHandler.WINDOW_WIDTH / 2) - (GLOBAL_SIZE / 2);
 
 	public PlayerUnit(BufferedImage[] images) {
-		super(initialX, (FrameHandler.WINDOW_HEIGHT / 2) - (GLOBAL_SIZE / 2), images);
+		super(GLOBAL_SIZE * 5, (FrameHandler.WINDOW_HEIGHT / 2) - (GLOBAL_SIZE / 2), images);
 		setActive(true);
 	}
 
@@ -39,7 +39,9 @@ public class PlayerUnit extends Unit {
 		}
 		if (isLeft() && !willCollideLeft()) {
 			if (xOffset - moveSpeed < 0) {
-				setX(x - moveSpeed);
+				if (xOffset - x - moveSpeed < 0) {
+					setX(x - moveSpeed);
+				}
 			} else {
 				TickHandler.setXOffset(xOffset - moveSpeed);
 			}
