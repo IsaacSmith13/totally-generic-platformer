@@ -52,6 +52,8 @@ public class PlayerUnit extends Unit {
 	public void die() {
 		if (lives > 0) {
 			if (timeOfDeath < 0) {
+				lives--;
+				FrameHandler.setLoading(true);
 				setActive(false);
 				setLeft(false);
 				setRight(false);
@@ -65,14 +67,15 @@ public class PlayerUnit extends Unit {
 			} else if (xOffset < -deathCameraSpeed) {
 				xOffset += deathCameraSpeed;
 			} else if (System.currentTimeMillis() / 1000 > timeOfDeath + 3) {
+				FrameHandler.setLoading(false);
 				setActive(true);
 				timeOfDeath = -1;
-				lives--;
 				xOffset = 0;
 				setLocation(spawnX, initialY);
 			}
 			TickHandler.setXOffset(xOffset);
 		} else {
+			FrameHandler.setLoading(false);
 			lives = 3;
 			TickHandler.setXOffset(0);
 			FrameHandler.setRunning(false);

@@ -103,9 +103,16 @@ public class FrameHandler extends JPanel implements KeyListener, Runnable {
 		g.setFont(new Font("helvetica", Font.BOLD, 72));
 		g.drawString("Level " + levelNumber, (int) (FrameHandler.WINDOW_WIDTH / 2.45), WINDOW_HEIGHT / 2);
 		for (int i = PlayerUnit.getLives(); i > 0; i--) {
-			g.drawImage(ImageLoader.getBufferedImage("PlayerRight0"),
-					(int) (WINDOW_WIDTH / 2 + (i * 40) - PlayerUnit.getLives() * 35), WINDOW_HEIGHT / 2 + 32, 32, 32,
-					null);
+			int x = 0;
+			switch (PlayerUnit.getLives()) {
+			case (2):
+				x -= 20;
+			case (1):
+				x += 40;
+			default:
+				x += (int) (WINDOW_WIDTH / 2.375 + (i * 40));
+			}
+			g.drawImage(ImageLoader.getBufferedImage("PlayerRight0"), x, (WINDOW_HEIGHT / 2) + 32, 32, 32, null);
 		}
 
 	}
