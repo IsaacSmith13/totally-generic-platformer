@@ -111,6 +111,7 @@ public class FrameHandler extends JPanel implements KeyListener, Runnable {
 				x += 40;
 			default:
 				x += (int) (WINDOW_WIDTH / 2.375 + (i * 40));
+				break;
 			}
 			g.drawImage(ImageLoader.getBufferedImage("PlayerRight0"), x, (WINDOW_HEIGHT / 2) + 32, 32, 32, null);
 		}
