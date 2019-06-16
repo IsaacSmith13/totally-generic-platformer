@@ -35,6 +35,7 @@ public class LevelState extends GameState {
 	private List<EnemyUnit> enemies;
 	private PlayerUnit player;
 	private TickHandler tickHandler;
+	private boolean hasWon = false;
 
 	public LevelState(GameStateHandler gameStateHandler, int levelNumber) {
 		super(gameStateHandler);
@@ -52,8 +53,24 @@ public class LevelState extends GameState {
 
 	@Override
 	public void tick() {
-		if (tickHandler.tick()) {
+		if (tickHandler.tick() && !hasWon) {
+			hasWon = false;
 			gameStateHandler.loadLevel(currentLevelNumber + 1);
+//			SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+//				@Override
+//				protected Void doInBackground() throws Exception {
+//					FrameHandler.setLevelNumber(currentLevelNumber + 1);
+//					FrameHandler.setLoading(true);
+//					Stack<GameState> gameStates = gameStateHandler.getGameStates();
+//					gameStates.push(new LevelState(gameStateHandler, currentLevelNumber + 1));
+//					FrameHandler.setLoading(false);
+//					return null;
+//				}
+//			};
+//			worker.execute();
+//			Stack<GameState> gameStates = gameStateHandler.getGameStates();
+//			gameStates.push(new LevelState(gameStateHandler, currentLevelNumber + 1));
+//			gameStateHandler.loadLevel(currentLevelNumber + 1);
 		}
 	}
 

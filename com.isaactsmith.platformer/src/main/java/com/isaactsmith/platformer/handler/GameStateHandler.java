@@ -15,6 +15,7 @@ public class GameStateHandler {
 
 	public GameStateHandler() {
 		gameStates.push(new MenuState(this));
+		gameStates.push(new MenuState(this));
 	}
 
 	public void tick() {
@@ -42,8 +43,8 @@ public class GameStateHandler {
 			@Override
 			protected Void doInBackground() throws Exception {
 				FrameHandler.setLevelNumber(levelNumber);
+				gameStates.pop();
 				FrameHandler.setLoading(true);
-				Thread.sleep(100);
 				gameStates.push(new LevelState(GameStateHandler.this, levelNumber));
 				FrameHandler.setLoading(false);
 				return null;
