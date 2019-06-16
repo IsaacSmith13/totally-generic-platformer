@@ -3,7 +3,10 @@ package com.isaactsmith.platformer.handler;
 import java.awt.Graphics;
 import java.util.Stack;
 
+import javax.swing.SwingWorker;
+
 import com.isaactsmith.platformer.gamestate.GameState;
+import com.isaactsmith.platformer.gamestate.LevelState;
 import com.isaactsmith.platformer.gamestate.MenuState;
 
 public class GameStateHandler {
@@ -32,5 +35,20 @@ public class GameStateHandler {
 
 	public Stack<GameState> getGameStates() {
 		return gameStates;
+	}
+
+	public void loadLevel(int levelNumber) {
+		SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+			@Override
+			protected Void doInBackground() throws Exception {
+				FrameHandler.setLevelNumber(levelNumber);
+				FrameHandler.setLoading(true);
+				Thread.sleep(100);
+				gameStates.push(new LevelState(GameStateHandler.this, levelNumber));
+				FrameHandler.setLoading(false);
+				return null;
+			}
+		};
+		worker.execute();
 	}
 }

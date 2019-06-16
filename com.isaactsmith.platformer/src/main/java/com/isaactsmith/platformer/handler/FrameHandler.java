@@ -1,7 +1,9 @@
 package com.isaactsmith.platformer.handler;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -17,6 +19,8 @@ public class FrameHandler extends JPanel implements KeyListener, Runnable {
 	private GameStateHandler gameStateHandler;
 	private static boolean isRunning;
 	private final double startTime = System.currentTimeMillis();
+	private static boolean isLoading = false;
+	private static int levelNumber = 1;
 
 	public FrameHandler(JFrame frame) {
 		// Initialize the window
@@ -70,15 +74,38 @@ public class FrameHandler extends JPanel implements KeyListener, Runnable {
 
 	@Override
 	public void paint(Graphics g) {
+		if (isLoading) {
+			paintLoadingScreen(g);
+		} else {
+			try {
+				requestFocusInWindow();
+				gameStateHandler.paint(g);
+			} catch (NullPointerException e) {
+				// Sometimes objects don't load in the first few seconds, so ignore error if
+				// game just launched
+				if (startTime + 5000 > System.currentTimeMillis()) {
+					System.out.println("Objects not loaded yet");
+				} else {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	private void paintLoadingScreen(Graphics g) {
 		try {
 			requestFocusInWindow();
-			gameStateHandler.paint(g);
+			g.setColor(Color.BLACK);
+			g.fillRect(0, 0, FrameHandler.WINDOW_WIDTH, FrameHandler.WINDOW_HEIGHT);
+			g.setColor(new Color(242, 2, 190));
+			g.setFont(new Font("helvetica", Font.BOLD, 72));
+			g.drawString("Level " + levelNumber, (int) (FrameHandler.WINDOW_WIDTH / 2.4), WINDOW_HEIGHT / 2);
 		} catch (NullPointerException e) {
-			// Sometimes objects don't load in the first few seconds, so ignore error if game just launched
+			// Sometimes objects don't load in the first few seconds, so ignore error if
+			// game just launched
 			if (startTime + 5000 > System.currentTimeMillis()) {
 				System.out.println("Objects not loaded yet");
-			}
-			else {
+			} else {
 				e.printStackTrace();
 			}
 		}
@@ -88,13 +115,29 @@ public class FrameHandler extends JPanel implements KeyListener, Runnable {
 	public void keyPressed(KeyEvent e) {
 		gameStateHandler.keyPressed(e.getKeyCode());
 	}
-	
+
 	@Override
 	public void keyReleased(KeyEvent e) {
 		gameStateHandler.keyReleased(e.getKeyCode());
 	}
-	
+
 	@Override
 	public void keyTyped(KeyEvent e) {
+	}
+
+	public static boolean isLoading() {
+		return isLoading;
+	}
+
+	public static void setLoading(boolean isLoading) {
+		FrameHandler.isLoading = isLoading;
+	}
+
+	public static int getLevelNumber() {
+		return levelNumber;
+	}
+
+	public static void setLevelNumber(int levelNumber) {
+		FrameHandler.levelNumber = levelNumber;
 	}
 }

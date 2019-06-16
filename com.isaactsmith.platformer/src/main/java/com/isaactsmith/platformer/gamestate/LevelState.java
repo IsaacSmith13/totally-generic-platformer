@@ -5,7 +5,6 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.List;
-import java.util.Stack;
 
 import com.isaactsmith.platformer.handler.FrameHandler;
 import com.isaactsmith.platformer.handler.GameStateHandler;
@@ -54,8 +53,7 @@ public class LevelState extends GameState {
 	@Override
 	public void tick() {
 		if (tickHandler.tick()) {
-			Stack<GameState> gameStates = gameStateHandler.getGameStates();
-			gameStates.push(new LevelState(gameStateHandler, currentLevelNumber + 1));
+			gameStateHandler.loadLevel(currentLevelNumber + 1);
 		}
 	}
 

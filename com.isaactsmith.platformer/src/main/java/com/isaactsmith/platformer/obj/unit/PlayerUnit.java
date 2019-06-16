@@ -7,7 +7,6 @@ import java.awt.image.BufferedImage;
 
 import com.isaactsmith.platformer.handler.FrameHandler;
 import com.isaactsmith.platformer.handler.TickHandler;
-import com.isaactsmith.platformer.obj.Obj;
 
 public class PlayerUnit extends Unit {
 
