@@ -76,10 +76,8 @@ public class PlayerUnit extends Unit {
 			}
 			TickHandler.setXOffset(xOffset);
 		} else {
-			FrameHandler.setLoading(false);
-			lives = 3;
+			lives--;
 			TickHandler.setXOffset(0);
-			FrameHandler.setRunning(false);
 		}
 	}
 

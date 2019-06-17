@@ -25,6 +25,7 @@ public class LevelState extends GameState {
 	private static final String BACKGROUND_IMAGE_PATH = "Background";
 	private static final int WINDOW_WIDTH = FrameHandler.WINDOW_WIDTH;
 	private static final int WINDOW_HEIGHT = FrameHandler.WINDOW_HEIGHT;
+	private static final int MENU_LEVEL_NUMBER = 0;
 	private final int currentLevelNumber;
 	private LevelLoader currentLevel;
 	private BufferedImage background;
@@ -36,6 +37,7 @@ public class LevelState extends GameState {
 	private PlayerUnit player;
 	private TickHandler tickHandler;
 	private boolean hasWon = false;
+	private boolean gameOver = false;
 
 	public LevelState(GameStateHandler gameStateHandler, int levelNumber) {
 		super(gameStateHandler);
@@ -54,23 +56,13 @@ public class LevelState extends GameState {
 	@Override
 	public void tick() {
 		if (tickHandler.tick() && !hasWon) {
-			hasWon = false;
 			gameStateHandler.loadLevel(currentLevelNumber + 1);
-//			SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
-//				@Override
-//				protected Void doInBackground() throws Exception {
-//					FrameHandler.setLevelNumber(currentLevelNumber + 1);
-//					FrameHandler.setLoading(true);
-//					Stack<GameState> gameStates = gameStateHandler.getGameStates();
-//					gameStates.push(new LevelState(gameStateHandler, currentLevelNumber + 1));
-//					FrameHandler.setLoading(false);
-//					return null;
-//				}
-//			};
-//			worker.execute();
-//			Stack<GameState> gameStates = gameStateHandler.getGameStates();
-//			gameStates.push(new LevelState(gameStateHandler, currentLevelNumber + 1));
-//			gameStateHandler.loadLevel(currentLevelNumber + 1);
+			hasWon = false;
+		} else if (PlayerUnit.getLives() < 0 && !gameOver) {
+			gameOver = true;
+			PlayerUnit.setLives(3);
+			gameStateHandler.loadLevel(MENU_LEVEL_NUMBER);
+			gameOver = false;
 		}
 	}
 

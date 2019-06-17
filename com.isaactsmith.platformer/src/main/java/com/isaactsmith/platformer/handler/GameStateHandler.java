@@ -11,6 +11,7 @@ import com.isaactsmith.platformer.gamestate.MenuState;
 
 public class GameStateHandler {
 
+	private static final int MENU_LEVEL_NUMBER = 0;
 	private Stack<GameState> gameStates = new Stack<GameState>();
 
 	public GameStateHandler() {
@@ -45,7 +46,12 @@ public class GameStateHandler {
 				FrameHandler.setLevelNumber(levelNumber);
 				gameStates.pop();
 				FrameHandler.setLoading(true);
-				gameStates.push(new LevelState(GameStateHandler.this, levelNumber));
+				if (levelNumber != MENU_LEVEL_NUMBER) {
+					gameStates.push(new LevelState(GameStateHandler.this, levelNumber));
+				} else {
+					gameStates.push(new MenuState(GameStateHandler.this));
+					Thread.sleep(3000);
+				}
 				FrameHandler.setLoading(false);
 				return null;
 			}

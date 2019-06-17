@@ -20,8 +20,8 @@ public class CollisionHandler {
 	private PlayerUnit player;
 	private TickHandler tickHandler;
 
-	public CollisionHandler(List<Tile> winningTiles, Tile[][] tiles, List<Tile> movingTiles, List<EnemyUnit> enemies, PlayerUnit player,
-			TickHandler tickHandler) {
+	public CollisionHandler(List<Tile> winningTiles, Tile[][] tiles, List<Tile> movingTiles, List<EnemyUnit> enemies,
+			PlayerUnit player, TickHandler tickHandler) {
 		this.winningTiles = winningTiles;
 		this.tiles = tiles;
 		this.movingTiles = movingTiles;
@@ -29,7 +29,7 @@ public class CollisionHandler {
 		this.player = player;
 		this.tickHandler = tickHandler;
 	}
-	
+
 	public boolean handleWinning() {
 		for (int i = 0, winningTilesAmount = winningTiles.size(); i < winningTilesAmount; i++) {
 			Tile tile = winningTiles.get(i);
@@ -148,7 +148,7 @@ public class CollisionHandler {
 	private boolean handleOneSideOfCollision(Point pointInObj, Obj object) {
 		return object.getRect().contains(pointInObj);
 	}
-	
+
 	public void handleEnemyCollision() {
 		for (int i = 0; i < enemies.size(); i++) {
 			EnemyUnit enemy = enemies.get(i);
