@@ -18,10 +18,14 @@ import com.isaactsmith.platformer.obj.unit.SkeletonEnemy;
 
 public class LevelLoader {
 
-	private static final int MAX_PASSABLE_ID = 4;
-	private static final int MAX_SOLID_ID = 19;
+	private static final int MAX_PASSABLE_ID = 19;
+	private static final int MAX_SOLID_ID = 39;
+	// Max moving id is 49
+	@SuppressWarnings("unused")
+	private static final int MAX_OTHER_ID = 59;
+	private static final int MAX_TERRAIN_ID = 79;
+	private static final int MAX_ENEMY_ID = 98;
 	private static final int WINNING_ID = 99;
-	private static final int MAX_ENEMY_ID = 39;
 	private static final int TERRAIN_LAYER_NUMBER = 2;
 	private String levelpath;
 	private int width;
@@ -63,12 +67,12 @@ public class LevelLoader {
 						tiles[y][x] = new PassableTile(tileX, tileY, id);
 					} else if (id <= MAX_SOLID_ID) {
 						tiles[y][x] = new Tile(tileX, tileY, id);
+					} else if (id <= MAX_TERRAIN_ID) {
+						terrain.add(new BackgroundTile(x * size, (y / TERRAIN_LAYER_NUMBER) * size, id));
 					} else if (id <= MAX_ENEMY_ID) {
 						makeEnemy(tileX, tileY, id);
 					} else if (id == WINNING_ID) {
 						winningTiles.add(new Tile(tileX, tileY, id));
-					} else {
-						terrain.add(new BackgroundTile(x * size, (y / TERRAIN_LAYER_NUMBER) * size, id));
 					}
 				}
 			}
@@ -87,7 +91,7 @@ public class LevelLoader {
 
 	private void makeEnemy(int x, int y, int id) {
 		switch (id) {
-		case (20):
+		case (80):
 			enemies.add(new SkeletonEnemy(x, y, ImageLoader.getUnitImagesById(id), 1, 6));
 		}
 	}

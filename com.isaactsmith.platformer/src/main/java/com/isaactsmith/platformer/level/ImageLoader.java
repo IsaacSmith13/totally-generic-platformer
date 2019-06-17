@@ -8,6 +8,14 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 
 public class ImageLoader {
+	
+	// MAX_PASSABLE_ID = 19
+	// MAX_SOLID_ID = 39
+	// MAX_MOVING_ID = 49
+	// MAX_OTHER_ID = 59
+	// MAX_TERRAIN_ID = 79
+	// MAX_ENEMY_ID = 98
+	// WINNING_ID = 99
 
 	private static Map<String, BufferedImage> images = new HashMap<String, BufferedImage>();
 	private static final String[] DIRECTIONS = { "Right", "Left" };
@@ -30,16 +38,52 @@ public class ImageLoader {
 
 	public static BufferedImage getTileImageById(int id) {
 		switch (id) {
+		// Passable
 		case (0):
-			return getBufferedImage("PassableGrass");
+			return getBufferedImage("PassableGrassLeft");
+		case (1):
+			return getBufferedImage("PassableGrassMid");
+		case (2):
+			return getBufferedImage("PassableGrassRight");
+		case (3):
+			return getBufferedImage("PassableMushroomLeft");
+		case (4):
+			return getBufferedImage("PassableMushroomMid");
 		case (5):
-			return getBufferedImage("MovingPlatform");
-		case (10):
+			return getBufferedImage("PassableMushroomRight");
+		// Solid
+		case (20):
 			return getBufferedImage("SolidGrass");
-		case (11):
+		case (21):
 			return getBufferedImage("SolidDirt");
+		case (22):
+			return getBufferedImage("CactusTop");
+		case (23):
+			return getBufferedImage("CactusBottom");
+		case (24):
+			return getBufferedImage("ItemFull");
+		case (25):
+			return getBufferedImage("ItemEmpty");
+		// Moving
 		case (40):
-			return getBufferedImage("Bush");
+			return getBufferedImage("MovingPlatform");
+		// Other
+		case (50):
+			return getBufferedImage("Spikes");
+		case (51):
+			return getBufferedImage("Ladder");
+		// Terrain
+		case (60):
+			return getBufferedImage("Bush0");
+		case (61):
+			return getBufferedImage("Bush1");
+		case (62):
+			return getBufferedImage("SignExit");
+		case (63):
+			return getBufferedImage("SignLeft");
+		case (64):
+			return getBufferedImage("SignRight");
+		// Winning Tile
 		case (99):
 			return getBufferedImage("WinningTile");
 		default:
@@ -51,7 +95,7 @@ public class ImageLoader {
 		switch (id) {
 		case (-1):
 			return createImagesArray(PLAYER_IMG);
-		case (20):
+		case (80):
 			return createImagesArray(SKELETON_IMG);
 		default:
 			return null;
