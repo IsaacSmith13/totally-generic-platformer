@@ -7,6 +7,7 @@ import com.isaactsmith.platformer.obj.Obj;
 
 public abstract class Unit extends Obj {
 
+	private static final int paintPadding = 3;
 	// Terminal velocity = unit height / terminal velocity pixels per frame
 	private static final int TERMINAL_VELOCITY = 8;
 	// For calculating which unit image to display
@@ -44,10 +45,7 @@ public abstract class Unit extends Obj {
 	}
 
 	@Override
-	public void paint(Graphics g) {
-		g.drawImage(getImageToRender(), (int) Math.round(getX()) - 3, (int) Math.round(getY()) - 3, getHeight() + 6,
-				getWidth() + 6, null);
-	}
+	public abstract void paint(Graphics g);
 
 	public BufferedImage getImageToRender() {
 		// selects a default standing image facing the last moved direction to use if
@@ -216,5 +214,9 @@ public abstract class Unit extends Obj {
 
 	public void setJumpSpeed(double jumpSpeed) {
 		this.jumpSpeed = jumpSpeed;
+	}
+
+	public static int getPaintPadding() {
+		return paintPadding;
 	}
 }
