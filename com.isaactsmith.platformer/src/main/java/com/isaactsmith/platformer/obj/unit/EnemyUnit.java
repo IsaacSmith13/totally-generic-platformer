@@ -32,11 +32,15 @@ public abstract class EnemyUnit extends Unit {
 	public void paint(Graphics g) {
 		int x = (int) Math.round(getX() - TickHandler.getXOffset());
 		int y = (int) Math.round(getY());
-		if (x <= FrameHandler.WINDOW_WIDTH + (GLOBAL_SIZE * 2) && (x - 1) >= -GLOBAL_SIZE * 2
-				&& y <= FrameHandler.WINDOW_HEIGHT + (GLOBAL_SIZE * 2) && (y - 1) >= -GLOBAL_SIZE * 2) {
-			setActive(true);
+		int maxX = FrameHandler.WINDOW_WIDTH + GLOBAL_SIZE;
+		int maxY = FrameHandler.WINDOW_HEIGHT + GLOBAL_SIZE;
+		int min = -GLOBAL_SIZE;
+		if (x <= maxX && (x - 1) >= min && y <= maxY && (y - 1) >= min) {
 			g.drawImage(getImageToRender(), x - getPaintPadding(), y - getPaintPadding(),
 					getHeight() + getPaintPadding() * 2, getWidth() + getPaintPadding() * 2, null);
+			if (!isActive() && x <= maxX + (min * 3)) {
+				setActive(true);
+			}
 		}
 	}
 
