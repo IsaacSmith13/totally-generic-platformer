@@ -48,7 +48,7 @@ public class ImageLoader {
 		case (3):
 			return getBufferedImage("PassableMushroomLeft");
 		case (4):
-			return getBufferedImage("PassableMushroomMid");
+			return getBufferedImage("PassableMushroomMiddle");
 		case (5):
 			return getBufferedImage("PassableMushroomRight");
 		// Solid
@@ -83,6 +83,16 @@ public class ImageLoader {
 			return getBufferedImage("SignLeft");
 		case (64):
 			return getBufferedImage("SignRight");
+		case (65):
+			return getBufferedImage("MushroomBottom");
+		case (66):
+			return getBufferedImage("MushroomMiddle");
+		case (67):
+			return getBufferedImage("MushroomSmallRed");
+		case (68):
+			return getBufferedImage("MushroomSmallWhite");
+		case (69):
+			return getBufferedImage("MushroomLarge");
 		// Winning Tile
 		case (99):
 			return getBufferedImage("WinningTile");
