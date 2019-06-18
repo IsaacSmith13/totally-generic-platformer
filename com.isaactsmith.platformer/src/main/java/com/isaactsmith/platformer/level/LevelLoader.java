@@ -26,7 +26,6 @@ public class LevelLoader {
 	private static final int MAX_TERRAIN_ID = 79;
 	private static final int MAX_ENEMY_ID = 98;
 	private static final int WINNING_ID = 99;
-	private static final int TERRAIN_LAYER_NUMBER = 2;
 	private String levelpath;
 	private int width;
 	private int height;
@@ -68,7 +67,7 @@ public class LevelLoader {
 					} else if (id <= MAX_SOLID_ID) {
 						tiles[y][x] = new Tile(tileX, tileY, id);
 					} else if (id <= MAX_TERRAIN_ID) {
-						terrain.add(new BackgroundTile(x * size, (y / TERRAIN_LAYER_NUMBER) * size, id));
+						terrain.add(new BackgroundTile(tileX, (y - mapHeight) * size, id));
 					} else if (id <= MAX_ENEMY_ID) {
 						makeEnemy(tileX, tileY, id);
 					} else if (id == WINNING_ID) {

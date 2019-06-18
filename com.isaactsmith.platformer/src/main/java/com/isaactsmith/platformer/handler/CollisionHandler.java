@@ -89,10 +89,16 @@ public class CollisionHandler {
 	private void handleMovingTileCollision(Unit unit, int unitX, int unitY, int size) {
 		for (int i = 0, movingTilesAmount = movingTiles.size(); i < movingTilesAmount; i++) {
 			if (handleDownwardCollision(unit, unitX, unitY, size, movingTiles.get(i)) && !unit.isJumping()) {
-				if (unit instanceof PlayerUnit) {
-					TickHandler.setXOffset(TickHandler.getXOffset() + ((MovingTile) movingTiles.get(i)).getMoveSpeed());
-				} else {
-					unit.setX(unit.getX() + ((MovingTile) movingTiles.get(i)).getMoveSpeed());
+				int movingTileSpeed = ((MovingTile) movingTiles.get(i)).getMoveSpeed();
+				if ((movingTileSpeed > 0 && !unit.willCollideRight())
+						|| (movingTileSpeed < 0 && !unit.willCollideLeft())) {
+					if (unit instanceof PlayerUnit) {
+						System.out.println("move" + movingTileSpeed);
+						System.out.println(unit.willCollideRight());
+						TickHandler.setXOffset(TickHandler.getXOffset() + movingTileSpeed);
+					} else {
+						unit.setX(unit.getX() + movingTileSpeed);
+					}
 				}
 			}
 		}
@@ -128,20 +134,16 @@ public class CollisionHandler {
 	}
 
 	private void handleLeftwardCollision(Unit unit, int unitX, int unitY, int size, Obj object) {
-		if (unit.isLeft()) {
-			if (handleOneSideOfCollision(new Point(unitX - 2, unitY + 2), object)
-					|| handleOneSideOfCollision(new Point(unitX - 2, unitY + size - 1), object)) {
-				unit.setCollideLeft(true);
-			}
+		if (handleOneSideOfCollision(new Point(unitX - 2, unitY + 2), object)
+				|| handleOneSideOfCollision(new Point(unitX - 2, unitY + size - 1), object)) {
+			unit.setCollideLeft(true);
 		}
 	}
 
 	private void handleRightwardCollision(Unit unit, int unitX, int unitY, int size, Obj object) {
-		if (unit.isRight()) {
-			if (handleOneSideOfCollision(new Point(unitX + size + 3, unitY + 2), object)
-					|| handleOneSideOfCollision(new Point(unitX + size + 3, unitY + size - 1), object)) {
-				unit.setCollideRight(true);
-			}
+		if (handleOneSideOfCollision(new Point(unitX + size + 3, unitY + 2), object)
+				|| handleOneSideOfCollision(new Point(unitX + size + 3, unitY + size - 1), object)) {
+			unit.setCollideRight(true);
 		}
 	}
 
