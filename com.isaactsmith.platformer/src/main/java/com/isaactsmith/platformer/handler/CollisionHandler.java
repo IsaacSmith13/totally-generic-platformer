@@ -93,8 +93,6 @@ public class CollisionHandler {
 				if ((movingTileSpeed > 0 && !unit.willCollideRight())
 						|| (movingTileSpeed < 0 && !unit.willCollideLeft())) {
 					if (unit instanceof PlayerUnit) {
-						System.out.println("move" + movingTileSpeed);
-						System.out.println(unit.willCollideRight());
 						TickHandler.setXOffset(TickHandler.getXOffset() + movingTileSpeed);
 					} else {
 						unit.setX(unit.getX() + movingTileSpeed);

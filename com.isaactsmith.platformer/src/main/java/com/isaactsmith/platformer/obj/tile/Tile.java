@@ -30,7 +30,7 @@ public class Tile extends Obj {
 		if (x <= FrameHandler.WINDOW_WIDTH + (width * 2) && (x - 1) >= -width * 2
 				&& y <= FrameHandler.WINDOW_HEIGHT + (height * 2) && (y - 1) >= -height * 2) {
 
-			g.drawImage(getImage(), x, y, getWidth(), getHeight(), null);
+			g.drawImage(getImage(), x, y, width, height, null);
 		}
 	}
 
