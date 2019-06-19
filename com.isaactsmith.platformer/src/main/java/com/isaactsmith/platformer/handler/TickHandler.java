@@ -64,7 +64,7 @@ public class TickHandler {
 	public void handleEnemies() {
 		for (int i = 0; i < enemies.size(); i++) {
 			Unit currentEnemy = enemies.get(i);
-			if (((EnemyUnit) currentEnemy).isActive() && player.isActive()) {
+			if (((EnemyUnit) currentEnemy).isActive() && player.isActive() && !((EnemyUnit)currentEnemy).isDying()) {
 				collisionHandler.handleTileCollision(currentEnemy);
 				handleJumping(currentEnemy);
 				handleFalling(currentEnemy);

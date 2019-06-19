@@ -13,7 +13,7 @@ public abstract class EnemyUnit extends Unit {
 	private int startX;
 	private int startY;
 	private double timeOfDeath;
-	private boolean isAlive = true;
+	private boolean isDying = false;
 
 	public EnemyUnit(int x, int y, BufferedImage[] images) {
 		super(x, y, images);
@@ -48,17 +48,17 @@ public abstract class EnemyUnit extends Unit {
 	}
 
 	public void die() {
-		timeOfDeath = System.currentTimeMillis();
-		setAlive(false);
-	}
-
-	public void handleDeath() {
-		if (System.currentTimeMillis() > timeOfDeath + DEATH_DELAY_MS) {
+		if (System.currentTimeMillis() > timeOfDeath + DEATH_DELAY_MS || timeOfDeath == -1) {
 			setY(-1000);
 			setActive(false);
 			timeOfDeath = -1;
-			setAlive(true);
+			setDying(false);
 		}
+	}
+
+	public void handleDeath() {
+		timeOfDeath = System.currentTimeMillis();
+		setDying(true);
 	}
 
 	@Override
@@ -101,11 +101,11 @@ public abstract class EnemyUnit extends Unit {
 		setLocation(startX, startY);
 	}
 
-	public boolean isAlive() {
-		return isAlive;
+	public boolean isDying() {
+		return isDying;
 	}
 
-	public void setAlive(boolean isAlive) {
-		this.isAlive = isAlive;
+	public void setDying(boolean isDying) {
+		this.isDying = isDying;
 	}
 }

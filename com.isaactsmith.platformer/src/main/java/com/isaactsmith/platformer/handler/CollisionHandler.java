@@ -156,19 +156,19 @@ public class CollisionHandler {
 				if (player.getRect().intersects(enemy.getRect())) {
 					if (player.getY() <= enemy.getY() - enemy.getHeight() + player.getYVelocity()
 							+ enemy.getCurrentJumpSpeed()) {
-						if (enemy.isAlive()) {
-							enemy.die();
+						if (!enemy.isDying()) {
+							enemy.handleDeath();
 						}
 						player.setFalling(false);
 						player.setYVelocity(0);
 						player.setY(enemy.getY() - player.getHeight());
-					} else if (enemy.isAlive()) {
+					} else if (!enemy.isDying()) {
 						tickHandler.reset();
 						player.die();
 					}
 				}
-				if (!enemy.isAlive()) {
-					enemy.handleDeath();
+				if (enemy.isDying()) {
+					enemy.die();
 				}
 			}
 		}
