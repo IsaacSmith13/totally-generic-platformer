@@ -20,19 +20,27 @@ public class GameStateHandler {
 	}
 
 	public void tick() {
-		gameStates.peek().tick();
+		if (!FrameHandler.isLoading()) {
+			gameStates.peek().tick();
+		}
 	}
 
 	public void paint(Graphics g) {
-		gameStates.peek().paint(g);
+		if (!FrameHandler.isLoading()) {
+			gameStates.peek().paint(g);
+		}
 	}
 
 	public void keyPressed(int e) {
-		gameStates.peek().keyPressed(e);
+		if (!FrameHandler.isLoading()) {
+			gameStates.peek().keyPressed(e);
+		}
 	}
 
 	public void keyReleased(int e) {
-		gameStates.peek().keyReleased(e);
+		if (!FrameHandler.isLoading()) {
+			gameStates.peek().keyReleased(e);
+		}
 	}
 
 	public Stack<GameState> getGameStates() {
@@ -44,11 +52,12 @@ public class GameStateHandler {
 			@Override
 			protected Void doInBackground() throws Exception {
 				FrameHandler.setLevelNumber(levelNumber);
-				gameStates.pop();
 				FrameHandler.setLoading(true);
 				if (levelNumber != MENU_LEVEL_NUMBER) {
+					gameStates.pop();
 					gameStates.push(new LevelState(GameStateHandler.this, levelNumber));
 				} else {
+					gameStates.pop();
 					gameStates.push(new MenuState(GameStateHandler.this));
 					Thread.sleep(3000);
 				}
