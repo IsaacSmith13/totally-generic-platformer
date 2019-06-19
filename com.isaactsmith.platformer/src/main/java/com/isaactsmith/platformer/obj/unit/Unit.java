@@ -11,7 +11,7 @@ public abstract class Unit extends Obj {
 	// Terminal velocity = unit height / terminal velocity pixels per frame
 	private static final int TERMINAL_VELOCITY = 8;
 	// For calculating which unit image to display
-	private static final int FRAMES_PER_IMAGE_CHANGE = 120;
+	private static final int FRAMES_PER_IMAGE_CHANGE = 60;
 	private static final int ANIMATION_FRAME_COUNT = 3;
 	private static final int JUMPING_RIGHT_IMG = 1;
 	private static final int JUMPING_LEFT_IMG = 4;
