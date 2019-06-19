@@ -42,17 +42,17 @@ public class MenuState extends GameState {
 	public void keyPressed(int e) {
 		switch (e) {
 		case (KeyEvent.VK_DOWN):
-			currentSelection = currentSelection >= options.length - 1 ? 0 : ++currentSelection;
-			break;
+			e = KeyEvent.VK_S;
 		case (KeyEvent.VK_S):
 			currentSelection = currentSelection >= options.length - 1 ? 0 : ++currentSelection;
 			break;
 		case (KeyEvent.VK_UP):
-			currentSelection = currentSelection < 1 ? options.length - 1 : --currentSelection;
-			break;
+			e = KeyEvent.VK_W;
 		case (KeyEvent.VK_W):
 			currentSelection = currentSelection < 1 ? options.length - 1 : --currentSelection;
 			break;
+		case (KeyEvent.VK_SPACE):
+			e = KeyEvent.VK_ENTER;
 		case (KeyEvent.VK_ENTER):
 			switch (currentSelection) {
 			case (0):
