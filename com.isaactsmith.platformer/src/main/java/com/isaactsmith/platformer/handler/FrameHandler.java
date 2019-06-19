@@ -19,6 +19,10 @@ public class FrameHandler extends JPanel implements KeyListener, Runnable {
 
 	public static final int WINDOW_WIDTH = 1280;
 	public static final int WINDOW_HEIGHT = 720;
+	private static final int TICKS_PER_SECOND = 100;
+	// No need to change this; just change updates per second as needed
+	private static final int MICROSECOND = 1000000;
+	private static final int MICROSECONDS_PER_TICK = 1000 / TICKS_PER_SECOND;
 	private final double startTime = System.currentTimeMillis();
 	private static boolean isRunning;
 	private static boolean isLoading = false;
@@ -49,19 +53,17 @@ public class FrameHandler extends JPanel implements KeyListener, Runnable {
 		while (true) {
 			isRunning = true;
 			gameStateHandler = new GameStateHandler();
-			long lastUpdate = System.nanoTime();
+			long lastTick = System.nanoTime();
 			long lastRender = System.nanoTime();
-			double ups = 100;
-			double wait = 1000 / ups;
 			double delta = 0;
 			long time;
 			gameStateHandler.tick();
 			while (isRunning) {
 				time = System.nanoTime();
-				delta += (time - lastRender) / 1000000;
-				if ((time - lastUpdate) / 1000000 >= wait) {
+				delta += (time - lastRender) / MICROSECOND;
+				if ((time - lastTick) / MICROSECOND >= MICROSECONDS_PER_TICK) {
 					gameStateHandler.tick();
-					lastUpdate = System.nanoTime();
+					lastTick = System.nanoTime();
 				}
 				if (delta >= 2) {
 					repaint();
@@ -77,11 +79,11 @@ public class FrameHandler extends JPanel implements KeyListener, Runnable {
 
 	@Override
 	public void paint(Graphics g) {
+		requestFocusInWindow();
 		if (isLoading) {
 			paintLoadingScreen(g);
 		} else {
 			try {
-				requestFocusInWindow();
 				gameStateHandler.paint(g);
 			} catch (NullPointerException e) {
 				// Sometimes objects don't load in the first few seconds, so ignore error if
@@ -96,7 +98,6 @@ public class FrameHandler extends JPanel implements KeyListener, Runnable {
 	}
 
 	private void paintLoadingScreen(Graphics g) {
-		requestFocusInWindow();
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, FrameHandler.WINDOW_WIDTH, FrameHandler.WINDOW_HEIGHT);
 		g.setFont(new Font("helvetica", Font.BOLD, 72));
