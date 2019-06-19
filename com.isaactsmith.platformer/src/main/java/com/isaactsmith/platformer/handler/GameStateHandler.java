@@ -20,15 +20,11 @@ public class GameStateHandler {
 	}
 
 	public void tick() {
-		if (!FrameHandler.isLoading()) {
-			gameStates.peek().tick();
-		}
+		gameStates.peek().tick();
 	}
 
 	public void paint(Graphics g) {
-		if (!FrameHandler.isLoading()) {
-			gameStates.peek().paint(g);
-		}
+		gameStates.peek().paint(g);
 	}
 
 	public void keyPressed(int e) {
