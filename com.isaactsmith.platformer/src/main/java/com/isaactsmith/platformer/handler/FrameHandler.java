@@ -65,7 +65,7 @@ public class FrameHandler extends JPanel implements KeyListener, Runnable {
 					gameStateHandler.tick();
 					lastTick = System.nanoTime();
 				}
-				if (delta >= 2) {
+				if (delta >= 1) {
 					repaint();
 					delta = 0;
 				}
