@@ -27,15 +27,15 @@ public class LevelState extends GameState {
 	private static final int WINDOW_HEIGHT = FrameHandler.WINDOW_HEIGHT;
 	private static final int MENU_LEVEL_NUMBER = 0;
 	private final int currentLevelNumber;
-	private LevelLoader currentLevel;
-	private BufferedImage background;
-	private List<Tile> winningTiles;
-	private Tile[][] tiles;
-	private List<Tile> terrain;
-	private List<Tile> movingTiles;
-	private List<EnemyUnit> enemies;
-	private PlayerUnit player;
-	private TickHandler tickHandler;
+	private final LevelLoader currentLevel;
+	private final BufferedImage background;
+	private final List<Tile> winningTiles;
+	private final Tile[][] tiles;
+	private final List<Tile> terrain;
+	private final List<Tile> movingTiles;
+	private final List<EnemyUnit> enemies;
+	private final PlayerUnit player;
+	private final TickHandler tickHandler;
 	private boolean hasWon = false;
 	private boolean gameOver = false;
 

@@ -11,10 +11,10 @@ import com.isaactsmith.platformer.obj.unit.Unit;
 public class TickHandler {
 
 	private static double xOffset;
-	private CollisionHandler collisionHandler;
-	private List<Tile> movingTiles;
-	private List<EnemyUnit> enemies;
-	PlayerUnit player;
+	private final CollisionHandler collisionHandler;
+	private final List<Tile> movingTiles;
+	private final List<EnemyUnit> enemies;
+	private final PlayerUnit player;
 
 	public TickHandler(List<Tile> winningTiles, Tile[][] tiles, List<Tile> movingTiles, List<EnemyUnit> enemies,
 			PlayerUnit player) {

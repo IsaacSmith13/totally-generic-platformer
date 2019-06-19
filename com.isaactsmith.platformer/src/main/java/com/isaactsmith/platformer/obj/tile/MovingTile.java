@@ -6,8 +6,8 @@ import com.isaactsmith.platformer.obj.Obj;
 
 public class MovingTile extends PassableTile {
 
-	private int leftLimit;
-	private int rightLimit;
+	private final int leftLimit;
+	private final int rightLimit;
 	private int moveSpeed;
 
 	public MovingTile(int x, int y, int id, int width, int rightLimit, int moveSpeed) {
@@ -17,11 +17,11 @@ public class MovingTile extends PassableTile {
 		this.rightLimit = x + (rightLimit * Obj.GLOBAL_SIZE);
 		this.moveSpeed = moveSpeed;
 	}
-	
+
 	public void reset() {
 		setX(leftLimit);
 	}
-	
+
 	@Override
 	public Rectangle getRect() {
 		return new Rectangle((int) getX(), (int) getY(), getWidth(), getHeight());
@@ -31,16 +31,8 @@ public class MovingTile extends PassableTile {
 		return leftLimit;
 	}
 
-	public void setLeftLimit(int leftLimit) {
-		this.leftLimit = leftLimit;
-	}
-
 	public int getRightLimit() {
 		return rightLimit;
-	}
-
-	public void setRightLimit(int rightLimit) {
-		this.rightLimit = rightLimit;
 	}
 
 	public int getMoveSpeed() {

@@ -7,11 +7,10 @@ import java.awt.image.BufferedImage;
 public abstract class Obj {
 
 	public static final int GLOBAL_SIZE = 32;
+	private final BufferedImage image;
+	private final BufferedImage[] images;
 	private double x;
 	private double y;
-	private BufferedImage image;
-	private BufferedImage[] images;
-	private boolean isForeground;
 	private int width;
 	private int height;
 
@@ -21,6 +20,7 @@ public abstract class Obj {
 		this.image = image;
 		width = GLOBAL_SIZE;
 		height = GLOBAL_SIZE;
+		images = null;
 	}
 
 	public Obj(int x, int y, BufferedImage[] images) {
@@ -29,6 +29,7 @@ public abstract class Obj {
 		this.images = images;
 		width = GLOBAL_SIZE;
 		height = GLOBAL_SIZE;
+		image = null;
 	}
 
 	public abstract void paint(Graphics g);
@@ -60,18 +61,6 @@ public abstract class Obj {
 
 	public BufferedImage getImage() {
 		return image;
-	}
-
-	public void setImage(BufferedImage image) {
-		this.image = image;
-	}
-
-	public boolean isForeground() {
-		return isForeground;
-	}
-
-	public void setForeground(boolean isForeground) {
-		this.isForeground = isForeground;
 	}
 
 	public int getWidth() {

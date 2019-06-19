@@ -13,12 +13,12 @@ import com.isaactsmith.platformer.obj.unit.Unit;
 
 public class CollisionHandler {
 
-	private List<Tile> winningTiles;
-	private Tile[][] tiles;
-	private List<Tile> movingTiles;
-	private List<EnemyUnit> enemies;
-	private PlayerUnit player;
-	private TickHandler tickHandler;
+	private final List<Tile> winningTiles;
+	private final Tile[][] tiles;
+	private final List<Tile> movingTiles;
+	private final List<EnemyUnit> enemies;
+	private final PlayerUnit player;
+	private final TickHandler tickHandler;
 
 	public CollisionHandler(List<Tile> winningTiles, Tile[][] tiles, List<Tile> movingTiles, List<EnemyUnit> enemies,
 			PlayerUnit player, TickHandler tickHandler) {

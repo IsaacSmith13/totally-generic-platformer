@@ -19,11 +19,11 @@ public class FrameHandler extends JPanel implements KeyListener, Runnable {
 
 	public static final int WINDOW_WIDTH = 1280;
 	public static final int WINDOW_HEIGHT = 720;
-	private GameStateHandler gameStateHandler;
-	private static boolean isRunning;
 	private final double startTime = System.currentTimeMillis();
+	private static boolean isRunning;
 	private static boolean isLoading = false;
 	private static int levelNumber = 1;
+	private GameStateHandler gameStateHandler;
 
 	public FrameHandler(JFrame frame) {
 		// Initialize the window

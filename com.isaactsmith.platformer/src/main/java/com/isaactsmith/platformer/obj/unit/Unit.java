@@ -7,7 +7,7 @@ import com.isaactsmith.platformer.obj.Obj;
 
 public abstract class Unit extends Obj {
 
-	private static final int paintPadding = 3;
+	private static final int paintPadding = 2;
 	// Terminal velocity = unit height / terminal velocity pixels per frame
 	private static final int TERMINAL_VELOCITY = 8;
 	// For calculating which unit image to display

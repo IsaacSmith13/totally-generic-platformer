@@ -10,7 +10,7 @@ import com.isaactsmith.platformer.handler.GameStateHandler;
 
 public class MenuState extends GameState {
 
-	String[] options = { "Start", "Levels", "Quit" };
+	private static final String[] options = { "Start", "Levels", "Quit" };
 	private int currentSelection = 0;
 
 	public MenuState(GameStateHandler gameStateHandler) {

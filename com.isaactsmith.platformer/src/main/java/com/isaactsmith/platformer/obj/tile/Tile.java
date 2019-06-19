@@ -10,9 +10,8 @@ import com.isaactsmith.platformer.obj.Obj;
 
 public class Tile extends Obj {
 
-	private Rectangle tileAsRect;
-	private int id;
-	private String type;
+	private final Rectangle tileAsRect;
+	private final int id;
 
 	public Tile(int x, int y, int id) {
 		super(x, y, ImageLoader.getTileImageById(id));
@@ -39,19 +38,7 @@ public class Tile extends Obj {
 		return tileAsRect;
 	}
 
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
 	public int getId() {
 		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 }
