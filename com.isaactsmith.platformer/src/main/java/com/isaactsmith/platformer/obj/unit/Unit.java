@@ -76,6 +76,7 @@ public abstract class Unit extends Obj {
 	public void jump() {
 		if (!isJumping && !isFalling) {
 			setJumping(true);
+			currentJumpSpeed = jumpSpeed;
 		}
 	}
 

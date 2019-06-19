@@ -33,8 +33,8 @@ public class TickHandler {
 		handleMovingTiles();
 
 		// Handle player tick logic
-		collisionHandler.handleEnemyCollision();
 		collisionHandler.handleTileCollision(player);
+		collisionHandler.handleEnemyCollision();
 		handleJumping(player);
 		handleFalling(player);
 		player.walk();
@@ -95,7 +95,7 @@ public class TickHandler {
 			unit.setY(unit.getY() + currentYVelocity);
 			unit.setYVelocity(currentYVelocity + .2);
 		} else {
-			unit.setYVelocity(0.2);
+			unit.setYVelocity(0);
 		}
 		if (unit.getY() > FrameHandler.WINDOW_HEIGHT) {
 			if (unit instanceof PlayerUnit) {

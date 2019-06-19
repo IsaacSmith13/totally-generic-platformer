@@ -9,8 +9,11 @@ import com.isaactsmith.platformer.handler.TickHandler;
 public abstract class EnemyUnit extends Unit {
 
 	private static final int AVG_TICKS_BETWEEN_JUMPS = 1000;
+	private static final int DEATH_DELAY_MS = 250;
 	private int startX;
 	private int startY;
+	private double timeOfDeath;
+	private boolean isAlive = true;
 
 	public EnemyUnit(int x, int y, BufferedImage[] images) {
 		super(x, y, images);
@@ -45,8 +48,17 @@ public abstract class EnemyUnit extends Unit {
 	}
 
 	public void die() {
-		setY(-1000);
-		setActive(false);
+		timeOfDeath = System.currentTimeMillis();
+		setAlive(false);
+	}
+
+	public void handleDeath() {
+		if (System.currentTimeMillis() > timeOfDeath + DEATH_DELAY_MS) {
+			setY(-1000);
+			setActive(false);
+			timeOfDeath = -1;
+			setAlive(true);
+		}
 	}
 
 	@Override
@@ -87,5 +99,13 @@ public abstract class EnemyUnit extends Unit {
 
 	public void reset() {
 		setLocation(startX, startY);
+	}
+
+	public boolean isAlive() {
+		return isAlive;
+	}
+
+	public void setAlive(boolean isAlive) {
+		this.isAlive = isAlive;
 	}
 }
