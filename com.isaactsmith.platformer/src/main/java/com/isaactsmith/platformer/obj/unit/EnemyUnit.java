@@ -10,8 +10,8 @@ public abstract class EnemyUnit extends Unit {
 
 	private static final int AVG_TICKS_BETWEEN_JUMPS = 1000;
 	private static final int DEATH_DELAY_MS = 250;
-	private int startX;
-	private int startY;
+	private final int startX;
+	private final int startY;
 	private double timeOfDeath;
 	private boolean isDying = false;
 

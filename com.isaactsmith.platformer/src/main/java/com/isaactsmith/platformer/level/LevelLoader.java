@@ -26,10 +26,10 @@ public class LevelLoader {
 	private static final int MAX_TERRAIN_ID = 79;
 	private static final int MAX_ENEMY_ID = 98;
 	private static final int WINNING_ID = 99;
-	private String levelpath;
+	private static final int size = Obj.GLOBAL_SIZE;
+	private final String levelpath;
 	private int width;
 	private int height;
-	private int size = Obj.GLOBAL_SIZE;
 	private List<Tile> winningTiles = new ArrayList<Tile>();
 	private Tile[][] tiles;
 	private List<Tile> terrain = new ArrayList<Tile>();

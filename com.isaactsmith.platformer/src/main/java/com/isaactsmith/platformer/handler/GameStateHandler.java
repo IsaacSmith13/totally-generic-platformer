@@ -12,6 +12,7 @@ import com.isaactsmith.platformer.gamestate.MenuState;
 public class GameStateHandler {
 
 	private static final int MENU_LEVEL_NUMBER = 0;
+	private static final int MENU_LOADING_TIME = 3000;
 	private Stack<GameState> gameStates = new Stack<GameState>();
 
 	public GameStateHandler() {
@@ -55,7 +56,7 @@ public class GameStateHandler {
 				} else {
 					gameStates.pop();
 					gameStates.push(new MenuState(GameStateHandler.this));
-					Thread.sleep(3000);
+					Thread.sleep(MENU_LOADING_TIME);
 				}
 				FrameHandler.setLoading(false);
 				return null;

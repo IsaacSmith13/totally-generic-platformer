@@ -17,10 +17,8 @@ public class ImageLoader {
 	// MAX_ENEMY_ID = 98
 	// WINNING_ID = 99
 
-	private static Map<String, BufferedImage> images = new HashMap<String, BufferedImage>();
 	private static final String[] DIRECTIONS = { "Right", "Left" };
-	private static final String PLAYER_IMG = "Player";
-	private static final String SKELETON_IMG = "Skeleton";
+	private static Map<String, BufferedImage> images = new HashMap<String, BufferedImage>();
 
 	public static BufferedImage getBufferedImage(String filePath) {
 		filePath = "images/" + filePath + ".png";
@@ -104,9 +102,9 @@ public class ImageLoader {
 	public static BufferedImage[] getUnitImagesById(int id) {
 		switch (id) {
 		case (-1):
-			return createImagesArray(PLAYER_IMG);
+			return createImagesArray("Player");
 		case (80):
-			return createImagesArray(SKELETON_IMG);
+			return createImagesArray("Skeleton");
 		default:
 			return null;
 		}
