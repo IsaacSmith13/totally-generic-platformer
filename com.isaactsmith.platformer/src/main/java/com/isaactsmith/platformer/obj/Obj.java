@@ -8,8 +8,8 @@ import com.isaactsmith.platformer.handler.FrameHandler;
 
 public abstract class Obj {
 
-	public static final int GLOBAL_SIZE = (int) (FrameHandler.getWindowHeight() / 22.5);
-	public static final double SCALAR = GLOBAL_SIZE / 32.0;
+	private static int globalSize = (int) (FrameHandler.getWindowHeight() / 22.5);
+	private static double scalar = globalSize / 32.0;
 	private final BufferedImage image;
 	private final BufferedImage[] images;
 	private double x;
@@ -21,8 +21,8 @@ public abstract class Obj {
 		this.x = x;
 		this.y = y;
 		this.image = image;
-		width = GLOBAL_SIZE;
-		height = GLOBAL_SIZE;
+		width = globalSize;
+		height = globalSize;
 		images = null;
 	}
 
@@ -30,9 +30,14 @@ public abstract class Obj {
 		this.x = x;
 		this.y = y;
 		this.images = images;
-		width = GLOBAL_SIZE;
-		height = GLOBAL_SIZE;
+		width = globalSize;
+		height = globalSize;
 		image = null;
+	}
+
+	public static void reScale() {
+		globalSize = (int) (FrameHandler.getWindowHeight() / 22.5);
+		scalar = globalSize / 32.0;
 	}
 
 	public abstract void paint(Graphics g);
@@ -84,5 +89,13 @@ public abstract class Obj {
 
 	public BufferedImage[] getImages() {
 		return images;
+	}
+
+	public static int getGlobalSize() {
+		return globalSize;
+	}
+
+	public static double getScalar() {
+		return scalar;
 	}
 }

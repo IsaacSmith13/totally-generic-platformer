@@ -10,14 +10,17 @@ import com.isaactsmith.platformer.handler.TickHandler;
 
 public class PlayerUnit extends Unit {
 
-	private static final int spawnX = GLOBAL_SIZE * 5;
-	private static final int initialX = (FrameHandler.getWindowWidth() / 2) - (GLOBAL_SIZE / 2);
-	private static final int initialY = (FrameHandler.getWindowHeight() / 2) - (GLOBAL_SIZE / 2);
+	private static int spawnX;
+	private static int initialX;
+	private static int initialY;
 	private static int lives = 3;
 	private double timeOfDeath = -1;
 
 	public PlayerUnit(BufferedImage[] images) {
-		super(GLOBAL_SIZE * 5, initialY, images);
+		super(getGlobalSize() * 5, (FrameHandler.getWindowHeight() / 2) - (getGlobalSize() / 2), images);
+		spawnX = getGlobalSize() * 5;
+		initialX = (FrameHandler.getWindowWidth() / 2) - (getGlobalSize() / 2);
+		initialY = (FrameHandler.getWindowHeight() / 2) - (getGlobalSize() / 2);
 		setActive(true);
 	}
 
@@ -61,7 +64,7 @@ public class PlayerUnit extends Unit {
 				timeOfDeath = System.currentTimeMillis() / 1000;
 			}
 			int xOffset = (int) TickHandler.getXOffset();
-			int deathCameraSpeed = Math.max(Math.abs(xOffset) / GLOBAL_SIZE, 4);
+			int deathCameraSpeed = Math.max(Math.abs(xOffset) / getGlobalSize(), 4);
 			if (xOffset > deathCameraSpeed) {
 				xOffset -= deathCameraSpeed;
 			} else if (xOffset < -deathCameraSpeed) {

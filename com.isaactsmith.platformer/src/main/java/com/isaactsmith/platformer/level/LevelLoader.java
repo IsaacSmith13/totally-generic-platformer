@@ -26,7 +26,7 @@ public class LevelLoader {
 	private static final int MAX_TERRAIN_ID = 79;
 	private static final int MAX_ENEMY_ID = 98;
 	private static final int WINNING_ID = 99;
-	private static final int size = Obj.GLOBAL_SIZE;
+	private static int size;
 	private final String levelpath;
 	private int width;
 	private int height;
@@ -38,6 +38,7 @@ public class LevelLoader {
 	private PlayerUnit player;
 
 	public LevelLoader(int levelNumber) {
+		size = Obj.getGlobalSize();
 		this.levelpath = "Level" + levelNumber + ".level";
 		player = new PlayerUnit(ImageLoader.getUnitImagesById(-1));
 		readLevel();

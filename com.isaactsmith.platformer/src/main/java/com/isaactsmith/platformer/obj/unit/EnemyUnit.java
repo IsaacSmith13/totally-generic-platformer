@@ -23,21 +23,21 @@ public abstract class EnemyUnit extends Unit {
 
 	public EnemyUnit(int x, int y, BufferedImage[] images, double moveSpeed) {
 		this(x, y, images);
-		setMoveSpeed(moveSpeed * SCALAR);
+		setMoveSpeed(moveSpeed * getScalar());
 	}
 
 	public EnemyUnit(int x, int y, BufferedImage[] images, double moveSpeed, double jumpSpeed) {
 		this(x, y, images, moveSpeed);
-		setJumpSpeed(jumpSpeed * SCALAR);
+		setJumpSpeed(jumpSpeed * getScalar());
 	}
 
 	@Override
 	public void paint(Graphics g) {
 		int x = (int) Math.round(getX() - TickHandler.getXOffset());
 		int y = (int) Math.round(getY());
-		int maxX = FrameHandler.getWindowWidth() + GLOBAL_SIZE;
-		int maxY = FrameHandler.getWindowHeight() + GLOBAL_SIZE;
-		int min = -GLOBAL_SIZE;
+		int maxX = FrameHandler.getWindowWidth() + getGlobalSize();
+		int maxY = FrameHandler.getWindowHeight() + getGlobalSize();
+		int min = -getGlobalSize();
 		if (x <= maxX && (x - 1) >= min && y <= maxY && (y - 1) >= min) {
 			g.drawImage(getImageToRender(), x - getPaintPadding(), y - getPaintPadding(),
 					getHeight() + getPaintPadding() * 2, getWidth() + getPaintPadding() * 2, null);

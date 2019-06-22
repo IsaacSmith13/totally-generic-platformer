@@ -18,10 +18,10 @@ public abstract class Unit extends Obj {
 	private int imageCounter = 0;
 	private int lastImage = 0;
 	// Jump and move speeds
-	private double jumpSpeed = 8 * SCALAR;
+	private double jumpSpeed = 8 * getScalar();
 	private double currentJumpSpeed = jumpSpeed;
 	private boolean isJumping = false;
-	private double moveSpeed = 2.5 * SCALAR;
+	private double moveSpeed = 2.5 * getScalar();
 	// Collision handlers
 	private boolean isFalling = false;
 	private boolean isFallingHandled = false;
@@ -41,7 +41,7 @@ public abstract class Unit extends Obj {
 
 	public Unit(int x, int y, BufferedImage[] images, double moveSpeed) {
 		super(x, y, images);
-		this.moveSpeed = moveSpeed * SCALAR;
+		this.moveSpeed = moveSpeed * getScalar();
 	}
 
 	@Override

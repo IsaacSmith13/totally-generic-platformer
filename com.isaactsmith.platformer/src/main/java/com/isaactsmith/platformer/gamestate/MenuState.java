@@ -36,7 +36,7 @@ public class MenuState extends GameState {
 			} else {
 				g.setColor(Color.BLACK);
 			}
-			g.setFont(new Font("helvetica", Font.BOLD, (int) (50 * Obj.SCALAR)));
+			g.setFont(new Font("helvetica", Font.BOLD, (int) (50 * Obj.getScalar())));
 			g.drawString(options[i], (int) (windowWidth / 2.3),
 					(windowHeight / options.length) + i * (windowHeight / options.length / 2));
 		}
