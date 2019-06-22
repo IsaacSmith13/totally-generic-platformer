@@ -21,22 +21,27 @@ import com.isaactsmith.platformer.obj.unit.PlayerUnit;
 @SuppressWarnings("serial")
 public class FrameHandler extends JPanel implements KeyListener, Runnable {
 
+	// Calculate full screen and windowed sizes based on screen resolution
 	private static final GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 	private static final Rectangle fullScreen = new Rectangle(gd.getDisplayMode().getWidth(),
 			gd.getDisplayMode().getHeight());
 	private static final Rectangle windowed = new Rectangle(gd.getDisplayMode().getWidth() / 2,
 			gd.getDisplayMode().getHeight() / 2);
+	// Record time the program starts
+	private static final double startTime = System.currentTimeMillis();
+	// How many times per second the game updates
 	private static final int TICKS_PER_SECOND = 100;
-	// No need to change this; just change updates per second as needed
 	private static final int MICROSECOND = 1000000;
 	private static final int MICROSECONDS_PER_TICK = 1000 / TICKS_PER_SECOND;
+	// Initialize game state handler to handle which state is being
+	// updated/repainted
+	private static final GameStateHandler gameStateHandler = new GameStateHandler();
+	// Current window size
 	private static int windowWidth;
 	private static int windowHeight;
-	private final double startTime = System.currentTimeMillis();
-	private static boolean isRunning;
+	// Current game states
 	private static boolean isLoading = false;
 	private static int levelNumber = 1;
-	private GameStateHandler gameStateHandler;
 	private static JFrame frame;
 
 	public FrameHandler(JFrame frame) {
@@ -45,51 +50,42 @@ public class FrameHandler extends JPanel implements KeyListener, Runnable {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setUndecorated(true);
 		frame.setVisible(true);
-		setPreferredSize(new Dimension((int) windowed.getWidth(), (int) windowed.getHeight()));
 		frame.setResizable(true);
-
+		// Adjust window size -- starts off in windowed mode
+		setPreferredSize(new Dimension((int) windowed.getWidth(), (int) windowed.getHeight()));
 		// Attach this panel to the window
 		frame.add(this, BorderLayout.CENTER);
-
-		// Adjust size and center frame
-//		setPreferredSize(new Dimension(width, height));
-		windowWidth = getPreferredSize().width;
-		windowHeight = getPreferredSize().height;
-
 		frame.pack();
+		// Center window
 		frame.setLocationRelativeTo(null);
 		// Attach a custom key listener to the panel
 		setFocusable(true);
 		addKeyListener(this);
+		// Update current window dimension variables
+		windowWidth = getPreferredSize().width;
+		windowHeight = getPreferredSize().height;
 	}
 
 	@Override
 	public void run() {
+		long lastTick = System.nanoTime();
+		long lastRender = System.nanoTime();
+		double delta = 0;
+		long time;
+		gameStateHandler.tick();
+		// Update and refresh game forever
 		while (true) {
-			isRunning = true;
-			gameStateHandler = new GameStateHandler();
-			long lastTick = System.nanoTime();
-			long lastRender = System.nanoTime();
-			double delta = 0;
-			long time;
-			gameStateHandler.tick();
-			while (isRunning) {
-				time = System.nanoTime();
-				delta += (time - lastRender) / MICROSECOND;
-				if ((time - lastTick) / MICROSECOND >= MICROSECONDS_PER_TICK) {
-					gameStateHandler.tick();
-					lastTick = System.nanoTime();
-				}
-				if (delta >= 1) {
-					repaint();
-					delta = 0;
-				}
+			time = System.nanoTime();
+			delta += (time - lastRender) / MICROSECOND;
+			if ((time - lastTick) / MICROSECOND >= MICROSECONDS_PER_TICK) {
+				gameStateHandler.tick();
+				lastTick = System.nanoTime();
+			}
+			if (delta >= 1) {
+				repaint();
+				delta = 0;
 			}
 		}
-	}
-
-	public static void setRunning(boolean isRunning) {
-		FrameHandler.isRunning = isRunning;
 	}
 
 	@Override
@@ -105,9 +101,7 @@ public class FrameHandler extends JPanel implements KeyListener, Runnable {
 			} catch (NullPointerException e) {
 				// Sometimes objects don't load in the first few seconds, so ignore error if
 				// game just launched
-				if (startTime + 5000 > System.currentTimeMillis()) {
-					System.out.println("Objects not loaded yet");
-				} else {
+				if (startTime + 5000 < System.currentTimeMillis()) {
 					e.printStackTrace();
 				}
 			}
@@ -117,7 +111,7 @@ public class FrameHandler extends JPanel implements KeyListener, Runnable {
 	private void paintLoadingScreen(Graphics g) {
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, windowWidth, windowHeight);
-		g.setFont(new Font("helvetica", Font.BOLD, 72));
+		g.setFont(new Font(Font.MONOSPACED, Font.BOLD, 72));
 		if (levelNumber == 0) {
 			g.setColor(Color.RED);
 			g.drawString("GAME OVER!", (int) (windowWidth / 3), windowHeight / 2);
