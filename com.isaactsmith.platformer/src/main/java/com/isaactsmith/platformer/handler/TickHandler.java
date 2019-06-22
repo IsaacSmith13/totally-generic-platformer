@@ -27,20 +27,22 @@ public class TickHandler {
 	}
 
 	public boolean tick() {
+		// If the player has touched a winning block,
+		// return true so the next level can be started
 		if (collisionHandler.handleWinning()) {
 			return true;
 		}
-
+		// Handle special tiles
 		handleMovingTiles();
-
 		// Handle player tick logic
 		collisionHandler.handleTileCollision(player);
 		collisionHandler.handleEnemyCollision();
 		handleJumping(player);
 		handleFalling(player);
 		player.walk();
-
+		// Handle enemy logic
 		handleEnemies();
+		// Returns false to indicate the player has not yet won
 		return false;
 	}
 
@@ -50,12 +52,15 @@ public class TickHandler {
 				MovingTile tile = (MovingTile) (movingTiles.get(i));
 				int tileX = (int) tile.getX();
 				int moveSpeed = tile.getMoveSpeed();
+				// If the tile has reached its right limit, turn around
 				if (tileX + tile.getWidth() > tile.getRightLimit() && moveSpeed > 0) {
 					moveSpeed *= -1;
 				}
-				if (tileX < tile.getLeftLimit() && moveSpeed < 0) {
+				// Else if the tile has reached its left limit, turn around
+				else if (tileX < tile.getLeftLimit() && moveSpeed < 0) {
 					moveSpeed *= -1;
 				}
+				// Move tile in its current direction
 				tile.setX(tileX + moveSpeed);
 				tile.setMoveSpeed(moveSpeed);
 			}
@@ -70,6 +75,7 @@ public class TickHandler {
 				handleJumping(currentEnemy);
 				handleFalling(currentEnemy);
 				currentEnemy.walk();
+				// If the enemy or player are inactive, or the enemy is currently dying, stop movement
 			} else {
 				currentEnemy.setRight(false);
 				currentEnemy.setLeft(false);
@@ -82,7 +88,7 @@ public class TickHandler {
 			double currentJumpSpeed = unit.getCurrentJumpSpeed();
 			unit.setY(unit.getY() - currentJumpSpeed);
 			unit.setCurrentJumpSpeed(currentJumpSpeed - .2 * Obj.getScalar());
-
+			// If the jumping has reached minimum speed, stop jumping
 			if (unit.getCurrentJumpSpeed() <= 0.1 * Obj.getScalar()) {
 				unit.setJumping(false);
 				unit.setFalling(true);
@@ -98,6 +104,7 @@ public class TickHandler {
 		} else {
 			unit.setYVelocity(0);
 		}
+		// Kill unit if it has fallen below the bottom of the screen
 		if (unit.getY() > FrameHandler.getWindowHeight()) {
 			if (unit instanceof PlayerUnit) {
 				reset();
@@ -114,6 +121,7 @@ public class TickHandler {
 		TickHandler.xOffset = xOffset;
 	}
 
+	// Reset all objects to their starting positions
 	public void reset() {
 		for (int i = 0, numberOfMovingTiles = movingTiles.size(); i < numberOfMovingTiles; i++) {
 			((MovingTile) movingTiles.get(i)).reset();

@@ -26,6 +26,7 @@ public class PlayerUnit extends Unit {
 
 	@Override
 	public void paint(Graphics g) {
+		// Adds some padding to the unit when painted so it seems more fair when hit
 		g.drawImage(getImageToRender(), (int) Math.round(getX()) - getPaintPadding(),
 				(int) Math.round(getY()) - getPaintPadding(), getHeight() + getPaintPadding() * 2,
 				getWidth() + getPaintPadding() * 2, null);
@@ -54,6 +55,7 @@ public class PlayerUnit extends Unit {
 
 	public void die() {
 		if (lives > 0) {
+			// The first time this method is called per death
 			if (timeOfDeath < 0) {
 				lives--;
 				FrameHandler.setLoading(true);
@@ -64,11 +66,13 @@ public class PlayerUnit extends Unit {
 				timeOfDeath = System.currentTimeMillis() / 1000;
 			}
 			int xOffset = (int) TickHandler.getXOffset();
+			// Move camera a percentage of the distance away from the start
 			int deathCameraSpeed = Math.max(Math.abs(xOffset) / getGlobalSize(), 4);
 			if (xOffset > deathCameraSpeed) {
 				xOffset -= deathCameraSpeed;
 			} else if (xOffset < -deathCameraSpeed) {
 				xOffset += deathCameraSpeed;
+				// If the death time has elapsed, respawn
 			} else if (System.currentTimeMillis() / 1000 > timeOfDeath + 3) {
 				FrameHandler.setLoading(false);
 				setActive(true);
@@ -78,6 +82,8 @@ public class PlayerUnit extends Unit {
 			}
 			TickHandler.setXOffset(xOffset);
 		} else {
+			// If the player has no lives left, set lives to -1 (so they can be reset),
+			// and reposition the camera
 			lives--;
 			TickHandler.setXOffset(0);
 		}
@@ -120,6 +126,7 @@ public class PlayerUnit extends Unit {
 			setRight(false);
 			break;
 		case KeyEvent.VK_SPACE:
+			// Cuts jump short when player stops holding the spacebar
 			if (isJumping()) {
 				setCurrentJumpSpeed(Math.min(getCurrentJumpSpeed(), getJumpspeed() / 2));
 			}
@@ -128,7 +135,7 @@ public class PlayerUnit extends Unit {
 			break;
 		}
 	}
-
+	// Gets the player's current position as a rectangle, accounting for the global xOffset
 	public Rectangle getRect() {
 		return new Rectangle((int) (getX() + TickHandler.getXOffset()), (int) getY(), getWidth(), getHeight() + 2);
 	}

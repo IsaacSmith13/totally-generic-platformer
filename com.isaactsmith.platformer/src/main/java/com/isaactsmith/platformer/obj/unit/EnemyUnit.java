@@ -38,9 +38,11 @@ public abstract class EnemyUnit extends Unit {
 		int maxX = FrameHandler.getWindowWidth() + getGlobalSize();
 		int maxY = FrameHandler.getWindowHeight() + getGlobalSize();
 		int min = -getGlobalSize();
+		// Draw the unit if it is on screen
 		if (x <= maxX && (x - 1) >= min && y <= maxY && (y - 1) >= min) {
 			g.drawImage(getImageToRender(), x - getPaintPadding(), y - getPaintPadding(),
 					getHeight() + getPaintPadding() * 2, getWidth() + getPaintPadding() * 2, null);
+			// If on screen and inactive, activate the unit
 			if (!isActive() && x <= maxX + (min * 3)) {
 				setActive(true);
 			}
@@ -48,6 +50,7 @@ public abstract class EnemyUnit extends Unit {
 	}
 
 	public void die() {
+		// Kills the unit after a small delay
 		if (System.currentTimeMillis() > timeOfDeath + DEATH_DELAY_MS || timeOfDeath == -1) {
 			setY(-1000);
 			setActive(false);
@@ -66,12 +69,14 @@ public abstract class EnemyUnit extends Unit {
 		if ((int) (Math.random() * AVG_TICKS_BETWEEN_JUMPS) == 1) {
 			jump();
 		}
+		// If the unit is not moving, go towards the player
 		if (!isRight() && !isLeft()) {
 			if (TickHandler.getXOffset() + (FrameHandler.getWindowWidth() / 2) > getX()) {
 				setRight(true);
 			} else {
 				setLeft(true);
 			}
+		// Otherwise move / turn around depending on if the unit will collide or not
 		} else if (isRight()) {
 			if (!willCollideRight()) {
 				setX(getX() + getMoveSpeed());

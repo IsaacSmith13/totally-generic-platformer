@@ -97,6 +97,7 @@ public class FrameHandler extends JPanel implements KeyListener, Runnable {
 			paintLoadingScreen(g);
 		} else {
 			try {
+				// Game state handler paints the appropriate level state
 				gameStateHandler.paint(g);
 			} catch (NullPointerException e) {
 				// Sometimes objects don't load in the first few seconds, so ignore error if
@@ -109,13 +110,16 @@ public class FrameHandler extends JPanel implements KeyListener, Runnable {
 	}
 
 	private void paintLoadingScreen(Graphics g) {
+		// Paint black background
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, windowWidth, windowHeight);
 		g.setFont(new Font(Font.MONOSPACED, Font.BOLD, 72));
 		if (levelNumber == 0) {
+			// Level 0 is menu, so the player must have just gotten a game over
 			g.setColor(Color.RED);
 			g.drawString("GAME OVER!", (int) (windowWidth / 3), windowHeight / 2);
 		} else {
+			// Otherwise paint the current level number and remaining lives
 			g.setColor(new Color(242, 2, 190));
 			g.drawString("Level " + levelNumber, (int) (windowWidth / 2.45), windowHeight / 2);
 			for (int i = PlayerUnit.getLives(); i > 0; i--) {
@@ -138,6 +142,7 @@ public class FrameHandler extends JPanel implements KeyListener, Runnable {
 		frame.setBounds(fullScreen);
 		windowWidth = frame.getWidth();
 		windowHeight = frame.getHeight();
+		// Updates the global size and scalar
 		Obj.reScale();
 	}
 
@@ -146,6 +151,7 @@ public class FrameHandler extends JPanel implements KeyListener, Runnable {
 		frame.setLocationRelativeTo(null);
 		windowWidth = frame.getWidth();
 		windowHeight = frame.getHeight();
+		// Updates the global size and scalar
 		Obj.reScale();
 	}
 

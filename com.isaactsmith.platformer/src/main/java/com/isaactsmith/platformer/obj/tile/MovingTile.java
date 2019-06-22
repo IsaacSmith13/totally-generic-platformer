@@ -12,6 +12,7 @@ public class MovingTile extends PassableTile {
 		super(x, y, id);
 		leftLimit = x;
 		setWidth(width * getGlobalSize());
+		// Right limit is passed in as number of spaces, so multiply by global size
 		this.rightLimit = x + (rightLimit * getGlobalSize());
 		this.moveSpeed = (int) (moveSpeed * getScalar());
 	}
