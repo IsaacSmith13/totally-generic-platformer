@@ -2,6 +2,7 @@ package com.isaactsmith.platformer.handler;
 
 import java.util.List;
 
+import com.isaactsmith.platformer.obj.Obj;
 import com.isaactsmith.platformer.obj.tile.MovingTile;
 import com.isaactsmith.platformer.obj.tile.Tile;
 import com.isaactsmith.platformer.obj.unit.EnemyUnit;
@@ -80,9 +81,9 @@ public class TickHandler {
 		if (unit.isJumping()) {
 			double currentJumpSpeed = unit.getCurrentJumpSpeed();
 			unit.setY(unit.getY() - currentJumpSpeed);
-			unit.setCurrentJumpSpeed(currentJumpSpeed - .2);
+			unit.setCurrentJumpSpeed(currentJumpSpeed - .2 * (Obj.GLOBAL_SIZE / 32));
 
-			if (unit.getCurrentJumpSpeed() <= 0.1) {
+			if (unit.getCurrentJumpSpeed() <= 0.1 * (Obj.GLOBAL_SIZE / 32)) {
 				unit.setJumping(false);
 				unit.setFalling(true);
 			}

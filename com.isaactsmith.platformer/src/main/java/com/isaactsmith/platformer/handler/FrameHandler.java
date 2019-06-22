@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -17,8 +19,8 @@ import com.isaactsmith.platformer.obj.unit.PlayerUnit;
 @SuppressWarnings("serial")
 public class FrameHandler extends JPanel implements KeyListener, Runnable {
 
-	public static final int WINDOW_WIDTH = 1280;
-	public static final int WINDOW_HEIGHT = 720;
+	public static int WINDOW_WIDTH;
+	public static int WINDOW_HEIGHT;
 	private static final int TICKS_PER_SECOND = 100;
 	// No need to change this; just change updates per second as needed
 	private static final int MICROSECOND = 1000000;
@@ -30,6 +32,16 @@ public class FrameHandler extends JPanel implements KeyListener, Runnable {
 	private GameStateHandler gameStateHandler;
 
 	public FrameHandler(JFrame frame) {
+
+		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+		int width = gd.getDisplayMode().getWidth();
+		int height = gd.getDisplayMode().getHeight();
+//		int width = 1600;
+//		int height = 900;
+		frame.setUndecorated(true);
+
+//		
+		// Initialize the window
 		// Initialize the window
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
@@ -39,7 +51,9 @@ public class FrameHandler extends JPanel implements KeyListener, Runnable {
 		frame.add(this, BorderLayout.CENTER);
 
 		// Adjust size and center frame
-		setPreferredSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
+		setPreferredSize(new Dimension(width, height));
+		WINDOW_WIDTH = getPreferredSize().width;
+		WINDOW_HEIGHT = getPreferredSize().height;
 
 		frame.pack();
 		frame.setLocationRelativeTo(null);

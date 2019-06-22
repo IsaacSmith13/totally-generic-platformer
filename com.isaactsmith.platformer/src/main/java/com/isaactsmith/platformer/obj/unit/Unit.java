@@ -18,10 +18,11 @@ public abstract class Unit extends Obj {
 	private int imageCounter = 0;
 	private int lastImage = 0;
 	// Jump and move speeds
-	private double jumpSpeed = 8;
+	private static final double SPEED_SCALAR = Obj.GLOBAL_SIZE / 32;
+	private double jumpSpeed = 8 * SPEED_SCALAR;
 	private double currentJumpSpeed = jumpSpeed;
 	private boolean isJumping = false;
-	private double moveSpeed = 2.5;
+	private double moveSpeed = 2.5 * SPEED_SCALAR;
 	// Collision handlers
 	private boolean isFalling = false;
 	private boolean isFallingHandled = false;
@@ -219,5 +220,9 @@ public abstract class Unit extends Obj {
 
 	public static int getPaintPadding() {
 		return paintPadding;
+	}
+	
+	public static double getSpeedScalar() {
+		return SPEED_SCALAR;
 	}
 }

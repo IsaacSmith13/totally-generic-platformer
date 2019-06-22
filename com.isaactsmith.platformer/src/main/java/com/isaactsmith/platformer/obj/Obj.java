@@ -4,9 +4,11 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
+import com.isaactsmith.platformer.handler.FrameHandler;
+
 public abstract class Obj {
 
-	public static final int GLOBAL_SIZE = 32;
+	public static final int GLOBAL_SIZE = (int)(FrameHandler.WINDOW_HEIGHT / 22.5);
 	private final BufferedImage image;
 	private final BufferedImage[] images;
 	private double x;
