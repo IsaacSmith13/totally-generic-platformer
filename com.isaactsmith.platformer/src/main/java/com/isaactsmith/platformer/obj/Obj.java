@@ -9,7 +9,7 @@ import com.isaactsmith.platformer.handler.FrameHandler;
 public abstract class Obj {
 
 	public static final int GLOBAL_SIZE = (int)(FrameHandler.WINDOW_HEIGHT / 22.5);
-	public static final double SCALAR = GLOBAL_SIZE / 32;
+	public static final double SCALAR = GLOBAL_SIZE / 32.0;
 	private final BufferedImage image;
 	private final BufferedImage[] images;
 	private double x;
