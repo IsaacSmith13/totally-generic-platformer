@@ -11,7 +11,7 @@ import com.isaactsmith.platformer.obj.Obj;
 
 public class MenuState extends GameState {
 
-	private static final String[] options = { "Start", "Levels", "Quit" };
+	private static final String[] options = { "Start", "Levels", "Quit", "Full Screen", "Windowed" };
 	private int currentSelection = 0;
 
 	public MenuState(GameStateHandler gameStateHandler) {
@@ -67,6 +67,14 @@ public class MenuState extends GameState {
 			// TODO level selector
 			case (2):
 				System.exit(0);
+				break;
+			case (3):
+				FrameHandler.setFullScreen();
+				break;
+			case (4):
+				FrameHandler.setWindowed();
+				break;
+			default:
 				break;
 			}
 		default:
