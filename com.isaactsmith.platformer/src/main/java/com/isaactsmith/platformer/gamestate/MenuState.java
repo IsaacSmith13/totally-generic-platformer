@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 
 import com.isaactsmith.platformer.handler.FrameHandler;
 import com.isaactsmith.platformer.handler.GameStateHandler;
+import com.isaactsmith.platformer.obj.Obj;
 
 public class MenuState extends GameState {
 
@@ -23,9 +24,11 @@ public class MenuState extends GameState {
 
 	@Override
 	public void paint(Graphics g) {
+		int windowWidth = FrameHandler.getWindowWidth();
+		int windowHeight = FrameHandler.getWindowHeight();
 
 		g.setColor(new Color(135, 206, 235));
-		g.fillRect(0, 0, FrameHandler.WINDOW_WIDTH, FrameHandler.WINDOW_HEIGHT);
+		g.fillRect(0, 0, windowWidth, windowHeight);
 
 		for (int i = 0; i < options.length; i++) {
 			if (i == currentSelection) {
@@ -33,8 +36,9 @@ public class MenuState extends GameState {
 			} else {
 				g.setColor(Color.BLACK);
 			}
-			g.setFont(new Font("helvetica", Font.BOLD, 50));
-			g.drawString(options[i], (int) (FrameHandler.WINDOW_WIDTH / 2.3), 200 + i * 150);
+			g.setFont(new Font("helvetica", Font.BOLD, (int) (50 * Obj.SCALAR)));
+			g.drawString(options[i], (int) (windowWidth / 2.3),
+					(windowHeight / options.length) + i * (windowHeight / options.length / 2));
 		}
 	}
 

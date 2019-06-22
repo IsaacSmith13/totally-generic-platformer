@@ -23,8 +23,6 @@ public class LevelState extends GameState {
 	private static final int BACKGROUND_OFFSET = 3;
 
 	private static final String BACKGROUND_IMAGE_PATH = "Background";
-	private static final int WINDOW_WIDTH = FrameHandler.WINDOW_WIDTH;
-	private static final int WINDOW_HEIGHT = FrameHandler.WINDOW_HEIGHT;
 	private static final int MENU_LEVEL_NUMBER = 0;
 	private final int currentLevelNumber;
 	private final LevelLoader currentLevel;
@@ -77,16 +75,16 @@ public class LevelState extends GameState {
 	}
 
 	public void paintBackground(Graphics g) {
+		int windowWidth = FrameHandler.getWindowWidth();
+		int windowHeight = FrameHandler.getWindowHeight();
 		int xOffsetParallax = (int) (TickHandler.getXOffset() * PARALLAX_MODIFIER);
 
-		while (xOffsetParallax < WINDOW_WIDTH * BACKGROUND_OFFSET * PARALLAX_MODIFIER) {
-			xOffsetParallax += WINDOW_WIDTH - BACKGROUND_OFFSET;
+		while (xOffsetParallax < windowWidth * BACKGROUND_OFFSET * PARALLAX_MODIFIER) {
+			xOffsetParallax += windowWidth - BACKGROUND_OFFSET;
 		}
-		g.drawImage(background, xOffsetParallax - WINDOW_WIDTH + BACKGROUND_OFFSET, 0, WINDOW_WIDTH, WINDOW_HEIGHT,
-				null);
-		g.drawImage(background, xOffsetParallax, 0, WINDOW_WIDTH, WINDOW_HEIGHT, null);
-		g.drawImage(background, xOffsetParallax + WINDOW_WIDTH - BACKGROUND_OFFSET, 0, WINDOW_WIDTH, WINDOW_HEIGHT,
-				null);
+		g.drawImage(background, xOffsetParallax - windowWidth + BACKGROUND_OFFSET, 0, windowWidth, windowHeight, null);
+		g.drawImage(background, xOffsetParallax, 0, windowWidth, windowHeight, null);
+		g.drawImage(background, xOffsetParallax + windowWidth - BACKGROUND_OFFSET, 0, windowWidth, windowHeight, null);
 	}
 
 	public void paintTerrain(Graphics g) {
@@ -115,9 +113,10 @@ public class LevelState extends GameState {
 		// Paint lives
 		g.setColor(Color.BLACK);
 		g.setFont(new Font("helvetica", Font.PLAIN, 16));
-		g.drawString("Lives: ", (int) (WINDOW_WIDTH / 2 - 50), 25);
+		g.drawString("Lives: ", (int) (FrameHandler.getWindowWidth() / 2 - 50), 25);
 		for (int i = PlayerUnit.getLives(); i > 0; i--) {
-			g.drawImage(player.getImages()[0], (int) (WINDOW_WIDTH / 2 + (i * 12) - 15), 10, 16, 16, null);
+			g.drawImage(player.getImages()[0], (int) (FrameHandler.getWindowWidth() / 2 + (i * 12) - 15), 10, 16, 16,
+					null);
 		}
 	}
 

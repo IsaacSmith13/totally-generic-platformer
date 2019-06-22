@@ -35,8 +35,8 @@ public abstract class EnemyUnit extends Unit {
 	public void paint(Graphics g) {
 		int x = (int) Math.round(getX() - TickHandler.getXOffset());
 		int y = (int) Math.round(getY());
-		int maxX = FrameHandler.WINDOW_WIDTH + GLOBAL_SIZE;
-		int maxY = FrameHandler.WINDOW_HEIGHT + GLOBAL_SIZE;
+		int maxX = FrameHandler.getWindowWidth() + GLOBAL_SIZE;
+		int maxY = FrameHandler.getWindowHeight() + GLOBAL_SIZE;
 		int min = -GLOBAL_SIZE;
 		if (x <= maxX && (x - 1) >= min && y <= maxY && (y - 1) >= min) {
 			g.drawImage(getImageToRender(), x - getPaintPadding(), y - getPaintPadding(),
@@ -67,7 +67,7 @@ public abstract class EnemyUnit extends Unit {
 			jump();
 		}
 		if (!isRight() && !isLeft()) {
-			if (TickHandler.getXOffset() + (FrameHandler.WINDOW_WIDTH / 2) > getX()) {
+			if (TickHandler.getXOffset() + (FrameHandler.getWindowWidth() / 2) > getX()) {
 				setRight(true);
 			} else {
 				setLeft(true);

@@ -11,8 +11,8 @@ import com.isaactsmith.platformer.handler.TickHandler;
 public class PlayerUnit extends Unit {
 
 	private static final int spawnX = GLOBAL_SIZE * 5;
-	private static final int initialX = (FrameHandler.WINDOW_WIDTH / 2) - (GLOBAL_SIZE / 2);
-	private static final int initialY = (FrameHandler.WINDOW_HEIGHT / 2) - (GLOBAL_SIZE / 2);
+	private static final int initialX = (FrameHandler.getWindowWidth() / 2) - (GLOBAL_SIZE / 2);
+	private static final int initialY = (FrameHandler.getWindowHeight() / 2) - (GLOBAL_SIZE / 2);
 	private static int lives = 3;
 	private double timeOfDeath = -1;
 
@@ -38,8 +38,7 @@ public class PlayerUnit extends Unit {
 			} else {
 				TickHandler.setXOffset(xOffset + moveSpeed);
 			}
-		}
-		else if (isLeft() && !willCollideLeft()) {
+		} else if (isLeft() && !willCollideLeft()) {
 			if (xOffset - moveSpeed < 0) {
 				if (xOffset - x - moveSpeed < 0) {
 					setX(x - moveSpeed);
@@ -58,7 +57,7 @@ public class PlayerUnit extends Unit {
 				setActive(false);
 				setLeft(false);
 				setRight(false);
-				setY(FrameHandler.WINDOW_HEIGHT + 50);
+				setY(FrameHandler.getWindowHeight() + 50);
 				timeOfDeath = System.currentTimeMillis() / 1000;
 			}
 			int xOffset = (int) TickHandler.getXOffset();

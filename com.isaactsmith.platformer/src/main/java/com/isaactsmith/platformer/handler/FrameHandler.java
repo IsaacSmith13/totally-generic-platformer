@@ -3,13 +3,18 @@ package com.isaactsmith.platformer.handler;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -19,41 +24,58 @@ import com.isaactsmith.platformer.obj.unit.PlayerUnit;
 @SuppressWarnings("serial")
 public class FrameHandler extends JPanel implements KeyListener, Runnable {
 
-	public static int WINDOW_WIDTH;
-	public static int WINDOW_HEIGHT;
+	private static final GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+	private static final Rectangle fullScreen = new Rectangle(gd.getDisplayMode().getWidth(),
+			gd.getDisplayMode().getHeight());
+	private static final Rectangle windowed = new Rectangle(gd.getDisplayMode().getWidth() / 2,
+			gd.getDisplayMode().getHeight() / 2);
 	private static final int TICKS_PER_SECOND = 100;
 	// No need to change this; just change updates per second as needed
 	private static final int MICROSECOND = 1000000;
 	private static final int MICROSECONDS_PER_TICK = 1000 / TICKS_PER_SECOND;
+	private static int windowWidth;
+	private static int windowHeight;
 	private final double startTime = System.currentTimeMillis();
 	private static boolean isRunning;
 	private static boolean isLoading = false;
 	private static int levelNumber = 1;
 	private GameStateHandler gameStateHandler;
+	private JFrame frame;
 
 	public FrameHandler(JFrame frame) {
-
-		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-		int width = gd.getDisplayMode().getWidth();
-		int height = gd.getDisplayMode().getHeight();
-//		int width = 1600;
-//		int height = 900;
-		frame.setUndecorated(true);
-
-//		
-		// Initialize the window
+		this.frame = frame;
 		// Initialize the window
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setResizable(false);
+		frame.setUndecorated(true);
 		frame.setVisible(true);
+		setPreferredSize(new Dimension((int) windowed.getWidth(), (int) windowed.getHeight()));
+		frame.setResizable(true);
+
+		JButton btn1 = new JButton("FullScreen");
+		btn1.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				frame.setBounds(fullScreen);
+			}
+		});
+		JButton btn2 = new JButton("Windowed");
+		btn2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				frame.setBounds(windowed);
+				frame.setLocationRelativeTo(null);
+			}
+		});
+		this.add(btn1);
+		this.add(btn2);
 
 		// Attach this panel to the window
 		frame.add(this, BorderLayout.CENTER);
 
 		// Adjust size and center frame
-		setPreferredSize(new Dimension(width, height));
-		WINDOW_WIDTH = getPreferredSize().width;
-		WINDOW_HEIGHT = getPreferredSize().height;
+//		setPreferredSize(new Dimension(width, height));
+		windowWidth = getPreferredSize().width;
+		windowHeight = getPreferredSize().height;
 
 		frame.pack();
 		frame.setLocationRelativeTo(null);
@@ -94,6 +116,8 @@ public class FrameHandler extends JPanel implements KeyListener, Runnable {
 	@Override
 	public void paint(Graphics g) {
 		requestFocusInWindow();
+		windowWidth = frame.getWidth();
+		windowHeight = frame.getHeight();
 		if (isLoading) {
 			paintLoadingScreen(g);
 		} else {
@@ -113,14 +137,14 @@ public class FrameHandler extends JPanel implements KeyListener, Runnable {
 
 	private void paintLoadingScreen(Graphics g) {
 		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, FrameHandler.WINDOW_WIDTH, FrameHandler.WINDOW_HEIGHT);
+		g.fillRect(0, 0, windowWidth, windowHeight);
 		g.setFont(new Font("helvetica", Font.BOLD, 72));
 		if (levelNumber == 0) {
 			g.setColor(Color.RED);
-			g.drawString("GAME OVER!", (int) (FrameHandler.WINDOW_WIDTH / 3), WINDOW_HEIGHT / 2);
+			g.drawString("GAME OVER!", (int) (windowWidth / 3), windowHeight / 2);
 		} else {
 			g.setColor(new Color(242, 2, 190));
-			g.drawString("Level " + levelNumber, (int) (FrameHandler.WINDOW_WIDTH / 2.45), WINDOW_HEIGHT / 2);
+			g.drawString("Level " + levelNumber, (int) (windowWidth / 2.45), windowHeight / 2);
 			for (int i = PlayerUnit.getLives(); i > 0; i--) {
 				int x = 0;
 				switch (PlayerUnit.getLives()) {
@@ -129,12 +153,28 @@ public class FrameHandler extends JPanel implements KeyListener, Runnable {
 				case (1):
 					x += 40;
 				default:
-					x += (int) (WINDOW_WIDTH / 2.375 + (i * 40));
+					x += (int) (windowWidth / 2.375 + (i * 40));
 					break;
 				}
-				g.drawImage(ImageLoader.getBufferedImage("PlayerRight0"), x, (WINDOW_HEIGHT / 2) + 32, 32, 32, null);
+				g.drawImage(ImageLoader.getBufferedImage("PlayerRight0"), x, (windowHeight / 2) + 32, 32, 32, null);
 			}
 		}
+	}
+
+	public static int getWindowWidth() {
+		return windowWidth;
+	}
+
+	public static void setWindowWidth(int windowWidth) {
+		FrameHandler.windowWidth = windowWidth;
+	}
+
+	public static int getWindowHeight() {
+		return windowHeight;
+	}
+
+	public static void setWindowHeight(int windowHeight) {
+		FrameHandler.windowHeight = windowHeight;
 	}
 
 	@Override

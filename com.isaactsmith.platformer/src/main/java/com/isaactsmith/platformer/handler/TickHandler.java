@@ -98,7 +98,7 @@ public class TickHandler {
 		} else {
 			unit.setYVelocity(0);
 		}
-		if (unit.getY() > FrameHandler.WINDOW_HEIGHT) {
+		if (unit.getY() > FrameHandler.getWindowHeight()) {
 			if (unit instanceof PlayerUnit) {
 				reset();
 			}
