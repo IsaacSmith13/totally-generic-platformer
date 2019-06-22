@@ -6,7 +6,8 @@ public class BackgroundTile extends Tile {
 
 	public BackgroundTile(int x, int y, int id) {
 		super(x, y, id);
-		setWidth((int)(Obj.GLOBAL_SIZE * (Math.ceil(getImage().getWidth() / (double)Obj.GLOBAL_SIZE))));
-		setHeight((int)(Obj.GLOBAL_SIZE * (Math.ceil(getImage().getHeight() / (double)Obj.GLOBAL_SIZE))));
+		// Make background terrain the size of the image scaled to the window size
+		setWidth((int) (Obj.GLOBAL_SIZE * (Math.ceil((getImage().getWidth() * SCALAR) / (double) Obj.GLOBAL_SIZE))));
+		setHeight((int) (Obj.GLOBAL_SIZE * (Math.ceil((getImage().getHeight() * SCALAR) / (double) Obj.GLOBAL_SIZE))));
 	}
 }

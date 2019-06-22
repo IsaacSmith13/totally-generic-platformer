@@ -65,7 +65,7 @@ public class TickHandler {
 	public void handleEnemies() {
 		for (int i = 0; i < enemies.size(); i++) {
 			Unit currentEnemy = enemies.get(i);
-			if (((EnemyUnit) currentEnemy).isActive() && player.isActive() && !((EnemyUnit)currentEnemy).isDying()) {
+			if (((EnemyUnit) currentEnemy).isActive() && player.isActive() && !((EnemyUnit) currentEnemy).isDying()) {
 				collisionHandler.handleTileCollision(currentEnemy);
 				handleJumping(currentEnemy);
 				handleFalling(currentEnemy);
@@ -81,9 +81,9 @@ public class TickHandler {
 		if (unit.isJumping()) {
 			double currentJumpSpeed = unit.getCurrentJumpSpeed();
 			unit.setY(unit.getY() - currentJumpSpeed);
-			unit.setCurrentJumpSpeed(currentJumpSpeed - .2 * Unit.getSpeedScalar());
+			unit.setCurrentJumpSpeed(currentJumpSpeed - .2 * Obj.SCALAR);
 
-			if (unit.getCurrentJumpSpeed() <= 0.1 * Unit.getSpeedScalar()) {
+			if (unit.getCurrentJumpSpeed() <= 0.1 * Obj.SCALAR) {
 				unit.setJumping(false);
 				unit.setFalling(true);
 			}
@@ -94,7 +94,7 @@ public class TickHandler {
 		if (unit.isFalling()) {
 			double currentYVelocity = unit.getYVelocity();
 			unit.setY(unit.getY() + currentYVelocity);
-			unit.setYVelocity(currentYVelocity + .2);
+			unit.setYVelocity(currentYVelocity + .2 * Obj.SCALAR);
 		} else {
 			unit.setYVelocity(0);
 		}
