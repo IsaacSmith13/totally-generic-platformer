@@ -3,6 +3,7 @@ package com.isaactsmith.platformer.obj.tile;
 import java.awt.Rectangle;
 
 import com.isaactsmith.platformer.obj.Obj;
+import com.isaactsmith.platformer.obj.unit.Unit;
 
 public class MovingTile extends PassableTile {
 
@@ -13,9 +14,9 @@ public class MovingTile extends PassableTile {
 	public MovingTile(int x, int y, int id, int width, int rightLimit, int moveSpeed) {
 		super(x, y, id);
 		leftLimit = x;
-		setWidth(width);
+		setWidth(width * Obj.GLOBAL_SIZE);
 		this.rightLimit = x + (rightLimit * Obj.GLOBAL_SIZE);
-		this.moveSpeed = moveSpeed;
+		this.moveSpeed = (int)(moveSpeed * Unit.getSpeedScalar());
 	}
 
 	public void reset() {
