@@ -81,9 +81,9 @@ public class TickHandler {
 		if (unit.isJumping()) {
 			double currentJumpSpeed = unit.getCurrentJumpSpeed();
 			unit.setY(unit.getY() - currentJumpSpeed);
-			unit.setCurrentJumpSpeed(currentJumpSpeed - .2 * (Obj.GLOBAL_SIZE / 32));
+			unit.setCurrentJumpSpeed(currentJumpSpeed - .2 * Unit.getSpeedScalar());
 
-			if (unit.getCurrentJumpSpeed() <= 0.1 * (Obj.GLOBAL_SIZE / 32)) {
+			if (unit.getCurrentJumpSpeed() <= 0.1 * Unit.getSpeedScalar()) {
 				unit.setJumping(false);
 				unit.setFalling(true);
 			}
