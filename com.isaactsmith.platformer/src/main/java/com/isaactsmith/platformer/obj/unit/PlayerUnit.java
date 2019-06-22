@@ -39,7 +39,7 @@ public class PlayerUnit extends Unit {
 				TickHandler.setXOffset(xOffset + moveSpeed);
 			}
 		}
-		if (isLeft() && !willCollideLeft()) {
+		else if (isLeft() && !willCollideLeft()) {
 			if (xOffset - moveSpeed < 0) {
 				if (xOffset - x - moveSpeed < 0) {
 					setX(x - moveSpeed);
@@ -85,14 +85,12 @@ public class PlayerUnit extends Unit {
 		if (isActive()) {
 			switch (e) {
 			case KeyEvent.VK_A:
-				setLeft(true);
-				break;
+				e = KeyEvent.VK_LEFT;
 			case KeyEvent.VK_LEFT:
 				setLeft(true);
 				break;
 			case KeyEvent.VK_D:
-				setRight(true);
-				break;
+				e = KeyEvent.VK_RIGHT;
 			case KeyEvent.VK_RIGHT:
 				setRight(true);
 				break;
