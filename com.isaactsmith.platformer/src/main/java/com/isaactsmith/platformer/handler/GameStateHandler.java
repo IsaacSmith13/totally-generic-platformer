@@ -90,5 +90,6 @@ public class GameStateHandler {
 	public void mainMenu() {
 		gameStates.pop();
 		gameStates.pop();
+		((MenuState) gameStates.peek()).setCurrentMenu("main");
 	}
 }

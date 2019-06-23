@@ -15,8 +15,8 @@ import com.isaactsmith.platformer.obj.Obj;
 public class MenuState extends GameState {
 
 	private static final String[] MAIN_OPTIONS = { "Start", "Levels", "Quit", "Full Screen", "Windowed" };
-	private static final String[] LEVEL_OPTIONS = new String[SaveHandler.readSave() + 1];
 	private static final String[] PAUSE_OPTIONS = { "Resume", "Main Menu", "Quit" };
+	private String[] LEVEL_OPTIONS;
 	private int currentSelection = 0;
 	private String currentMenu = "main";
 
@@ -119,14 +119,6 @@ public class MenuState extends GameState {
 		}
 	}
 
-	public String getCurrentMenu() {
-		return currentMenu;
-	}
-
-	public void setCurrentMenu(String currentMenu) {
-		this.currentMenu = currentMenu;
-	}
-
 	private int getOptionsLength() {
 		switch (currentMenu) {
 		case ("main"):
@@ -190,6 +182,7 @@ public class MenuState extends GameState {
 
 	private void levelSelector() {
 		int highestLevel = SaveHandler.readSave();
+		LEVEL_OPTIONS = new String[highestLevel + 1];
 		LEVEL_OPTIONS[LEVEL_OPTIONS.length - 1] = "Back";
 		for (int i = 0; i < highestLevel; i++) {
 			LEVEL_OPTIONS[i] = "Level " + (i + 1);
@@ -200,5 +193,14 @@ public class MenuState extends GameState {
 	@Override
 	public void keyReleased(int e) {
 
+	}
+
+	public String getCurrentMenu() {
+		return currentMenu;
+	}
+
+	public void setCurrentMenu(String currentMenu) {
+		this.currentMenu = currentMenu;
+		currentSelection = 0;
 	}
 }
