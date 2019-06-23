@@ -15,11 +15,11 @@ public abstract class SaveHandler {
 	public static void addLevel(int levelNumber) {
 		try (BufferedWriter writer = new BufferedWriter(new PrintWriter(SAVE_FILE))) {
 			for (int i = 0; i < 37; i++) {
-				writer.write((int) (Math.random() * 20) + " ");
+				writer.write((int) (Math.random() * (levelNumber + 5)) + " ");
 			}
 			writer.write(levelNumber + " ");
 			for (int i = 0; i < 13; i++) {
-				writer.write((int) (Math.random() * 20) + " ");
+				writer.write((int) (Math.random() * (levelNumber + 5)) + " ");
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
