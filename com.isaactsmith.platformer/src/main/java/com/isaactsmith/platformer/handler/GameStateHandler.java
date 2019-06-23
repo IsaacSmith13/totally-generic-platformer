@@ -50,12 +50,14 @@ public class GameStateHandler {
 			protected Void doInBackground() throws Exception {
 				FrameHandler.setLevelNumber(levelNumber);
 				FrameHandler.setLoading(true);
+				// Load the next level and save progress
 				if (levelNumber != MENU_LEVEL_NUMBER) {
 					gameStates.pop();
 					if (levelNumber > 1) {
-						SaveHandler.addLevel(levelNumber);
+						SaveHandler.writeSave(levelNumber);
 					}
 					gameStates.push(new LevelState(GameStateHandler.this, levelNumber));
+					// If the level to load is the menu, load a menu instead
 				} else {
 					gameStates.pop();
 					gameStates.push(new MenuState(GameStateHandler.this));
