@@ -115,7 +115,7 @@ public class FrameHandler extends JPanel implements KeyListener, Runnable {
 		if (levelNumber == 0) {
 			// Level 0 is menu, so the player must have just gotten a game over
 			g.setColor(Color.RED);
-			g.drawString("GAME OVER!", (int) (windowWidth / 3), windowHeight / 2);
+			g.drawString("GAME OVER!", windowWidth / 3, windowHeight / 2);
 		} else {
 			// Otherwise paint the current level number and remaining lives
 			g.setColor(new Color(242, 2, 190));

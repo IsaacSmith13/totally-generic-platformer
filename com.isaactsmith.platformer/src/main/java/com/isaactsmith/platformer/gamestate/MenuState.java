@@ -62,8 +62,8 @@ public class MenuState extends GameState {
 			}
 			// Determines a rectangle along the middle of the screen
 			Rectangle drawSpace = new Rectangle(0,
-					(int) (FrameHandler.getWindowHeight() / (options.length * 2) + (i * Obj.getGlobalSize() * 4)),
-					FrameHandler.getWindowWidth(), (int) Obj.getGlobalSize() * 2);
+					FrameHandler.getWindowHeight() / (options.length * 2) + (i * Obj.getGlobalSize() * 4),
+					FrameHandler.getWindowWidth(), Obj.getGlobalSize() * 2);
 			drawCenteredString(g, options[i], drawSpace,
 					new Font("helvetica", Font.BOLD, (int) (50 * Obj.getScalar())));
 		}

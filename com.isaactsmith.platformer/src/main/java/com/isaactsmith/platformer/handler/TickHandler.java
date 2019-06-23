@@ -75,7 +75,8 @@ public class TickHandler {
 				handleJumping(currentEnemy);
 				handleFalling(currentEnemy);
 				currentEnemy.walk();
-				// If the enemy or player are inactive, or the enemy is currently dying, stop movement
+				// If the enemy or player are inactive, or the enemy is currently dying, stop
+				// movement
 			} else {
 				currentEnemy.setRight(false);
 				currentEnemy.setLeft(false);

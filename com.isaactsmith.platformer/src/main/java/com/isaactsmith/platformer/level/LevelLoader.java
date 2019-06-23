@@ -18,6 +18,7 @@ import com.isaactsmith.platformer.obj.unit.SkeletonEnemy;
 
 public class LevelLoader {
 
+	// Max ids for each type of object
 	private static final int MAX_PASSABLE_ID = 19;
 	private static final int MAX_SOLID_ID = 39;
 	// Max moving id is 49
@@ -26,34 +27,36 @@ public class LevelLoader {
 	private static final int MAX_TERRAIN_ID = 79;
 	private static final int MAX_ENEMY_ID = 98;
 	private static final int WINNING_ID = 99;
-	private static int size;
+	// Object global size
+	private final int size = Obj.getGlobalSize();
+	// Current level's filepath
 	private final String levelpath;
-	private int width;
-	private int height;
-	private List<Tile> winningTiles = new ArrayList<Tile>();
+	// Level objects
+	private final List<Tile> terrain = new ArrayList<Tile>();
+	private final List<Tile> movingTiles = new ArrayList<Tile>();
+	private final List<EnemyUnit> enemies = new ArrayList<EnemyUnit>();
+	private final PlayerUnit player = new PlayerUnit(ImageLoader.getUnitImagesById(-1));
+	private final List<Tile> winningTiles = new ArrayList<Tile>();
 	private Tile[][] tiles;
-	private List<Tile> terrain = new ArrayList<Tile>();
-	private List<Tile> movingTiles = new ArrayList<Tile>();
-	private List<EnemyUnit> enemies = new ArrayList<EnemyUnit>();
-	private PlayerUnit player;
+	// Level size
+	private int levelWidth;
+	private int levelHeight;
 
 	public LevelLoader(int levelNumber) {
-		size = Obj.getGlobalSize();
-		this.levelpath = "Level" + levelNumber + ".level";
-		player = new PlayerUnit(ImageLoader.getUnitImagesById(-1));
-		readLevel();
+		levelpath = "Level" + levelNumber + ".level";
 	}
 
 	public void readLevel() {
 		try (InputStream in = getClass().getResourceAsStream(levelpath);
 				BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
-			int mapWidth = Integer.parseInt(reader.readLine());
-			int mapHeight = Integer.parseInt(reader.readLine());
-			tiles = new Tile[mapHeight][mapWidth];
-			for (int y = 0; y < mapHeight * 2; y++) {
+			levelWidth = Integer.parseInt(reader.readLine());
+			levelHeight = Integer.parseInt(reader.readLine());
+			tiles = new Tile[levelHeight][levelWidth];
+
+			for (int y = 0; y < levelHeight * 2; y++) {
 				String line = reader.readLine();
 				String[] tileIDs = line.split(",");
-				for (int x = 0; x < mapWidth; x++) {
+				for (int x = 0; x < levelWidth; x++) {
 					int tileX = x * size;
 					int tileY = y * size;
 					if (tileIDs[x].contains("|")) {
@@ -68,7 +71,7 @@ public class LevelLoader {
 					} else if (id <= MAX_SOLID_ID) {
 						tiles[y][x] = new Tile(tileX, tileY, id);
 					} else if (id <= MAX_TERRAIN_ID) {
-						terrain.add(new BackgroundTile(tileX, (y - mapHeight) * size, id));
+						terrain.add(new BackgroundTile(tileX, (y - levelHeight) * size, id));
 					} else if (id <= MAX_ENEMY_ID) {
 						makeEnemy(tileX, tileY, id);
 					} else if (id == WINNING_ID) {
@@ -96,12 +99,12 @@ public class LevelLoader {
 		}
 	}
 
-	public int getWidth() {
-		return width;
+	public int getLevelWidth() {
+		return levelWidth;
 	}
 
-	public int getHeight() {
-		return height;
+	public int getLevelHeight() {
+		return levelHeight;
 	}
 
 	public List<Tile> getTerrain() {

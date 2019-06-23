@@ -13,7 +13,7 @@ public class GameStateHandler {
 
 	private static final int MENU_LEVEL_NUMBER = 0;
 	private static final int MENU_LOADING_TIME = 3000;
-	private Stack<GameState> gameStates = new Stack<GameState>();
+	private final Stack<GameState> gameStates = new Stack<GameState>();
 
 	public GameStateHandler() {
 		gameStates.push(new MenuState(this));

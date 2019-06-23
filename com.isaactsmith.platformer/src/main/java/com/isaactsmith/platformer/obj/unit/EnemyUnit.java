@@ -17,8 +17,8 @@ public abstract class EnemyUnit extends Unit {
 
 	public EnemyUnit(int x, int y, BufferedImage[] images) {
 		super(x, y, images);
-		this.startX = x;
-		this.startY = y;
+		startX = x;
+		startY = y;
 	}
 
 	public EnemyUnit(int x, int y, BufferedImage[] images, double moveSpeed) {
@@ -49,6 +49,7 @@ public abstract class EnemyUnit extends Unit {
 		}
 	}
 
+	@Override
 	public void die() {
 		// Kills the unit after a small delay
 		if (System.currentTimeMillis() > timeOfDeath + DEATH_DELAY_MS || timeOfDeath == -1) {
@@ -76,7 +77,7 @@ public abstract class EnemyUnit extends Unit {
 			} else {
 				setLeft(true);
 			}
-		// Otherwise move / turn around depending on if the unit will collide or not
+			// Otherwise move / turn around depending on if the unit will collide or not
 		} else if (isRight()) {
 			if (!willCollideRight()) {
 				setX(getX() + getMoveSpeed());

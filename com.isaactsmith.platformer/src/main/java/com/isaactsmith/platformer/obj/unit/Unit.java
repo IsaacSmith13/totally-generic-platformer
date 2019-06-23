@@ -173,7 +173,7 @@ public abstract class Unit extends Obj {
 	}
 
 	public void setCollideTop(boolean topCollision) {
-		this.willCollideTop = topCollision;
+		willCollideTop = topCollision;
 	}
 
 	public boolean willCollideRight() {

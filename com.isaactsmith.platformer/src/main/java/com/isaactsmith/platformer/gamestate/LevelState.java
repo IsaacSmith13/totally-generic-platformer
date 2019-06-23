@@ -42,6 +42,7 @@ public class LevelState extends GameState {
 		super(gameStateHandler);
 		currentLevelNumber = levelNumber;
 		currentLevel = new LevelLoader(levelNumber);
+		currentLevel.readLevel();
 		background = ImageLoader.getBufferedImage(BACKGROUND_IMAGE_PATH);
 		winningTiles = currentLevel.getWinningTiles();
 		tiles = currentLevel.getTiles();
@@ -76,8 +77,8 @@ public class LevelState extends GameState {
 	}
 
 	public void paintBackground(Graphics g) {
-		int windowWidth = FrameHandler.getWindowWidth();
-		int windowHeight = FrameHandler.getWindowHeight();
+		final int windowWidth = FrameHandler.getWindowWidth();
+		final int windowHeight = FrameHandler.getWindowHeight();
 		int xOffsetParallax = (int) (TickHandler.getXOffset() * PARALLAX_MODIFIER);
 
 		while (xOffsetParallax < windowWidth * BACKGROUND_OFFSET * PARALLAX_MODIFIER) {
@@ -114,10 +115,9 @@ public class LevelState extends GameState {
 		// Paint lives
 		g.setColor(Color.BLACK);
 		g.setFont(new Font("helvetica", Font.PLAIN, 16));
-		g.drawString("Lives: ", (int) (FrameHandler.getWindowWidth() / 2 - 50), 25);
+		g.drawString("Lives: ", FrameHandler.getWindowWidth() / 2 - 50, 25);
 		for (int i = PlayerUnit.getLives(); i > 0; i--) {
-			g.drawImage(player.getImages()[0], (int) (FrameHandler.getWindowWidth() / 2 + (i * 12) - 15), 10, 16, 16,
-					null);
+			g.drawImage(player.getImages()[0], FrameHandler.getWindowWidth() / 2 + (i * 12) - 15, 10, 16, 16, null);
 		}
 	}
 

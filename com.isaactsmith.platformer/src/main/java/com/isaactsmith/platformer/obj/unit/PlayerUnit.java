@@ -10,9 +10,9 @@ import com.isaactsmith.platformer.handler.TickHandler;
 
 public class PlayerUnit extends Unit {
 
-	private static int spawnX;
-	private static int initialX;
-	private static int initialY;
+	private final int spawnX;
+	private final int initialX;
+	private final int initialY;
 	private static int lives = 3;
 	private double timeOfDeath = -1;
 
@@ -32,6 +32,7 @@ public class PlayerUnit extends Unit {
 				getWidth() + getPaintPadding() * 2, null);
 	}
 
+	@Override
 	public void walk() {
 		double xOffset = TickHandler.getXOffset();
 		double x = getX();
@@ -53,6 +54,7 @@ public class PlayerUnit extends Unit {
 		}
 	}
 
+	@Override
 	public void die() {
 		if (lives > 0) {
 			// The first time this method is called per death
@@ -142,6 +144,7 @@ public class PlayerUnit extends Unit {
 
 	// Gets the player's current position as a rectangle, accounting for the global
 	// xOffset
+	@Override
 	public Rectangle getRect() {
 		return new Rectangle((int) (getX() + TickHandler.getXOffset()), (int) getY(), getWidth(), getHeight() + 2);
 	}

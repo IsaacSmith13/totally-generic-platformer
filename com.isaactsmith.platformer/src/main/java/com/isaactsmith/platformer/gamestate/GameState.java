@@ -5,7 +5,7 @@ import java.awt.Graphics;
 import com.isaactsmith.platformer.handler.GameStateHandler;
 
 public abstract class GameState {
-	
+
 	GameStateHandler gameStateHandler;
 
 	public GameState(GameStateHandler gameStateHandler) {
