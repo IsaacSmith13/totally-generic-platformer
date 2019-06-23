@@ -30,10 +30,6 @@ public abstract class SaveHandler {
 	public static int readSave() {
 		try (Scanner scanner = new Scanner(SAVE_FILE)) {
 			String[] saveFileLine = scanner.nextLine().split(" ");
-			for (int i = 0; i < saveFileLine.length; i++) {
-				System.out.println(i + " " + saveFileLine[i]);
-			}
-			System.out.println(saveFileLine[37]);
 			return Integer.parseInt(saveFileLine[37]);
 		} catch (FileNotFoundException | InputMismatchException | NumberFormatException e) {
 			e.printStackTrace();

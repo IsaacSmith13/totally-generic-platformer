@@ -40,10 +40,6 @@ public class MenuState extends GameState {
 		}
 	}
 
-	private void paintLevelSelector(Graphics g) {
-		// TODO paint level selector screen
-	}
-
 	private void paintMenu(Graphics g, String[] options) {
 		for (int i = 0; i < options.length; i++) {
 			if (i == currentSelection) {
