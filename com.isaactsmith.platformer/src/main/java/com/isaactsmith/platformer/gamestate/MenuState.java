@@ -16,7 +16,7 @@ public class MenuState extends GameState {
 
 	private static final String[] MAIN_OPTIONS = { "Start", "Levels", "Quit", "Full Screen", "Windowed" };
 	private static final String[] LEVEL_OPTIONS = new String[SaveHandler.readSave() + 1];
-	private static final String[] PAUSE_OPTIONS = { "Resume", "Quit" };
+	private static final String[] PAUSE_OPTIONS = { "Resume", "Main Menu", "Quit" };
 	private int currentSelection = 0;
 	private String currentMenu = "main";
 
@@ -119,6 +119,14 @@ public class MenuState extends GameState {
 		}
 	}
 
+	public String getCurrentMenu() {
+		return currentMenu;
+	}
+
+	public void setCurrentMenu(String currentMenu) {
+		this.currentMenu = currentMenu;
+	}
+
 	private int getOptionsLength() {
 		switch (currentMenu) {
 		case ("main"):
@@ -138,6 +146,9 @@ public class MenuState extends GameState {
 			gameStateHandler.unpause();
 			break;
 		case (1):
+			gameStateHandler.mainMenu();
+			break;
+		case (2):
 			System.exit(0);
 			break;
 		default:

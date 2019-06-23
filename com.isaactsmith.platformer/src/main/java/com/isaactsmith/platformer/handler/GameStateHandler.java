@@ -52,7 +52,9 @@ public class GameStateHandler {
 				FrameHandler.setLoading(true);
 				// Load the next level and save progress
 				if (levelNumber != MENU_LEVEL_NUMBER) {
-					gameStates.pop();
+					if (gameStates.size() > 2) {
+						gameStates.pop();
+					}
 					if (levelNumber > 1) {
 						SaveHandler.writeSave(levelNumber);
 					}
@@ -71,14 +73,22 @@ public class GameStateHandler {
 	}
 
 	public void pause() {
+		// Only pause if currently in a level
 		if (gameStates.peek() instanceof LevelState) {
 			gameStates.push(new MenuState(this, true));
 		}
 	}
 
 	public void unpause() {
-		if (gameStates.peek() instanceof MenuState) {
+		// Only remove the current gameState if the game is still in the pause menu
+		if (gameStates.peek() instanceof MenuState
+				&& ((MenuState) gameStates.peek()).getCurrentMenu().equals("pause")) {
 			gameStates.pop();
 		}
+	}
+
+	public void mainMenu() {
+		gameStates.pop();
+		gameStates.pop();
 	}
 }
