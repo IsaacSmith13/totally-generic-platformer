@@ -52,6 +52,9 @@ public class GameStateHandler {
 				FrameHandler.setLoading(true);
 				if (levelNumber != MENU_LEVEL_NUMBER) {
 					gameStates.pop();
+					if (levelNumber > 1) {
+						SaveHandler.addLevel(levelNumber);
+					}
 					gameStates.push(new LevelState(GameStateHandler.this, levelNumber));
 				} else {
 					gameStates.pop();

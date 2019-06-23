@@ -9,12 +9,15 @@ import java.awt.event.KeyEvent;
 
 import com.isaactsmith.platformer.handler.FrameHandler;
 import com.isaactsmith.platformer.handler.GameStateHandler;
+import com.isaactsmith.platformer.handler.SaveHandler;
 import com.isaactsmith.platformer.obj.Obj;
 
 public class MenuState extends GameState {
 
-	private static final String[] options = { "Start", "Levels", "Quit", "Full Screen", "Windowed" };
+	private static final String[] normalOptions = { "Start", "Levels", "Quit", "Full Screen", "Windowed" };
 	private int currentSelection = 0;
+	private boolean isSelectingLevel = false;
+	private String[] levels;
 
 	public MenuState(GameStateHandler gameStateHandler) {
 		super(gameStateHandler);
@@ -26,12 +29,22 @@ public class MenuState extends GameState {
 
 	@Override
 	public void paint(Graphics g) {
-		int windowWidth = FrameHandler.getWindowWidth();
-		int windowHeight = FrameHandler.getWindowHeight();
-
+		// Paint blue background
 		g.setColor(new Color(135, 206, 235));
-		g.fillRect(0, 0, windowWidth, windowHeight);
+		g.fillRect(0, 0, FrameHandler.getWindowWidth(), FrameHandler.getWindowHeight());
 
+		if (isSelectingLevel) {
+			paintMenu(g, levels);
+		} else {
+			paintMenu(g, normalOptions);
+		}
+	}
+
+	private void paintLevelSelector(Graphics g) {
+		// TODO paint level selector screen
+	}
+
+	private void paintMenu(Graphics g, String[] options) {
 		for (int i = 0; i < options.length; i++) {
 			if (i == currentSelection) {
 				g.setColor(new Color(242, 2, 190));
@@ -40,8 +53,8 @@ public class MenuState extends GameState {
 			}
 			// Determines a rectangle along the middle of the screen
 			Rectangle drawSpace = new Rectangle(0,
-					(int) (windowHeight / (options.length * 2) + (i * Obj.getGlobalSize() * 4)), windowWidth,
-					(int) Obj.getGlobalSize() * 2);
+					(int) (FrameHandler.getWindowHeight() / (options.length * 2) + (i * Obj.getGlobalSize() * 4)),
+					FrameHandler.getWindowWidth(), (int) Obj.getGlobalSize() * 2);
 			drawCenteredString(g, options[i], drawSpace,
 					new Font("helvetica", Font.BOLD, (int) (50 * Obj.getScalar())));
 		}
@@ -59,6 +72,7 @@ public class MenuState extends GameState {
 
 	@Override
 	public void keyPressed(int e) {
+		String options[] = isSelectingLevel ? levels : normalOptions;
 		switch (e) {
 		case (KeyEvent.VK_DOWN):
 			e = KeyEvent.VK_S;
@@ -73,28 +87,57 @@ public class MenuState extends GameState {
 		case (KeyEvent.VK_SPACE):
 			e = KeyEvent.VK_ENTER;
 		case (KeyEvent.VK_ENTER):
-			switch (currentSelection) {
-			case (0):
-				gameStateHandler.loadLevel(1);
-				break;
-			case (1):
-				break;
-			// TODO level selector
-			case (2):
-				System.exit(0);
-				break;
-			case (3):
-				FrameHandler.setFullScreen();
-				break;
-			case (4):
-				FrameHandler.setWindowed();
-				break;
-			default:
-				break;
+			if (isSelectingLevel) {
+				selectLevel(currentSelection);
+			} else {
+				selectOption(currentSelection);
 			}
+			break;
 		default:
 			break;
 		}
+	}
+
+	private void selectLevel(int currentSelection) {
+		// If the selection is not the last option, load the selected level number
+		if (currentSelection < levels.length - 1) {
+			gameStateHandler.loadLevel(currentSelection + 1);
+			// Otherwise go back to the menu
+		} else {
+			isSelectingLevel = false;
+		}
+	}
+
+	private void selectOption(int currentSelection) {
+		switch (currentSelection) {
+		case (0):
+			gameStateHandler.loadLevel(1);
+			break;
+		case (1):
+			levelSelector();
+			break;
+		case (2):
+			System.exit(0);
+			break;
+		case (3):
+			FrameHandler.setFullScreen();
+			break;
+		case (4):
+			FrameHandler.setWindowed();
+			break;
+		default:
+			break;
+		}
+	}
+
+	private void levelSelector() {
+		int highestLevel = SaveHandler.readSave();
+		levels = new String[highestLevel + 1];
+		levels[levels.length - 1] = "Back";
+		for (int i = 0; i < highestLevel; i++) {
+			levels[i] = "Level " + (i + 1);
+		}
+		isSelectingLevel = true;
 	}
 
 	@Override
