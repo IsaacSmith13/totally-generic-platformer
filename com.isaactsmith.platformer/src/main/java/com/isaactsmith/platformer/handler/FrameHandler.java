@@ -19,14 +19,6 @@ import com.isaactsmith.platformer.obj.unit.PlayerUnit;
 @SuppressWarnings("serial")
 public class FrameHandler extends JPanel implements KeyListener, Runnable {
 
-	// Calculate full screen and windowed sizes based on screen resolution
-//	private static final GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-//	private static final Rectangle fullScreen = new Rectangle(gd.getDisplayMode().getWidth(),
-//			gd.getDisplayMode().getHeight());
-//	private static final Rectangle windowed = new Rectangle(gd.getDisplayMode().getWidth() / 2,
-//			gd.getDisplayMode().getHeight() / 2);
-	private static Rectangle fullScreen;
-	private static  Rectangle windowed;
 	// Record time the program starts
 	private static final double startTime = System.currentTimeMillis();
 	// How many times per second the game updates
@@ -36,6 +28,9 @@ public class FrameHandler extends JPanel implements KeyListener, Runnable {
 	// Initialize game state handler to handle which state is being
 	// updated/repainted
 	private static final GameStateHandler gameStateHandler = new GameStateHandler();
+	// Calculate full screen and windowed sizes based on screen resolution
+	private static Rectangle fullScreen;
+	private static Rectangle windowed;
 	// Current window size
 	private static int windowWidth;
 	private static int windowHeight;
@@ -46,7 +41,8 @@ public class FrameHandler extends JPanel implements KeyListener, Runnable {
 
 	public FrameHandler(JFrame frame) {
 		fullScreen = frame.getGraphicsConfiguration().getBounds();
-		windowed = new Rectangle((int)frame.getGraphicsConfiguration().getBounds().getWidth() / 2, (int)frame.getGraphicsConfiguration().getBounds().getHeight() / 2);
+		windowed = new Rectangle((int) frame.getGraphicsConfiguration().getBounds().getWidth() / 2,
+				(int) frame.getGraphicsConfiguration().getBounds().getHeight() / 2);
 		FrameHandler.frame = frame;
 		// Initialize the window
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -3,6 +3,7 @@ package com.isaactsmith.platformer.gamestate;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
@@ -128,7 +129,11 @@ public class LevelState extends GameState {
 
 	@Override
 	public void keyPressed(int e) {
-		player.keyPressed(e);
+		if (e == KeyEvent.VK_ESCAPE) {
+			gameStateHandler.pause();
+		} else {
+			player.keyPressed(e);
+		}
 	}
 
 	@Override

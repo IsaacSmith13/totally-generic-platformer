@@ -14,13 +14,21 @@ import com.isaactsmith.platformer.obj.Obj;
 
 public class MenuState extends GameState {
 
-	private static final String[] normalOptions = { "Start", "Levels", "Quit", "Full Screen", "Windowed" };
+	private static final String[] MAIN_OPTIONS = { "Start", "Levels", "Quit", "Full Screen", "Windowed" };
+	private static final String[] LEVEL_OPTIONS = new String[SaveHandler.readSave() + 1];
+	private static final String[] PAUSE_OPTIONS = { "Resume", "Quit" };
 	private int currentSelection = 0;
-	private boolean isSelectingLevel = false;
-	private String[] levels;
+	private String currentMenu = "main";
 
 	public MenuState(GameStateHandler gameStateHandler) {
 		super(gameStateHandler);
+	}
+
+	public MenuState(GameStateHandler gameStateHandler, boolean isPauseMenu) {
+		this(gameStateHandler);
+		if (isPauseMenu) {
+			currentMenu = "pause";
+		}
 	}
 
 	@Override
@@ -33,10 +41,15 @@ public class MenuState extends GameState {
 		g.setColor(new Color(135, 206, 235));
 		g.fillRect(0, 0, FrameHandler.getWindowWidth(), FrameHandler.getWindowHeight());
 
-		if (isSelectingLevel) {
-			paintMenu(g, levels);
-		} else {
-			paintMenu(g, normalOptions);
+		switch (currentMenu) {
+		case ("main"):
+			paintMenu(g, MAIN_OPTIONS);
+			break;
+		case ("levels"):
+			paintMenu(g, LEVEL_OPTIONS);
+			break;
+		case ("pause"):
+			paintMenu(g, PAUSE_OPTIONS);
 		}
 	}
 
@@ -68,26 +81,64 @@ public class MenuState extends GameState {
 
 	@Override
 	public void keyPressed(int e) {
-		String options[] = isSelectingLevel ? levels : normalOptions;
+		int optionsLength = getOptionsLength();
 		switch (e) {
 		case (KeyEvent.VK_DOWN):
 			e = KeyEvent.VK_S;
 		case (KeyEvent.VK_S):
-			currentSelection = currentSelection >= options.length - 1 ? 0 : ++currentSelection;
+			currentSelection = currentSelection >= optionsLength - 1 ? 0 : ++currentSelection;
 			break;
 		case (KeyEvent.VK_UP):
 			e = KeyEvent.VK_W;
 		case (KeyEvent.VK_W):
-			currentSelection = currentSelection < 1 ? options.length - 1 : --currentSelection;
+			currentSelection = currentSelection < 1 ? optionsLength - 1 : --currentSelection;
 			break;
 		case (KeyEvent.VK_SPACE):
 			e = KeyEvent.VK_ENTER;
 		case (KeyEvent.VK_ENTER):
-			if (isSelectingLevel) {
-				selectLevel(currentSelection);
-			} else {
+			switch (currentMenu) {
+			case ("main"):
 				selectOption(currentSelection);
+				break;
+			case ("levels"):
+				selectLevel(currentSelection);
+				break;
+			case ("pause"):
+				selectPause(currentSelection);
+				break;
+			default:
+				break;
 			}
+		case (KeyEvent.VK_ESCAPE):
+			if (currentMenu == "pause") {
+				gameStateHandler.unpause();
+			}
+			break;
+		default:
+			break;
+		}
+	}
+
+	private int getOptionsLength() {
+		switch (currentMenu) {
+		case ("main"):
+			return MAIN_OPTIONS.length;
+		case ("levels"):
+			return LEVEL_OPTIONS.length;
+		case ("pause"):
+			return PAUSE_OPTIONS.length;
+		default:
+			return 0;
+		}
+	}
+
+	private void selectPause(int currentSelection) {
+		switch (currentSelection) {
+		case (0):
+			gameStateHandler.unpause();
+			break;
+		case (1):
+			System.exit(0);
 			break;
 		default:
 			break;
@@ -96,11 +147,11 @@ public class MenuState extends GameState {
 
 	private void selectLevel(int currentSelection) {
 		// If the selection is not the last option, load the selected level number
-		if (currentSelection < levels.length - 1) {
+		if (currentSelection < LEVEL_OPTIONS.length - 1) {
 			gameStateHandler.loadLevel(currentSelection + 1);
 			// Otherwise go back to the menu
 		} else {
-			isSelectingLevel = false;
+			currentMenu = "main";
 		}
 	}
 
@@ -128,12 +179,11 @@ public class MenuState extends GameState {
 
 	private void levelSelector() {
 		int highestLevel = SaveHandler.readSave();
-		levels = new String[highestLevel + 1];
-		levels[levels.length - 1] = "Back";
+		LEVEL_OPTIONS[LEVEL_OPTIONS.length - 1] = "Back";
 		for (int i = 0; i < highestLevel; i++) {
-			levels[i] = "Level " + (i + 1);
+			LEVEL_OPTIONS[i] = "Level " + (i + 1);
 		}
-		isSelectingLevel = true;
+		currentMenu = "levels";
 	}
 
 	@Override

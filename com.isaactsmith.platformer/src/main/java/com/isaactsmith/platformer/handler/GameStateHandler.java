@@ -69,4 +69,16 @@ public class GameStateHandler {
 		};
 		worker.execute();
 	}
+
+	public void pause() {
+		if (gameStates.peek() instanceof LevelState) {
+			gameStates.push(new MenuState(this, true));
+		}
+	}
+
+	public void unpause() {
+		if (gameStates.peek() instanceof MenuState) {
+			gameStates.pop();
+		}
+	}
 }

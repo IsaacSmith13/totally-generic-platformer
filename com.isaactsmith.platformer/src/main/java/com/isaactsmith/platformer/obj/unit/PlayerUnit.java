@@ -102,6 +102,10 @@ public class PlayerUnit extends Unit {
 			case KeyEvent.VK_RIGHT:
 				setRight(true);
 				break;
+			case KeyEvent.VK_W:
+				e = KeyEvent.VK_SPACE;
+			case KeyEvent.VK_UP:
+				e = KeyEvent.VK_SPACE;
 			case KeyEvent.VK_SPACE:
 				jump();
 				break;
@@ -135,7 +139,9 @@ public class PlayerUnit extends Unit {
 			break;
 		}
 	}
-	// Gets the player's current position as a rectangle, accounting for the global xOffset
+
+	// Gets the player's current position as a rectangle, accounting for the global
+	// xOffset
 	public Rectangle getRect() {
 		return new Rectangle((int) (getX() + TickHandler.getXOffset()), (int) getY(), getWidth(), getHeight() + 2);
 	}
