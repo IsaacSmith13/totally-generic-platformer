@@ -2,11 +2,11 @@ package com.isaactsmith.platformer.gamestate;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 
+import com.isaactsmith.platformer.handler.CenteredStringHandler;
 import com.isaactsmith.platformer.handler.FrameHandler;
 import com.isaactsmith.platformer.handler.GameStateHandler;
 import com.isaactsmith.platformer.handler.SaveHandler;
@@ -64,20 +64,12 @@ public class MenuState extends GameState {
 			Rectangle drawSpace = new Rectangle(0,
 					FrameHandler.getWindowHeight() / (options.length * 2) + (i * Obj.getGlobalSize() * 4),
 					FrameHandler.getWindowWidth(), Obj.getGlobalSize() * 2);
-			drawCenteredString(g, options[i], drawSpace,
+			CenteredStringHandler.drawCenteredString(g, options[i], drawSpace,
 					new Font("helvetica", Font.BOLD, (int) (50 * Obj.getScalar())));
 		}
 	}
 
-	public static void drawCenteredString(Graphics g, String text, Rectangle drawSpace, Font font) {
-		// Get the FontMetrics of the specified font
-		FontMetrics metrics = g.getFontMetrics(font);
-		int x = drawSpace.x + (drawSpace.width - metrics.stringWidth(text)) / 2;
-		// Add the ascent to the Y coordinate, as 2d 0 is the top of the screen
-		int y = drawSpace.y + ((drawSpace.height - metrics.getHeight()) / 2) + metrics.getAscent();
-		g.setFont(font);
-		g.drawString(text, x, y);
-	}
+	
 
 	@Override
 	public void keyPressed(int e) {
