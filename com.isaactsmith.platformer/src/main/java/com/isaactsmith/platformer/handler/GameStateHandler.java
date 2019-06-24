@@ -8,6 +8,7 @@ import javax.swing.SwingWorker;
 import com.isaactsmith.platformer.gamestate.GameState;
 import com.isaactsmith.platformer.gamestate.LevelState;
 import com.isaactsmith.platformer.gamestate.MenuState;
+import com.isaactsmith.platformer.obj.unit.PlayerUnit;
 
 public class GameStateHandler {
 
@@ -84,6 +85,16 @@ public class GameStateHandler {
 		if (gameStates.peek() instanceof MenuState
 				&& ((MenuState) gameStates.peek()).getCurrentMenu().equals("pause")) {
 			gameStates.pop();
+		}
+	}
+
+	public void restartLevel() {
+		if (gameStates.peek() instanceof MenuState
+				&& ((MenuState) gameStates.peek()).getCurrentMenu().equals("pause")) {
+			gameStates.pop();
+			PlayerUnit.setLives(3);
+			int levelNumber = ((LevelState) gameStates.peek()).getCurrentLevelNumber();
+			loadLevel(levelNumber);
 		}
 	}
 

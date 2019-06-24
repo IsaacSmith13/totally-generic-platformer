@@ -3,7 +3,6 @@ package com.isaactsmith.platformer.handler;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
@@ -134,11 +133,11 @@ public class FrameHandler extends JPanel implements KeyListener, Runnable {
 					x += (int) (windowWidth / 2.4 + (i * globalSize * 1.25));
 					break;
 				}
-				g.drawImage(ImageLoader.getBufferedImage("PlayerRight0"), x, (windowHeight / 2) + 10, globalSize, globalSize, null);
+				g.drawImage(ImageLoader.getBufferedImage("PlayerRight0"), x, (windowHeight / 2) + 10, globalSize,
+						globalSize, null);
 			}
 		}
-		
-		
+
 	}
 
 	public static void setFullScreen() {

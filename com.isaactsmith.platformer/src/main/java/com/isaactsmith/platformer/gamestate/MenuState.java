@@ -15,7 +15,7 @@ import com.isaactsmith.platformer.obj.Obj;
 public class MenuState extends GameState {
 
 	private static final String[] MAIN_OPTIONS = { "Start", "Levels", "Quit", "Full Screen", "Windowed" };
-	private static final String[] PAUSE_OPTIONS = { "Resume", "Main Menu", "Quit" };
+	private static final String[] PAUSE_OPTIONS = { "Resume", "Restart Level", "Main Menu", "Quit" };
 	private String[] LEVEL_OPTIONS;
 	private int currentSelection = 0;
 	private String currentMenu = "main";
@@ -68,8 +68,6 @@ public class MenuState extends GameState {
 					new Font("helvetica", Font.BOLD, (int) (50 * Obj.getScalar())));
 		}
 	}
-
-	
 
 	@Override
 	public void keyPressed(int e) {
@@ -130,9 +128,12 @@ public class MenuState extends GameState {
 			gameStateHandler.unpause();
 			break;
 		case (1):
-			gameStateHandler.mainMenu();
+			gameStateHandler.restartLevel();
 			break;
 		case (2):
+			gameStateHandler.mainMenu();
+			break;
+		case (3):
 			System.exit(0);
 			break;
 		default:

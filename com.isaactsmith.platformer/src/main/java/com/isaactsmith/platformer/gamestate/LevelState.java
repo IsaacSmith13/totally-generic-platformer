@@ -2,7 +2,6 @@ package com.isaactsmith.platformer.gamestate;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
@@ -40,6 +39,7 @@ public class LevelState extends GameState {
 	private final PlayerUnit player;
 	private final TickHandler tickHandler;
 	private boolean hasWon = false;
+
 	private boolean gameOver = false;
 
 	public LevelState(GameStateHandler gameStateHandler, int levelNumber) {
@@ -148,5 +148,9 @@ public class LevelState extends GameState {
 	@Override
 	public void keyReleased(int e) {
 		player.keyReleased(e);
+	}
+
+	public int getCurrentLevelNumber() {
+		return currentLevelNumber;
 	}
 }
