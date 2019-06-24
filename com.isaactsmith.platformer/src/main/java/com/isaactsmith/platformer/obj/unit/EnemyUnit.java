@@ -10,6 +10,7 @@ public abstract class EnemyUnit extends Unit {
 
 	private static final int AVG_TICKS_BETWEEN_JUMPS = 1000;
 	private static final int DEATH_DELAY_MS = 250;
+	private final boolean isSmart = false;
 	private final int startX;
 	private final int startY;
 	private double timeOfDeath;
