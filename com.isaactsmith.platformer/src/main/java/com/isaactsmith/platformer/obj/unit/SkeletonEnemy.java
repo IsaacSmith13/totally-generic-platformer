@@ -9,6 +9,7 @@ public class SkeletonEnemy extends EnemyUnit {
 
 	public SkeletonEnemy(int x, int y, BufferedImage[] images) {
 		super(x, y, images, defaultMovespeed, defaultJumpSpeed);
+		setSmart(true);
 	}
 
 	public SkeletonEnemy(int x, int y, BufferedImage[] images, double moveSpeed) {

@@ -89,12 +89,15 @@ public class MenuState extends GameState {
 			switch (currentMenu) {
 			case ("main"):
 				selectOption(currentSelection);
+				currentSelection = 0;
 				break;
 			case ("levels"):
 				selectLevel(currentSelection);
+				currentSelection = 0;
 				break;
 			case ("pause"):
 				selectPause(currentSelection);
+				currentSelection = 0;
 				break;
 			default:
 				break;
