@@ -10,9 +10,9 @@ public abstract class EnemyUnit extends Unit {
 
 	private static final int AVG_TICKS_BETWEEN_JUMPS = 1000;
 	private static final int DEATH_DELAY_MS = 250;
-	private final boolean isSmart = false;
 	private final int startX;
 	private final int startY;
+	private boolean isSmart;
 	private double timeOfDeath;
 	private boolean isDying = false;
 
@@ -114,5 +114,13 @@ public abstract class EnemyUnit extends Unit {
 
 	public void setDying(boolean isDying) {
 		this.isDying = isDying;
+	}
+
+	public boolean isSmart() {
+		return isSmart;
+	}
+	
+	public void setSmart(boolean isSmart) {
+		this.isSmart = isSmart;
 	}
 }
