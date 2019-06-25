@@ -15,6 +15,8 @@ public abstract class EnemyUnit extends Unit {
 	private boolean isSmart;
 	private double timeOfDeath;
 	private boolean isDying = false;
+	private boolean willFallRight = false;
+	private boolean willFallLeft = false;
 
 	public EnemyUnit(int x, int y, BufferedImage[] images) {
 		super(x, y, images);
@@ -80,14 +82,14 @@ public abstract class EnemyUnit extends Unit {
 			}
 			// Otherwise move / turn around depending on if the unit will collide or not
 		} else if (isRight()) {
-			if (!willCollideRight()) {
+			if (!willCollideRight() && !isWillFallRight()) {
 				setX(getX() + getMoveSpeed());
 			} else {
 				setRight(false);
 				setLeft(true);
 			}
 		} else if (isLeft()) {
-			if (!willCollideLeft()) {
+			if (!willCollideLeft() && !isWillFallLeft()) {
 				setX(getX() - getMoveSpeed());
 			} else {
 				setLeft(false);
@@ -96,16 +98,21 @@ public abstract class EnemyUnit extends Unit {
 		}
 	}
 
+	public void resetFalling() {
+		willFallLeft = false;
+		willFallRight = false;
+	}
+	
+	public void reset() {
+		setLocation(startX, startY);
+	}
+
 	public int getStartX() {
 		return startX;
 	}
 
 	public int getStartY() {
 		return startY;
-	}
-
-	public void reset() {
-		setLocation(startX, startY);
 	}
 
 	public boolean isDying() {
@@ -119,8 +126,24 @@ public abstract class EnemyUnit extends Unit {
 	public boolean isSmart() {
 		return isSmart;
 	}
-	
+
 	public void setSmart(boolean isSmart) {
 		this.isSmart = isSmart;
+	}
+
+	public boolean isWillFallRight() {
+		return willFallRight;
+	}
+
+	public void setWillFallRight(boolean willFallRight) {
+		this.willFallRight = willFallRight;
+	}
+
+	public boolean isWillFallLeft() {
+		return willFallLeft;
+	}
+
+	public void setWillFallLeft(boolean willFallLeft) {
+		this.willFallLeft = willFallLeft;
 	}
 }
