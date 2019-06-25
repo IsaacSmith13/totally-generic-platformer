@@ -24,13 +24,6 @@ public class MenuState extends GameState {
 		super(gameStateHandler);
 	}
 
-	public MenuState(GameStateHandler gameStateHandler, boolean isPauseMenu) {
-		this(gameStateHandler);
-		if (isPauseMenu) {
-			currentMenu = "pause";
-		}
-	}
-
 	@Override
 	public void tick() {
 	}

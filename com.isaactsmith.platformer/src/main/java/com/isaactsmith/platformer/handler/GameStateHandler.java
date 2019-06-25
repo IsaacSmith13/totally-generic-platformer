@@ -76,7 +76,8 @@ public class GameStateHandler {
 	public void pause() {
 		// Only pause if currently in a level
 		if (gameStates.peek() instanceof LevelState) {
-			gameStates.push(new MenuState(this, true));
+			gameStates.push(new MenuState(this));
+			((MenuState)gameStates.peek()).setCurrentMenu("pause");
 		}
 	}
 
