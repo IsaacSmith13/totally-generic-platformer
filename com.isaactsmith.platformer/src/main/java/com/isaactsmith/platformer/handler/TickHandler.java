@@ -70,11 +70,16 @@ public class TickHandler {
 	public void handleEnemies() {
 		for (int i = 0; i < enemies.size(); i++) {
 			Unit currentEnemy = enemies.get(i);
-			if (((EnemyUnit) currentEnemy).isActive() && player.isActive() && !((EnemyUnit) currentEnemy).isDying()) {
+			EnemyUnit currentEnemyUnit = (EnemyUnit) currentEnemy;
+			if (currentEnemyUnit.isActive() && player.isActive() && !currentEnemyUnit.isDying()) {
 				collisionHandler.handleTileCollision(currentEnemy);
 				handleJumping(currentEnemy);
 				handleFalling(currentEnemy);
-				currentEnemy.walk();
+				if (currentEnemyUnit.isSmart()) {
+					handleSmartEnemy(currentEnemy);
+				} else {
+					currentEnemy.walk();
+				}
 				// If the enemy or player are inactive, or the enemy is currently dying, stop
 				// movement
 			} else {
@@ -82,6 +87,10 @@ public class TickHandler {
 				currentEnemy.setLeft(false);
 			}
 		}
+	}
+
+	private void handleSmartEnemy(Unit currentEnemy) {
+		// TODO Auto-generated method stub
 	}
 
 	public void handleJumping(Unit unit) {

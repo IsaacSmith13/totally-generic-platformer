@@ -145,7 +145,7 @@ public class CollisionHandler {
 		}
 	}
 
-	private boolean handleOneSideOfCollision(Point pointInObj, Obj object) {
+	private static boolean handleOneSideOfCollision(Point pointInObj, Obj object) {
 		return object.getRect().contains(pointInObj);
 	}
 
