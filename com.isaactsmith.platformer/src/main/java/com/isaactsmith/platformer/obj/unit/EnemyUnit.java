@@ -73,6 +73,9 @@ public abstract class EnemyUnit extends Unit {
 		if ((int) (Math.random() * AVG_TICKS_BETWEEN_JUMPS) == 1) {
 			jump();
 		}
+		if (willFallLeft && willFallRight) {
+			return;
+		}
 		// If the unit is not moving, go towards the player
 		if (!isRight() && !isLeft()) {
 			if (TickHandler.getXOffset() + (FrameHandler.getWindowWidth() / 2) > getX()) {
@@ -82,14 +85,14 @@ public abstract class EnemyUnit extends Unit {
 			}
 			// Otherwise move / turn around depending on if the unit will collide or not
 		} else if (isRight()) {
-			if (!willCollideRight() && !isWillFallRight()) {
+			if (!willCollideRight() && !willFallRight) {
 				setX(getX() + getMoveSpeed());
 			} else {
 				setRight(false);
 				setLeft(true);
 			}
 		} else if (isLeft()) {
-			if (!willCollideLeft() && !isWillFallLeft()) {
+			if (!willCollideLeft() && !willFallLeft) {
 				setX(getX() - getMoveSpeed());
 			} else {
 				setLeft(false);
@@ -102,7 +105,7 @@ public abstract class EnemyUnit extends Unit {
 		willFallLeft = false;
 		willFallRight = false;
 	}
-	
+
 	public void reset() {
 		setLocation(startX, startY);
 	}
