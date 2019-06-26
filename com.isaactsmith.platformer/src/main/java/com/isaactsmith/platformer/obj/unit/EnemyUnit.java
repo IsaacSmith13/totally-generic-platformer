@@ -12,6 +12,7 @@ public abstract class EnemyUnit extends Unit {
 	private static final int DEATH_DELAY_MS = 250;
 	private final int startX;
 	private final int startY;
+	private boolean canJump = true;
 	private boolean isSmart;
 	private double timeOfDeath;
 	private boolean isDying = false;
@@ -70,7 +71,7 @@ public abstract class EnemyUnit extends Unit {
 
 	@Override
 	public void walk() {
-		if ((int) (Math.random() * AVG_TICKS_BETWEEN_JUMPS) == 1) {
+		if (canJump && (int) (Math.random() * AVG_TICKS_BETWEEN_JUMPS) == 1) {
 			jump();
 		}
 		if (willFallLeft && willFallRight) {
@@ -148,5 +149,13 @@ public abstract class EnemyUnit extends Unit {
 
 	public void setWillFallLeft(boolean willFallLeft) {
 		this.willFallLeft = willFallLeft;
+	}
+
+	public boolean isCanJump() {
+		return canJump;
+	}
+
+	public void setCanJump(boolean canJump) {
+		this.canJump = canJump;
 	}
 }

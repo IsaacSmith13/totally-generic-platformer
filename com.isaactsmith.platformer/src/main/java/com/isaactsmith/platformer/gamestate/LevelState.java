@@ -120,13 +120,13 @@ public class LevelState extends GameState {
 		// Paint lives
 		g.setColor(Color.BLACK);
 		g.setFont(new Font("helvetica", Font.PLAIN, 16));
-		Rectangle drawSpace = new Rectangle(0, globalSize, FrameHandler.getWindowWidth() - globalSize * 2, globalSize);
+		Rectangle drawSpace = new Rectangle(0, 0, FrameHandler.getWindowWidth() - globalSize * 2, globalSize);
 		CenteredStringHandler.drawCenteredString(g, "Lives:", drawSpace,
 				new Font("helvetica", Font.BOLD, globalSize / 2));
 		for (int i = PlayerUnit.getLives(); i > 0; i--) {
 			g.drawImage(player.getImages()[0],
-					FrameHandler.getWindowWidth() / 2 + (i * globalSize / 2) - globalSize / 2,
-					(int) (globalSize * 1.15), globalSize * 3 / 4, globalSize * 3 / 4, null);
+					FrameHandler.getWindowWidth() / 2 + (i * globalSize / 2) - globalSize / 2, (int) (globalSize * .15),
+					globalSize * 3 / 4, globalSize * 3 / 4, null);
 		}
 	}
 
