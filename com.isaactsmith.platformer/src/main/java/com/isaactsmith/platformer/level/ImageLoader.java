@@ -105,6 +105,8 @@ public class ImageLoader {
 			return createImagesArray("Player");
 		case (80):
 			return createImagesArray("Skeleton");
+		case(81):
+			return createImagesArray("Orc");
 		default:
 			return null;
 		}

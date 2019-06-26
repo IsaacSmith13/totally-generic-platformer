@@ -3,7 +3,6 @@ package com.isaactsmith.platformer.handler;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
@@ -19,6 +18,8 @@ import com.isaactsmith.platformer.obj.unit.PlayerUnit;
 @SuppressWarnings("serial")
 public class FrameHandler extends JPanel implements KeyListener, Runnable {
 
+	// Messages
+	private static final String GAME_OVER = "GAME OVER!";
 	// Record time the program starts
 	private static final double startTime = System.currentTimeMillis();
 	// How many times per second the game updates
@@ -41,8 +42,9 @@ public class FrameHandler extends JPanel implements KeyListener, Runnable {
 
 	public FrameHandler(JFrame frame) {
 		fullScreen = frame.getGraphicsConfiguration().getBounds();
-		windowed = new Rectangle((int) frame.getGraphicsConfiguration().getBounds().getWidth() / 2,
-				(int) frame.getGraphicsConfiguration().getBounds().getHeight() / 2);
+		// Windowed display is 3/4ths of the screen size
+		windowed = new Rectangle((int) frame.getGraphicsConfiguration().getBounds().getWidth() * 3 / 4,
+				(int) frame.getGraphicsConfiguration().getBounds().getHeight() * 3 / 4);
 		FrameHandler.frame = frame;
 		// Initialize the window
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -111,29 +113,31 @@ public class FrameHandler extends JPanel implements KeyListener, Runnable {
 		// Paint black background
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, windowWidth, windowHeight);
-		g.setFont(new Font(Font.MONOSPACED, Font.BOLD, 72));
 		if (levelNumber == 0) {
 			// Level 0 is menu, so the player must have just gotten a game over
 			g.setColor(Color.RED);
-			g.drawString("GAME OVER!", windowWidth / 3, windowHeight / 2);
+			CenteredStringHandler.drawScreenCenteredString(g, GAME_OVER);
 		} else {
+			int globalSize = Obj.getGlobalSize();
 			// Otherwise paint the current level number and remaining lives
 			g.setColor(new Color(242, 2, 190));
-			g.drawString("Level " + levelNumber, (int) (windowWidth / 2.45), windowHeight / 2);
+			CenteredStringHandler.drawScreenCenteredString(g, "Level " + levelNumber);
 			for (int i = PlayerUnit.getLives(); i > 0; i--) {
 				int x = 0;
 				switch (PlayerUnit.getLives()) {
 				case (2):
-					x -= 20;
+					x -= globalSize * 1.25 / 2;
 				case (1):
-					x += 40;
+					x += globalSize * 1.25;
 				default:
-					x += (int) (windowWidth / 2.375 + (i * 40));
+					x += (int) (windowWidth / 2.4 + (i * globalSize * 1.25));
 					break;
 				}
-				g.drawImage(ImageLoader.getBufferedImage("PlayerRight0"), x, (windowHeight / 2) + 32, 32, 32, null);
+				g.drawImage(ImageLoader.getBufferedImage("PlayerRight0"), x, (windowHeight / 2) + 10, globalSize,
+						globalSize, null);
 			}
 		}
+
 	}
 
 	public static void setFullScreen() {

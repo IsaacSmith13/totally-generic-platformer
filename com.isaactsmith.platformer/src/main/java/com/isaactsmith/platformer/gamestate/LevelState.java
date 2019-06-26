@@ -3,15 +3,18 @@ package com.isaactsmith.platformer.gamestate;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
+import com.isaactsmith.platformer.handler.CenteredStringHandler;
 import com.isaactsmith.platformer.handler.FrameHandler;
 import com.isaactsmith.platformer.handler.GameStateHandler;
 import com.isaactsmith.platformer.handler.TickHandler;
 import com.isaactsmith.platformer.level.ImageLoader;
 import com.isaactsmith.platformer.level.LevelLoader;
+import com.isaactsmith.platformer.obj.Obj;
 import com.isaactsmith.platformer.obj.tile.Tile;
 import com.isaactsmith.platformer.obj.unit.EnemyUnit;
 import com.isaactsmith.platformer.obj.unit.PlayerUnit;
@@ -36,6 +39,7 @@ public class LevelState extends GameState {
 	private final PlayerUnit player;
 	private final TickHandler tickHandler;
 	private boolean hasWon = false;
+
 	private boolean gameOver = false;
 
 	public LevelState(GameStateHandler gameStateHandler, int levelNumber) {
@@ -112,12 +116,17 @@ public class LevelState extends GameState {
 	}
 
 	public void paintDisplay(Graphics g) {
+		int globalSize = Obj.getGlobalSize();
 		// Paint lives
 		g.setColor(Color.BLACK);
 		g.setFont(new Font("helvetica", Font.PLAIN, 16));
-		g.drawString("Lives: ", FrameHandler.getWindowWidth() / 2 - 50, 25);
+		Rectangle drawSpace = new Rectangle(0, globalSize, FrameHandler.getWindowWidth() - globalSize * 2, globalSize);
+		CenteredStringHandler.drawCenteredString(g, "Lives:", drawSpace,
+				new Font("helvetica", Font.BOLD, globalSize / 2));
 		for (int i = PlayerUnit.getLives(); i > 0; i--) {
-			g.drawImage(player.getImages()[0], FrameHandler.getWindowWidth() / 2 + (i * 12) - 15, 10, 16, 16, null);
+			g.drawImage(player.getImages()[0],
+					FrameHandler.getWindowWidth() / 2 + (i * globalSize / 2) - globalSize / 2,
+					(int) (globalSize * 1.15), globalSize * 3 / 4, globalSize * 3 / 4, null);
 		}
 	}
 
@@ -139,5 +148,9 @@ public class LevelState extends GameState {
 	@Override
 	public void keyReleased(int e) {
 		player.keyReleased(e);
+	}
+
+	public int getCurrentLevelNumber() {
+		return currentLevelNumber;
 	}
 }

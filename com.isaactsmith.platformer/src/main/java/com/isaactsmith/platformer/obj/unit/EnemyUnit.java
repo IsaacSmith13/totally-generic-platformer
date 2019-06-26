@@ -12,8 +12,11 @@ public abstract class EnemyUnit extends Unit {
 	private static final int DEATH_DELAY_MS = 250;
 	private final int startX;
 	private final int startY;
+	private boolean isSmart;
 	private double timeOfDeath;
 	private boolean isDying = false;
+	private boolean willFallRight = false;
+	private boolean willFallLeft = false;
 
 	public EnemyUnit(int x, int y, BufferedImage[] images) {
 		super(x, y, images);
@@ -70,6 +73,9 @@ public abstract class EnemyUnit extends Unit {
 		if ((int) (Math.random() * AVG_TICKS_BETWEEN_JUMPS) == 1) {
 			jump();
 		}
+		if (willFallLeft && willFallRight) {
+			return;
+		}
 		// If the unit is not moving, go towards the player
 		if (!isRight() && !isLeft()) {
 			if (TickHandler.getXOffset() + (FrameHandler.getWindowWidth() / 2) > getX()) {
@@ -79,20 +85,29 @@ public abstract class EnemyUnit extends Unit {
 			}
 			// Otherwise move / turn around depending on if the unit will collide or not
 		} else if (isRight()) {
-			if (!willCollideRight()) {
+			if (!willCollideRight() && !willFallRight) {
 				setX(getX() + getMoveSpeed());
 			} else {
 				setRight(false);
 				setLeft(true);
 			}
 		} else if (isLeft()) {
-			if (!willCollideLeft()) {
+			if (!willCollideLeft() && !willFallLeft) {
 				setX(getX() - getMoveSpeed());
 			} else {
 				setLeft(false);
 				setRight(true);
 			}
 		}
+	}
+
+	public void resetFalling() {
+		willFallLeft = false;
+		willFallRight = false;
+	}
+
+	public void reset() {
+		setLocation(startX, startY);
 	}
 
 	public int getStartX() {
@@ -103,15 +118,35 @@ public abstract class EnemyUnit extends Unit {
 		return startY;
 	}
 
-	public void reset() {
-		setLocation(startX, startY);
-	}
-
 	public boolean isDying() {
 		return isDying;
 	}
 
 	public void setDying(boolean isDying) {
 		this.isDying = isDying;
+	}
+
+	public boolean isSmart() {
+		return isSmart;
+	}
+
+	public void setSmart(boolean isSmart) {
+		this.isSmart = isSmart;
+	}
+
+	public boolean isWillFallRight() {
+		return willFallRight;
+	}
+
+	public void setWillFallRight(boolean willFallRight) {
+		this.willFallRight = willFallRight;
+	}
+
+	public boolean isWillFallLeft() {
+		return willFallLeft;
+	}
+
+	public void setWillFallLeft(boolean willFallLeft) {
+		this.willFallLeft = willFallLeft;
 	}
 }

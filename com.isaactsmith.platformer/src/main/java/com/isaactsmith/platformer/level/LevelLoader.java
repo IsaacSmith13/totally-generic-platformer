@@ -13,6 +13,7 @@ import com.isaactsmith.platformer.obj.tile.MovingTile;
 import com.isaactsmith.platformer.obj.tile.PassableTile;
 import com.isaactsmith.platformer.obj.tile.Tile;
 import com.isaactsmith.platformer.obj.unit.EnemyUnit;
+import com.isaactsmith.platformer.obj.unit.OrcEnemy;
 import com.isaactsmith.platformer.obj.unit.PlayerUnit;
 import com.isaactsmith.platformer.obj.unit.SkeletonEnemy;
 
@@ -95,7 +96,10 @@ public class LevelLoader {
 	private void makeEnemy(int x, int y, int id) {
 		switch (id) {
 		case (80):
-			enemies.add(new SkeletonEnemy(x, y, ImageLoader.getUnitImagesById(id), 1, 6));
+			enemies.add(new SkeletonEnemy(x, y, ImageLoader.getUnitImagesById(id)));
+		break;
+		case(81):
+			enemies.add(new OrcEnemy(x, y, ImageLoader.getUnitImagesById(id)));
 		}
 	}
 

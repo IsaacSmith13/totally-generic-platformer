@@ -6,6 +6,7 @@ import com.isaactsmith.platformer.obj.Obj;
 import com.isaactsmith.platformer.obj.tile.MovingTile;
 import com.isaactsmith.platformer.obj.tile.Tile;
 import com.isaactsmith.platformer.obj.unit.EnemyUnit;
+import com.isaactsmith.platformer.obj.unit.OrcEnemy;
 import com.isaactsmith.platformer.obj.unit.PlayerUnit;
 import com.isaactsmith.platformer.obj.unit.Unit;
 
@@ -70,11 +71,16 @@ public class TickHandler {
 	public void handleEnemies() {
 		for (int i = 0; i < enemies.size(); i++) {
 			Unit currentEnemy = enemies.get(i);
-			if (((EnemyUnit) currentEnemy).isActive() && player.isActive() && !((EnemyUnit) currentEnemy).isDying()) {
+			EnemyUnit currentEnemyUnit = (EnemyUnit) currentEnemy;
+			if (currentEnemyUnit.isActive() && player.isActive() && !currentEnemyUnit.isDying()) {
 				collisionHandler.handleTileCollision(currentEnemy);
 				handleJumping(currentEnemy);
 				handleFalling(currentEnemy);
+				if (currentEnemyUnit.isSmart()) {
+					handleSmartEnemy(currentEnemy);
+				}
 				currentEnemy.walk();
+
 				// If the enemy or player are inactive, or the enemy is currently dying, stop
 				// movement
 			} else {
@@ -82,6 +88,19 @@ public class TickHandler {
 				currentEnemy.setLeft(false);
 			}
 		}
+	}
+
+	private void handleSmartEnemy(Unit enemy) {
+		EnemyUnit enemyUnit = (EnemyUnit) enemy;
+		enemyUnit.resetFalling();
+		// Create test enemy to the right and down to see if it will be falling
+		Unit testEnemy = new OrcEnemy((int) (enemy.getX() + enemy.getWidth()), (int) enemy.getY(), enemy.getImages());
+		collisionHandler.handleTileCollision(testEnemy);
+		enemyUnit.setWillFallRight(testEnemy.isFalling() && !enemy.isJumping() && !enemy.isFalling());
+		// Change test enemy to the left and down to see if it will be falling
+		testEnemy.setX(testEnemy.getX() - (enemy.getWidth() * 2));
+		collisionHandler.handleTileCollision(testEnemy);
+		enemyUnit.setWillFallLeft(testEnemy.isFalling() && !enemy.isJumping() && !enemy.isFalling());
 	}
 
 	public void handleJumping(Unit unit) {
