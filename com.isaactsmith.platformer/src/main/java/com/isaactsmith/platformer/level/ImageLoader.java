@@ -7,7 +7,7 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
-public class ImageLoader {
+public abstract class ImageLoader {
 
 	// MAX_PASSABLE_ID = 19
 	// MAX_SOLID_ID = 39
@@ -105,7 +105,7 @@ public class ImageLoader {
 			return createImagesArray("Player");
 		case (80):
 			return createImagesArray("Skeleton");
-		case(81):
+		case (81):
 			return createImagesArray("Orc");
 		default:
 			return null;
