@@ -36,79 +36,79 @@ public abstract class ImageLoader {
 
 	public static BufferedImage getTileImageById(int id) {
 		switch (id) {
-		// Passable
-		case (0):
-			return getBufferedImage("PassableGrassLeft");
-		case (1):
-			return getBufferedImage("PassableGrassMid");
-		case (2):
-			return getBufferedImage("PassableGrassRight");
-		case (3):
-			return getBufferedImage("PassableMushroomLeft");
-		case (4):
-			return getBufferedImage("PassableMushroomMiddle");
-		case (5):
-			return getBufferedImage("PassableMushroomRight");
-		// Solid
-		case (20):
-			return getBufferedImage("SolidGrass");
-		case (21):
-			return getBufferedImage("SolidDirt");
-		case (22):
-			return getBufferedImage("CactusTop");
-		case (23):
-			return getBufferedImage("CactusBottom");
-		case (24):
-			return getBufferedImage("ItemFull");
-		case (25):
-			return getBufferedImage("ItemEmpty");
-		// Moving
-		case (40):
-			return getBufferedImage("MovingPlatform");
-		// Other
-		case (50):
-			return getBufferedImage("Spikes");
-		case (51):
-			return getBufferedImage("Ladder");
-		// Terrain
-		case (60):
-			return getBufferedImage("Bush0");
-		case (61):
-			return getBufferedImage("Bush1");
-		case (62):
-			return getBufferedImage("SignExit");
-		case (63):
-			return getBufferedImage("SignLeft");
-		case (64):
-			return getBufferedImage("SignRight");
-		case (65):
-			return getBufferedImage("MushroomBottom");
-		case (66):
-			return getBufferedImage("MushroomMiddle");
-		case (67):
-			return getBufferedImage("MushroomSmallRed");
-		case (68):
-			return getBufferedImage("MushroomSmallWhite");
-		case (69):
-			return getBufferedImage("MushroomLarge");
-		// Winning Tile
-		case (99):
-			return getBufferedImage("WinningTile");
-		default:
-			return null;
+			// Passable
+			case (0):
+				return getBufferedImage("PassableGrassLeft");
+			case (1):
+				return getBufferedImage("PassableGrassMid");
+			case (2):
+				return getBufferedImage("PassableGrassRight");
+			case (3):
+				return getBufferedImage("PassableMushroomLeft");
+			case (4):
+				return getBufferedImage("PassableMushroomMiddle");
+			case (5):
+				return getBufferedImage("PassableMushroomRight");
+			// Solid
+			case (20):
+				return getBufferedImage("SolidGrass");
+			case (21):
+				return getBufferedImage("SolidDirt");
+			case (22):
+				return getBufferedImage("CactusTop");
+			case (23):
+				return getBufferedImage("CactusBottom");
+			case (24):
+				return getBufferedImage("ItemFull");
+			case (25):
+				return getBufferedImage("ItemEmpty");
+			// Moving
+			case (40):
+				return getBufferedImage("MovingPlatform");
+			// Other
+			case (50):
+				return getBufferedImage("Spikes");
+			case (51):
+				return getBufferedImage("Ladder");
+			// Terrain
+			case (60):
+				return getBufferedImage("Bush0");
+			case (61):
+				return getBufferedImage("Bush1");
+			case (62):
+				return getBufferedImage("SignExit");
+			case (63):
+				return getBufferedImage("SignLeft");
+			case (64):
+				return getBufferedImage("SignRight");
+			case (65):
+				return getBufferedImage("MushroomBottom");
+			case (66):
+				return getBufferedImage("MushroomMiddle");
+			case (67):
+				return getBufferedImage("MushroomSmallRed");
+			case (68):
+				return getBufferedImage("MushroomSmallWhite");
+			case (69):
+				return getBufferedImage("MushroomLarge");
+			// Winning Tile
+			case (99):
+				return getBufferedImage("WinningTile");
+			default:
+				return null;
 		}
 	}
 
 	public static BufferedImage[] getUnitImagesById(int id) {
 		switch (id) {
-		case (-1):
-			return createImagesArray("Player");
-		case (80):
-			return createImagesArray("Skeleton");
-		case (81):
-			return createImagesArray("Orc");
-		default:
-			return null;
+			case (-1):
+				return createImagesArray("Player");
+			case (80):
+				return createImagesArray("Skeleton");
+			case (81):
+				return createImagesArray("Orc");
+			default:
+				return null;
 		}
 	}
 

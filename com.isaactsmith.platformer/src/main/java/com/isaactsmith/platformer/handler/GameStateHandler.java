@@ -77,21 +77,19 @@ public class GameStateHandler {
 		// Only pause if currently in a level
 		if (gameStates.peek() instanceof LevelState) {
 			gameStates.push(new MenuState(this));
-			((MenuState)gameStates.peek()).setCurrentMenu("pause");
+			((MenuState) gameStates.peek()).setCurrentMenu("pause");
 		}
 	}
 
 	public void unpause() {
 		// Only remove the current gameState if the game is still in the pause menu
-		if (gameStates.peek() instanceof MenuState
-				&& ((MenuState) gameStates.peek()).getCurrentMenu().equals("pause")) {
+		if (gameStates.peek() instanceof MenuState && ((MenuState) gameStates.peek()).getCurrentMenu().equals("pause")) {
 			gameStates.pop();
 		}
 	}
 
 	public void restartLevel() {
-		if (gameStates.peek() instanceof MenuState
-				&& ((MenuState) gameStates.peek()).getCurrentMenu().equals("pause")) {
+		if (gameStates.peek() instanceof MenuState && ((MenuState) gameStates.peek()).getCurrentMenu().equals("pause")) {
 			gameStates.pop();
 			PlayerUnit.setLives(3);
 			int levelNumber = ((LevelState) gameStates.peek()).getCurrentLevelNumber();

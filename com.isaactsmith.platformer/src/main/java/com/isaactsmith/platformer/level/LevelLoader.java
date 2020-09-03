@@ -95,11 +95,11 @@ public class LevelLoader {
 
 	private void makeEnemy(int x, int y, int id) {
 		switch (id) {
-		case (80):
-			enemies.add(new SkeletonEnemy(x, y, ImageLoader.getUnitImagesById(id)));
-		break;
-		case(81):
-			enemies.add(new OrcEnemy(x, y, ImageLoader.getUnitImagesById(id)));
+			case (80):
+				enemies.add(new SkeletonEnemy(x, y, ImageLoader.getUnitImagesById(id)));
+				break;
+			case (81):
+				enemies.add(new OrcEnemy(x, y, ImageLoader.getUnitImagesById(id)));
 		}
 	}
 

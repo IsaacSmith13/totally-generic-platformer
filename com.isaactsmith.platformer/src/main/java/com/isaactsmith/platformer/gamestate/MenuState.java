@@ -35,14 +35,14 @@ public class MenuState extends GameState {
 		g.fillRect(0, 0, FrameHandler.getWindowWidth(), FrameHandler.getWindowHeight());
 
 		switch (currentMenu) {
-		case ("main"):
-			paintMenu(g, MAIN_OPTIONS);
-			break;
-		case ("levels"):
-			paintMenu(g, LEVEL_OPTIONS);
-			break;
-		case ("pause"):
-			paintMenu(g, PAUSE_OPTIONS);
+			case ("main"):
+				paintMenu(g, MAIN_OPTIONS);
+				break;
+			case ("levels"):
+				paintMenu(g, LEVEL_OPTIONS);
+				break;
+			case ("pause"):
+				paintMenu(g, PAUSE_OPTIONS);
 		}
 	}
 
@@ -66,74 +66,74 @@ public class MenuState extends GameState {
 	public void keyPressed(int e) {
 		int optionsLength = getOptionsLength();
 		switch (e) {
-		case (KeyEvent.VK_DOWN):
-			e = KeyEvent.VK_S;
-		case (KeyEvent.VK_S):
-			currentSelection = currentSelection >= optionsLength - 1 ? 0 : ++currentSelection;
-			break;
-		case (KeyEvent.VK_UP):
-			e = KeyEvent.VK_W;
-		case (KeyEvent.VK_W):
-			currentSelection = currentSelection < 1 ? optionsLength - 1 : --currentSelection;
-			break;
-		case (KeyEvent.VK_SPACE):
-			e = KeyEvent.VK_ENTER;
-		case (KeyEvent.VK_ENTER):
-			switch (currentMenu) {
-			case ("main"):
-				selectOption(currentSelection);
-				currentSelection = 0;
+			case (KeyEvent.VK_DOWN):
+				e = KeyEvent.VK_S;
+			case (KeyEvent.VK_S):
+				currentSelection = currentSelection >= optionsLength - 1 ? 0 : ++currentSelection;
 				break;
-			case ("levels"):
-				selectLevel(currentSelection);
-				currentSelection = 0;
+			case (KeyEvent.VK_UP):
+				e = KeyEvent.VK_W;
+			case (KeyEvent.VK_W):
+				currentSelection = currentSelection < 1 ? optionsLength - 1 : --currentSelection;
 				break;
-			case ("pause"):
-				selectPause(currentSelection);
-				currentSelection = 0;
+			case (KeyEvent.VK_SPACE):
+				e = KeyEvent.VK_ENTER;
+			case (KeyEvent.VK_ENTER):
+				switch (currentMenu) {
+					case ("main"):
+						selectOption(currentSelection);
+						currentSelection = 0;
+						break;
+					case ("levels"):
+						selectLevel(currentSelection);
+						currentSelection = 0;
+						break;
+					case ("pause"):
+						selectPause(currentSelection);
+						currentSelection = 0;
+						break;
+					default:
+						break;
+				}
+			case (KeyEvent.VK_ESCAPE):
+				if (currentMenu == "pause") {
+					gameStateHandler.unpause();
+				}
 				break;
 			default:
 				break;
-			}
-		case (KeyEvent.VK_ESCAPE):
-			if (currentMenu == "pause") {
-				gameStateHandler.unpause();
-			}
-			break;
-		default:
-			break;
 		}
 	}
 
 	private int getOptionsLength() {
 		switch (currentMenu) {
-		case ("main"):
-			return MAIN_OPTIONS.length;
-		case ("levels"):
-			return LEVEL_OPTIONS.length;
-		case ("pause"):
-			return PAUSE_OPTIONS.length;
-		default:
-			return 0;
+			case ("main"):
+				return MAIN_OPTIONS.length;
+			case ("levels"):
+				return LEVEL_OPTIONS.length;
+			case ("pause"):
+				return PAUSE_OPTIONS.length;
+			default:
+				return 0;
 		}
 	}
 
 	private void selectPause(int currentSelection) {
 		switch (currentSelection) {
-		case (0):
-			gameStateHandler.unpause();
-			break;
-		case (1):
-			gameStateHandler.restartLevel();
-			break;
-		case (2):
-			gameStateHandler.mainMenu();
-			break;
-		case (3):
-			System.exit(0);
-			break;
-		default:
-			break;
+			case (0):
+				gameStateHandler.unpause();
+				break;
+			case (1):
+				gameStateHandler.restartLevel();
+				break;
+			case (2):
+				gameStateHandler.mainMenu();
+				break;
+			case (3):
+				System.exit(0);
+				break;
+			default:
+				break;
 		}
 	}
 
@@ -149,23 +149,23 @@ public class MenuState extends GameState {
 
 	private void selectOption(int currentSelection) {
 		switch (currentSelection) {
-		case (0):
-			gameStateHandler.loadLevel(1);
-			break;
-		case (1):
-			levelSelector();
-			break;
-		case (2):
-			System.exit(0);
-			break;
-		case (3):
-			FrameHandler.setFullScreen();
-			break;
-		case (4):
-			FrameHandler.setWindowed();
-			break;
-		default:
-			break;
+			case (0):
+				gameStateHandler.loadLevel(1);
+				break;
+			case (1):
+				levelSelector();
+				break;
+			case (2):
+				System.exit(0);
+				break;
+			case (3):
+				FrameHandler.setFullScreen();
+				break;
+			case (4):
+				FrameHandler.setWindowed();
+				break;
+			default:
+				break;
 		}
 	}
 

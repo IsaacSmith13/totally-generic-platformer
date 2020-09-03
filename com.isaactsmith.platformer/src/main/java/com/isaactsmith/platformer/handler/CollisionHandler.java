@@ -59,14 +59,15 @@ public class CollisionHandler {
 
 	public void handleStationaryTileCollision(Unit unit, int unitX, int unitY, int size) {
 
-		int startX = Math.max(Math.min(-2 + (int) (unit.isLeft() ? (unitX - unit.getMoveSpeed()) / size : unitX / size),
-				tiles[0].length - 1), 0);
-		int endX = Math.max(Math.min(2 + (int) (unit.isRight() ? (unitX + unit.getMoveSpeed()) / size : unitX / size),
-				tiles[0].length - 1), 0);
-		int startY = Math.max(
-				Math.min(-2 + (int) (unit.isJumping() ? (unitY - unit.getCurrentJumpSpeed()) / size : unitY / size),
-						tiles.length - 1),
+		int startX = Math.max(
+				Math.min(-2 + (int) (unit.isLeft() ? (unitX - unit.getMoveSpeed()) / size : unitX / size), tiles[0].length - 1),
 				0);
+		int endX = Math.max(
+				Math.min(2 + (int) (unit.isRight() ? (unitX + unit.getMoveSpeed()) / size : unitX / size), tiles[0].length - 1),
+				0);
+		int startY = Math
+				.max(Math.min(-2 + (int) (unit.isJumping() ? (unitY - unit.getCurrentJumpSpeed()) / size : unitY / size),
+						tiles.length - 1), 0);
 		int endY = Math.max(Math.min(2 + (int) ((unitY + unit.getYVelocity()) / size), tiles.length - 1), 0);
 
 		for (int y = startY; y <= endY; y++) {
@@ -90,8 +91,7 @@ public class CollisionHandler {
 		for (int i = 0, movingTilesAmount = movingTiles.size(); i < movingTilesAmount; i++) {
 			if (handleDownwardCollision(unit, unitX, unitY, size, movingTiles.get(i)) && !unit.isJumping()) {
 				int movingTileSpeed = ((MovingTile) movingTiles.get(i)).getMoveSpeed();
-				if ((movingTileSpeed > 0 && !unit.willCollideRight())
-						|| (movingTileSpeed < 0 && !unit.willCollideLeft())) {
+				if ((movingTileSpeed > 0 && !unit.willCollideRight()) || (movingTileSpeed < 0 && !unit.willCollideLeft())) {
 					if (unit instanceof PlayerUnit) {
 						TickHandler.setXOffset(TickHandler.getXOffset() + movingTileSpeed);
 					} else {
@@ -154,8 +154,7 @@ public class CollisionHandler {
 			EnemyUnit enemy = enemies.get(i);
 			if (enemy.isActive() && player.isActive()) {
 				if (player.getRect().intersects(enemy.getRect())) {
-					if (player.getY() <= enemy.getY() - enemy.getHeight() + player.getYVelocity()
-							+ enemy.getCurrentJumpSpeed()) {
+					if (player.getY() <= enemy.getY() - enemy.getHeight() + player.getYVelocity() + enemy.getCurrentJumpSpeed()) {
 						if (!enemy.isDying()) {
 							enemy.handleDeath();
 						}

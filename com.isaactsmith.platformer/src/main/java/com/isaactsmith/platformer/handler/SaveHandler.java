@@ -13,12 +13,12 @@ public abstract class SaveHandler {
 	private static final File SAVE_FILE = new File("savefile.save");
 
 	public static void writeSave(int levelNumber) {
-//		 If the player has already beat this level or higher, don't rewrite the file
+		// If the player has already beat this level or higher, don't rewrite the file
 		if (SAVE_FILE.exists() && SAVE_FILE.isFile() && readSave() >= levelNumber) {
 			return;
 		}
 		try (BufferedWriter writer = new BufferedWriter(new PrintWriter(SAVE_FILE))) {
-//			 Adds some garbage numbers before and after the actual value
+			// Adds some garbage numbers before and after the actual value
 			for (int i = 0; i < 37; i++) {
 				writer.write((int) (Math.random() * (levelNumber + 10)) + " ");
 			}

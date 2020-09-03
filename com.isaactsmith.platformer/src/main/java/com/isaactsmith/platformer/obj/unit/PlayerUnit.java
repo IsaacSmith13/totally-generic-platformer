@@ -94,51 +94,51 @@ public class PlayerUnit extends Unit {
 	public void keyPressed(int e) {
 		if (isActive()) {
 			switch (e) {
-			case KeyEvent.VK_A:
-				e = KeyEvent.VK_LEFT;
-			case KeyEvent.VK_LEFT:
-				setLeft(true);
-				break;
-			case KeyEvent.VK_D:
-				e = KeyEvent.VK_RIGHT;
-			case KeyEvent.VK_RIGHT:
-				setRight(true);
-				break;
-			case KeyEvent.VK_W:
-				e = KeyEvent.VK_SPACE;
-			case KeyEvent.VK_UP:
-				e = KeyEvent.VK_SPACE;
-			case KeyEvent.VK_SPACE:
-				jump();
-				break;
-			default:
-				break;
+				case KeyEvent.VK_A:
+					e = KeyEvent.VK_LEFT;
+				case KeyEvent.VK_LEFT:
+					setLeft(true);
+					break;
+				case KeyEvent.VK_D:
+					e = KeyEvent.VK_RIGHT;
+				case KeyEvent.VK_RIGHT:
+					setRight(true);
+					break;
+				case KeyEvent.VK_W:
+					e = KeyEvent.VK_SPACE;
+				case KeyEvent.VK_UP:
+					e = KeyEvent.VK_SPACE;
+				case KeyEvent.VK_SPACE:
+					jump();
+					break;
+				default:
+					break;
 			}
 		}
 	}
 
 	public void keyReleased(int e) {
 		switch (e) {
-		case KeyEvent.VK_A:
-			setLeft(false);
-			break;
-		case KeyEvent.VK_LEFT:
-			setLeft(false);
-			break;
-		case KeyEvent.VK_D:
-			setRight(false);
-			break;
-		case KeyEvent.VK_RIGHT:
-			setRight(false);
-			break;
-		case KeyEvent.VK_SPACE:
-			// Cuts jump short when player stops holding the spacebar
-			if (isJumping()) {
-				setCurrentJumpSpeed(Math.min(getCurrentJumpSpeed(), getJumpspeed() / 2));
-			}
-			break;
-		default:
-			break;
+			case KeyEvent.VK_A:
+				setLeft(false);
+				break;
+			case KeyEvent.VK_LEFT:
+				setLeft(false);
+				break;
+			case KeyEvent.VK_D:
+				setRight(false);
+				break;
+			case KeyEvent.VK_RIGHT:
+				setRight(false);
+				break;
+			case KeyEvent.VK_SPACE:
+				// Cuts jump short when player stops holding the spacebar
+				if (isJumping()) {
+					setCurrentJumpSpeed(Math.min(getCurrentJumpSpeed(), getJumpspeed() / 2));
+				}
+				break;
+			default:
+				break;
 		}
 	}
 

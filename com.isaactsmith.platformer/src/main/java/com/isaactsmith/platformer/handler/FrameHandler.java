@@ -125,16 +125,16 @@ public class FrameHandler extends JPanel implements KeyListener, Runnable {
 			for (int i = PlayerUnit.getLives(); i > 0; i--) {
 				int x = 0;
 				switch (PlayerUnit.getLives()) {
-				case (2):
-					x -= globalSize * 1.25 / 2;
-				case (1):
-					x += globalSize * 1.25;
-				default:
-					x += (int) (windowWidth / 2.4 + (i * globalSize * 1.25));
-					break;
+					case (2):
+						x -= globalSize * 1.25 / 2;
+					case (1):
+						x += globalSize * 1.25;
+					default:
+						x += (int) (windowWidth / 2.4 + (i * globalSize * 1.25));
+						break;
 				}
-				g.drawImage(ImageLoader.getBufferedImage("PlayerRight0"), x, (windowHeight / 2) + globalSize,
-						globalSize, globalSize, null);
+				g.drawImage(ImageLoader.getBufferedImage("PlayerRight0"), x, (windowHeight / 2) + globalSize, globalSize,
+						globalSize, null);
 			}
 		}
 

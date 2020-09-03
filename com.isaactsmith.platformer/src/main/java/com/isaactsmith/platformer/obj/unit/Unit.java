@@ -82,18 +82,18 @@ public abstract class Unit extends Obj {
 
 	public void move(String direction) {
 		switch (direction) {
-		case ("left"):
-			setLeft(true);
-			break;
-		case ("right"):
-			setRight(true);
-			break;
-		case ("stop"):
-			setLeft(false);
-			setRight(false);
-			break;
-		default:
-			break;
+			case ("left"):
+				setLeft(true);
+				break;
+			case ("right"):
+				setRight(true);
+				break;
+			case ("stop"):
+				setLeft(false);
+				setRight(false);
+				break;
+			default:
+				break;
 		}
 	}
 
